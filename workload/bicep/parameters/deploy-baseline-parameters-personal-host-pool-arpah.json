@@ -5,6 +5,9 @@
         "deploymentPrefix": {
             "value": "AVDA"
         },
+        "deploymentEnvironment":{
+            "value": "Prod"
+        },
         "avdUseCustomNaming": {
             "value": false
         },

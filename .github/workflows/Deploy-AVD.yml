@@ -20,13 +20,23 @@ jobs:
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
-    #   - name: Deploy MLZ
+      - name: Deploy AVD Personal Host Pool
+        uses: azure/arm-deploy@v2
+        with:
+          scope: subscription
+          #subscriptionId: ${{ secrets.AZURE_SUB_ID }}
+          region: centralus
+          template: ./workload/bicep/deploy-baseline-personal-host-pool-arpah.bicep
+          parameters: ./workload/bicep/parameters/deploy-baseline-parameters-personal-host-pool-arpah deploymentEnvironment=${{ github.event.inputs.environment }} avdWorkloadSubsId=${{ secrets.AZURE_SUB_ID }} imageGallerySubscriptionId=${{ secrets.IMAGE_GALLERY_SUB_ID }} avdVmLocalUserName=${{ secrets.AVD_ADMIN }} avdVmLocalUserPassword=${{ secrets.AVD_ADMINPASS }} avdEnterpriseAppObjectId=${{ secrets.AZURE_AVD_OBJECTID }} existingVnetAvdSubnetResourceId=${{ secrets.AVD_SUBNET_ID }} existingVnetPrivateEndpointSubnetResourceId=${{ secrets.AVD_SUBNET_ID }} identityDomainName=${{ secrets.AD_NAME}} avdDomainJoinUserName=${{ secrets.AD_JOIN_USER }} avdDomainJoinUserPassword=${{ secrets.AD_JOIN_PASS }} avdOuPath="${{ secrets.AD_OU }}" storageOuPath="${{ secrets.AD_OU }}" storageFilePrivateEndpointStaticIp="${{ secrets.STORAGEFILEPRIVATEENDPOINTSTATICIP }}" storageFilePrivateEndpointStaticIpRemote="${{ secrets.STORAGEFILEPRIVATEENDPOINTSTATICIPREMOTE }}" securityPrincipalId="${{ secrets.SECURITY_PRINCIPAL_ID }}" securityPrincipalName="${{ secrets.SECURITY_PRINCIPAL_NAME }}"
+          failOnStdErr: false
+
+    #   - name: Deploy AVD Personal Host Pool
     #     uses: azure/arm-deploy@v2
     #     with:
     #         scope: subscription
     #         region: centralus
     #         #deploymentMode: 'Complete'
-    #         template: ./src/bicep/mlz-arpah.bicep
+    #         template: ./workload/bicep/deploy-baseline-personal-host-pool-arpah.bicep
     #         parameters:
     #           resourcePrefix=mlz
     #           environmentAbbreviation=dev
@@ -47,5 +57,4 @@ jobs:
     #           bastionHostSubnetAddressPrefix=${{ secrets.BASTION_SNET_PREFIX }}
     #           windowsVmAdminPassword=${{ secrets.WIN_VM_ADMIN_PWD }}
     #           firewallSupernetIPAddress=${{ secrets.SUPERNET_ADDRESS}}
-    #         #additionalArguments: "--what-if"
     #         failOnStdErr: false

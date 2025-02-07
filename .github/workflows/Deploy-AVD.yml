@@ -1,0 +1,51 @@
+name: Deploy AVD to the ARPA-H Tenant
+on:
+    workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+ 
+      - name: OIDC Login to Azure Public Cloud
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+
+    #   - name: Deploy MLZ
+    #     uses: azure/arm-deploy@v2
+    #     with:
+    #         scope: subscription
+    #         region: centralus
+    #         #deploymentMode: 'Complete'
+    #         template: ./src/bicep/mlz-arpah.bicep
+    #         parameters:
+    #           resourcePrefix=mlz
+    #           environmentAbbreviation=dev
+    #           hubSubscriptionId=${{ secrets.HUB_SUB_ID }} 
+    #           operationsSubscriptionId=${{ secrets.OPS_SUB_ID }} 
+    #           sharedServicesSubscriptionId=${{ secrets.SS_SUB_ID }} 
+    #           identitySubscriptionId=${{ secrets.IDENTITY_SUB_ID }} 
+    #           hubVirtualNetworkAddressPrefix=${{ secrets.HUB_VNET_PREFIX }} 
+    #           hubSubnetAddressPrefix=${{ secrets.HUB_SNET_PREFIX }} 
+    #           operationsVirtualNetworkAddressPrefix=${{ secrets.OPS_VNET_PREFIX }} 
+    #           operationsSubnetAddressPrefix=${{ secrets.OPS_SNET_PREFIX }} 
+    #           sharedServicesVirtualNetworkAddressPrefix=${{ secrets.SS_VNET_PREFIX }} 
+    #           sharedServicesSubnetAddressPrefix=${{ secrets.SS_SNET_PREFIX }}
+    #           identityVirtualNetworkAddressPrefix=${{ secrets.IDENTITY_VNET_PREFIX }}
+    #           identitySubnetAddressPrefix=${{ secrets.IDENTITY_SNET_PREFIX}}
+    #           firewallClientSubnetAddressPrefix=${{ secrets.FW_CLIENT_SNET_PREFIX }}
+    #           firewallManagementSubnetAddressPrefix=${{ secrets.FW_MGMT_SNET_PREFIX }}
+    #           bastionHostSubnetAddressPrefix=${{ secrets.BASTION_SNET_PREFIX }}
+    #           windowsVmAdminPassword=${{ secrets.WIN_VM_ADMIN_PWD }}
+    #           firewallSupernetIPAddress=${{ secrets.SUPERNET_ADDRESS}}
+    #         #additionalArguments: "--what-if"
+    #         failOnStdErr: false

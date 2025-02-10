@@ -26,35 +26,47 @@ jobs:
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
-      - name: Deploy AVD Personal Host Pool
-        uses: azure/arm-deploy@v2
+      - name: Azure CLI script
+        id: step_one
+        uses: azure/CLI@v1
         with:
-          scope: subscription
-          #subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          region: centralus
-          template: ./workload/bicep/deploy-baseline-personal-host-pool-arpah.bicep
-          #parameters: ./workload/bicep/parameters/deploy-baseline-parameters-personal-host-pool-arpah.bicep  
-          parameters:
-            deploymentPrefix=avda
-            deploymentEnvironment=Prod
-            avdWorkloadSubsId=${{ secrets.SUBSCRIPTION_ID }} 
-            avdVmLocalUserName=${{ secrets.AVD_VM_LOCALUSER_NAME }} 
-            avdVmLocalUserPassword=${{ secrets.AVD_VM_LOCALUSER_PASSWORD }} 
-            avdEnterpriseAppObjectId=${{ secrets.AZURE_AVD_OBJECT_ID }} 
-            existingHubVnetResourceId=${{ secrets.EXISTING_HUB_VNET_RESOURCE_ID }}
-            #imageGallerySubscriptionId=${{ secrets.IMAGE_GALLERY_SUB_ID }} 
-            # existingVnetAvdSubnetResourceId=${{ secrets.AVD_SUBNET_ID }} 
-            # existingVnetPrivateEndpointSubnetResourceId=${{ secrets.AVD_SUBNET_ID }} 
-            # avdDomainJoinUserName=${{ secrets.AD_JOIN_USER }} 
-            # identityDomainName=${{ secrets.AD_NAME}} 
-            #avdDomainJoinUserPassword=${{ secrets.AD_JOIN_PASS }} 
-            #avdOuPath="${{ secrets.AD_OU }}" 
-            #storageOuPath="${{ secrets.AD_OU }}" 
-            # storageFilePrivateEndpointStaticIp="${{ secrets.STORAGEFILEPRIVATEENDPOINTSTATICIP }}" 
-            # storageFilePrivateEndpointStaticIpRemote="${{ secrets.STORAGEFILEPRIVATEENDPOINTSTATICIPREMOTE }}" 
-            # securityPrincipalId="${{ secrets.SECURITY_PRINCIPAL_ID }}" 
-            # securityPrincipalName="${{ secrets.SECURITY_PRINCIPAL_NAME }}"
-          failOnStdErr: false
+          inlineScript: |
+            echo secret=$(az keyvault secret show --vault-name kventerprisehub --name test --query value --out tsv) >> $GITHUB_ENV
+      
+      - name: Use the value
+        id: step_two
+        run: |
+          echo "${{ env.secret }}"
+
+      # - name: Deploy AVD Personal Host Pool
+      #   uses: azure/arm-deploy@v2
+      #   with:
+      #     scope: subscription
+      #     subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+      #     region: centralus
+      #     template: ./workload/bicep/deploy-baseline-personal-host-pool-arpah.bicep
+      #     #parameters: ./workload/bicep/parameters/deploy-baseline-parameters-personal-host-pool-arpah.bicep  
+      #     parameters:
+      #       deploymentPrefix=avda
+      #       deploymentEnvironment=Prod
+      #       avdWorkloadSubsId=${{ secrets.SUBSCRIPTION_ID }} 
+      #       avdVmLocalUserName=${{ secrets.AVD_VM_LOCALUSER_NAME }} 
+      #       avdVmLocalUserPassword=${{ secrets.AVD_VM_LOCALUSER_PASSWORD }} 
+      #       avdEnterpriseAppObjectId=${{ secrets.AZURE_AVD_OBJECT_ID }} 
+      #       existingHubVnetResourceId=${{ secrets.EXISTING_HUB_VNET_RESOURCE_ID }}
+      #       #imageGallerySubscriptionId=${{ secrets.IMAGE_GALLERY_SUB_ID }} 
+      #       # existingVnetAvdSubnetResourceId=${{ secrets.AVD_SUBNET_ID }} 
+      #       # existingVnetPrivateEndpointSubnetResourceId=${{ secrets.AVD_SUBNET_ID }} 
+      #       # avdDomainJoinUserName=${{ secrets.AD_JOIN_USER }} 
+      #       # identityDomainName=${{ secrets.AD_NAME}} 
+      #       #avdDomainJoinUserPassword=${{ secrets.AD_JOIN_PASS }} 
+      #       #avdOuPath="${{ secrets.AD_OU }}" 
+      #       #storageOuPath="${{ secrets.AD_OU }}" 
+      #       # storageFilePrivateEndpointStaticIp="${{ secrets.STORAGEFILEPRIVATEENDPOINTSTATICIP }}" 
+      #       # storageFilePrivateEndpointStaticIpRemote="${{ secrets.STORAGEFILEPRIVATEENDPOINTSTATICIPREMOTE }}" 
+      #       # securityPrincipalId="${{ secrets.SECURITY_PRINCIPAL_ID }}" 
+      #       # securityPrincipalName="${{ secrets.SECURITY_PRINCIPAL_NAME }}"
+      #     failOnStdErr: false
 
     #   - name: Deploy AVD Personal Host Pool
     #     uses: azure/arm-deploy@v2

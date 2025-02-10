@@ -401,7 +401,7 @@ param avdApplicationGroupCustomFriendlyName string = 'Desktops - App1 - ${toLowe
 
 @maxLength(11)
 @sys.description('AVD session host prefix custom name. (Default: vmapp1duse2)')
-param avdSessionHostCustomNamePrefix string = 'vmapp1duse2'
+param avdSessionHostCustomNamePrefix string = 'arpahavd'
 
 // @maxLength(9)
 // @sys.description('AVD VMSS Flex custom name. (Default: vmss)')

@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "deploymentPrefix": {
-            "value": "AVDA"
+            "value": "avda"
         },
         "deploymentEnvironment":{
             "value": "Prod"
@@ -37,7 +37,10 @@
         },
         "avdIdentityServiceProvider": {
             "value": "EntraID"
-        },     
+        },
+        "avdApplicationGroupCustomFriendlyName": {
+            "value": "ARPA-H Admin Windows Desktop"
+        },
         "createIntuneEnrollment": {
             "value": true
         },            
@@ -159,7 +162,7 @@
             "value": "Premium"
         },
         "avdSessionHostsSize": {
-            "value": "Standard_D2s_v3"
+            "value": "Standard_E4s_v5"
         },
         "avdSessionHostDiskType": {
             "value": "Premium_LRS"

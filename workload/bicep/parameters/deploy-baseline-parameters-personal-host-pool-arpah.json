@@ -9,13 +9,16 @@
             "value": "Prod"
         },
         "avdUseCustomNaming": {
-            "value": false
+            "value": true
         },
         "avdSessionHostLocation": {
             "value": "centralus"
         },
         "avdManagementPlaneLocation": {
             "value": "centralus"
+        },
+        "avdSessionHostCustomNamePrefix": {
+            "value": "arpahavd"
         },
         "avdDeployMonitoring": {
             "value": true
@@ -132,7 +135,7 @@
             "value": true
         },
         "avdDeploySessionHostsCount": {
-            "value": 1
+            "value": 3
         },
         "avdSessionHostCountIndex": {
             "value": 0

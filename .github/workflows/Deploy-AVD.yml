@@ -30,18 +30,18 @@ jobs:
         uses: azure/arm-deploy@v2
         with:
           scope: subscription
-          #subscriptionId: ${{ secrets.AZURE_SUB_ID }}
+          #subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           region: centralus
           template: ./workload/bicep/deploy-baseline-personal-host-pool-arpah.bicep
           #parameters: ./workload/bicep/parameters/deploy-baseline-parameters-personal-host-pool-arpah.bicep  
           parameters:
             deploymentPrefix=avda
-            deploymentEnvironment=${{ github.event.inputs.environment }} 
+            deploymentEnvironment=Prod
             avdWorkloadSubsId=${{ secrets.SUBSCRIPTION_ID }} 
             avdVmLocalUserName=${{ secrets.AVD_VM_LOCALUSER_NAME }} 
             avdVmLocalUserPassword=${{ secrets.AVD_VM_LOCALUSER_PASSWORD }} 
             avdEnterpriseAppObjectId=${{ secrets.AZURE_AVD_OBJECT_ID }} 
-            existingHubVnetResourceId=${{ secrets.EXISTINGHUBVNETRESOURCEID }}
+            existingHubVnetResourceId=${{ secrets.EXISTING_HUB_VNET_RESOURCE_ID }}
             #imageGallerySubscriptionId=${{ secrets.IMAGE_GALLERY_SUB_ID }} 
             # existingVnetAvdSubnetResourceId=${{ secrets.AVD_SUBNET_ID }} 
             # existingVnetPrivateEndpointSubnetResourceId=${{ secrets.AVD_SUBNET_ID }} 

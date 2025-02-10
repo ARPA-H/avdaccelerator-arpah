@@ -130,6 +130,7 @@ param avdStartVmOnConnect bool = true
 
 @sys.description('AVD host pool Custom RDP properties. (Default: audiocapturemode:i:1;audiomode:i:0;drivestoredirect:s:;redirectclipboard:i:1;redirectcomports:i:1;redirectprinters:i:1;redirectsmartcards:i:1;screen mode id:i:2)')
 param avdHostPoolRdpProperties string = 'audiocapturemode:i:1;audiomode:i:0;drivestoredirect:s:;redirectclipboard:i:1;redirectcomports:i:1;redirectprinters:i:1;redirectsmartcards:i:1;screen mode id:i:2'
+//param avdHostPoolRdpProperties string = 'audiocapturemode:i:1;audiomode:i:0;drivestoredirect:s:;redirectclipboard:i:1;redirectcomports:i:1;redirectprinters:i:1;redirectsmartcards:i:1;screen mode id:i:2;enablerdsaadauth:i:1'
 
 @sys.description('AVD deploy scaling plan. (Default: true)')
 param avdDeployScalingPlan bool = true
@@ -226,17 +227,17 @@ param avdDeploySessionHostsCount int = 1
 @sys.description('The session host number to begin with for the deployment. This is important when adding virtual machines to ensure the names do not conflict. (Default: 0)')
 param avdSessionHostCountIndex int = 0
 
-@sys.description('When true VMs are distributed across availability zones, when set to false, VMs will be members of a new availability set. (Default: true)')
+@sys.description('When true VMs are distributed across availability zones, when set to false, VMs will be deployed at regional level. (Default: true)')
 param availabilityZonesCompute bool = true
 
 @sys.description('When true, Zone Redundant Storage (ZRS) is used, when set to false, Locally Redundant Storage (LRS) is used. (Default: false)')
 param zoneRedundantStorage bool = false
 
-@sys.description('Deploys a VMSS Flex group and associates session hosts with it for availability purposes. (Default: true)')
-param deployVmssFlex bool = true
+// @sys.description('Deploys a VMSS Flex group and associates session hosts with it for availability purposes. (Default: true)')
+// param deployVmssFlex bool = true
 
-@sys.description('Sets the number of fault domains for the availability set. (Default: 2)')
-param vmssFlatformFaultDomainCount int = 2
+// @sys.description('Sets the number of fault domains for the availability set. (Default: 2)')
+// param vmssFlatformFaultDomainCount int = 2
 
 @allowed([
   'Standard'
@@ -312,109 +313,109 @@ param storageOuPath string = ''
 // Custom Naming
 // Input must followe resource naming rules on https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules
 @sys.description('AVD resources custom naming. (Default: false)')
-param avdUseCustomNaming bool = false
+param avdUseCustomNaming bool = true
 
 @maxLength(90)
 @sys.description('AVD service resources resource group custom name. (Default: rg-avd-app1-dev-use2-service-objects)')
-param avdServiceObjectsRgCustomName string = 'rg-avd-app1-dev-use2-service-objects'
+param avdServiceObjectsRgCustomName string = 'rg-avd-app1-${toLower(deploymentEnvironment)}-use2-service-objects'
 
 @maxLength(90)
 @sys.description('AVD network resources resource group custom name. (Default: rg-avd-app1-dev-use2-network)')
-param avdNetworkObjectsRgCustomName string = 'rg-avd-app1-dev-use2-network'
+param avdNetworkObjectsRgCustomName string = 'rg-avd-app1-${toLower(deploymentEnvironment)}-use2-network'
 
 @maxLength(90)
 @sys.description('AVD network resources resource group custom name. (Default: rg-avd-app1-dev-use2-pool-compute)')
-param avdComputeObjectsRgCustomName string = 'rg-avd-app1-dev-use2-pool-compute'
+param avdComputeObjectsRgCustomName string = 'rg-avd-app1-${toLower(deploymentEnvironment)}-use2-pool-compute'
 
 @maxLength(90)
 @sys.description('AVD network resources resource group custom name. (Default: rg-avd-app1-dev-use2-storage)')
-param avdStorageObjectsRgCustomName string = 'rg-avd-app1-dev-use2-storage'
+param avdStorageObjectsRgCustomName string = 'rg-avd-app1-${toLower(deploymentEnvironment)}-use2-storage'
 
 @maxLength(90)
 @sys.description('AVD monitoring resource group custom name. (Default: rg-avd-dev-use2-monitoring)')
-param avdMonitoringRgCustomName string = 'rg-avd-dev-use2-monitoring'
+param avdMonitoringRgCustomName string = 'rg-avd-${toLower(deploymentEnvironment)}-use2-monitoring'
 
 @maxLength(64)
 @sys.description('AVD virtual network custom name. (Default: vnet-app1-dev-use2-001)')
-param avdVnetworkCustomName string = 'vnet-app1-dev-use2-001'
+param avdVnetworkCustomName string = 'vnet-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(64)
 @sys.description('AVD Azure log analytics workspace custom name. (Default: log-avd-app1-dev-use2)')
-param avdAlaWorkspaceCustomName string = 'log-avd-app1-dev-use2'
+param avdAlaWorkspaceCustomName string = 'log-avd-${toLower(deploymentEnvironment)}-dev-use2'
 
 @maxLength(80)
 @sys.description('AVD virtual network subnet custom name. (Default: snet-avd-app1-dev-use2-001)')
-param avdVnetworkSubnetCustomName string = 'snet-avd-app1-dev-use2-001'
+param avdVnetworkSubnetCustomName string = 'snet-avd-${toLower(deploymentEnvironment)}-dev-use2-001'
 
 @maxLength(80)
 @sys.description('private endpoints virtual network subnet custom name. (Default: snet-pe-app1-dev-use2-001)')
-param privateEndpointVnetworkSubnetCustomName string = 'snet-pe-app1-dev-use2-001'
+param privateEndpointVnetworkSubnetCustomName string = 'snet-pe-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(80)
 @sys.description('AVD network security group custom name. (Default: nsg-avd-app1-dev-use2-001)')
-param avdNetworksecurityGroupCustomName string = 'nsg-avd-app1-dev-use2-001'
+param avdNetworksecurityGroupCustomName string = 'nsg-avd-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(80)
 @sys.description('Private endpoint network security group custom name. (Default: nsg-pe-app1-dev-use2-001)')
-param privateEndpointNetworksecurityGroupCustomName string = 'nsg-pe-app1-dev-use2-001'
+param privateEndpointNetworksecurityGroupCustomName string = 'nsg-pe-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(80)
 @sys.description('AVD route table custom name. (Default: route-avd-app1-dev-use2-001)')
-param avdRouteTableCustomName string = 'route-avd-app1-dev-use2-001'
+param avdRouteTableCustomName string = 'route-avd-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(80)
 @sys.description('Private endpoint route table custom name. (Default: route-avd-app1-dev-use2-001)')
-param privateEndpointRouteTableCustomName string = 'route-pe-app1-dev-use2-001'
+param privateEndpointRouteTableCustomName string = 'route-pe-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(80)
 @sys.description('AVD application security custom name. (Default: asg-app1-dev-use2-001)')
-param avdApplicationSecurityGroupCustomName string = 'asg-app1-dev-use2-001'
+param avdApplicationSecurityGroupCustomName string = 'asg-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(64)
 @sys.description('AVD workspace custom name. (Default: vdws-app1-dev-use2-001)')
-param avdWorkSpaceCustomName string = 'vdws-app1-dev-use2-001'
+param avdWorkSpaceCustomName string = 'vdws-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(64)
 @sys.description('AVD workspace custom friendly (Display) name. (Default: App1 - Dev - East US 2 - 001)')
-param avdWorkSpaceCustomFriendlyName string = 'App1 - Dev - East US 2 - 001'
+param avdWorkSpaceCustomFriendlyName string = 'App1 - ${toLower(deploymentEnvironment)} - ${avdSessionHostLocation} - 001'
 
 @maxLength(64)
 @sys.description('AVD host pool custom name. (Default: vdpool-app1-dev-use2-001)')
-param avdHostPoolCustomName string = 'vdpool-app1-dev-use2-001'
+param avdHostPoolCustomName string = 'vdpool-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(64)
 @sys.description('AVD host pool custom friendly (Display) name. (Default: App1 - East US - Dev - 001)')
-param avdHostPoolCustomFriendlyName string = 'App1 - Dev - East US 2 - 001'
+param avdHostPoolCustomFriendlyName string = 'App1 - ${toLower(deploymentEnvironment)} - ${avdSessionHostLocation} - 001'
 
 @maxLength(64)
 @sys.description('AVD scaling plan custom name. (Default: vdscaling-app1-dev-use2-001)')
-param avdScalingPlanCustomName string = 'vdscaling-app1-dev-use2-001'
+param avdScalingPlanCustomName string = 'vdscaling-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(64)
 @sys.description('AVD desktop application group custom name. (Default: vdag-desktop-app1-dev-use2-001)')
-param avdApplicationGroupCustomName string = 'vdag-desktop-app1-dev-use2-001'
+param avdApplicationGroupCustomName string = 'vdag-desktop-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(64)
 @sys.description('AVD desktop application group custom friendly (Display) name. (Default: Desktops - App1 - East US - Dev - 001)')
-param avdApplicationGroupCustomFriendlyName string = 'Desktops - App1 - Dev - East US 2 - 001'
+param avdApplicationGroupCustomFriendlyName string = 'Desktops - App1 - ${toLower(deploymentEnvironment)} - ${avdSessionHostLocation} - 001'
 
 @maxLength(11)
 @sys.description('AVD session host prefix custom name. (Default: vmapp1duse2)')
 param avdSessionHostCustomNamePrefix string = 'vmapp1duse2'
 
-@maxLength(9)
-@sys.description('AVD VMSS Flex custom name. (Default: vmss)')
-param vmssFlexCustomNamePrefix string = 'vmss'
+// @maxLength(9)
+// @sys.description('AVD VMSS Flex custom name. (Default: vmss)')
+// param vmssFlexCustomNamePrefix string = 'vmss'
 
 @maxLength(2)
 @sys.description('AVD FSLogix and App Attach storage account prefix custom name. (Default: st)')
 param storageAccountPrefixCustomName string = 'st'
 
 @sys.description('FSLogix file share name. (Default: fslogix-pc-app1-dev-001)')
-param fslogixFileShareCustomName string = 'fslogix-pc-app1-dev-use2-001'
+param fslogixFileShareCustomName string = 'fslogix-pc-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 @sys.description('App Attach file share name. (Default: appa-app1-dev-001)')
-param appAttachFileShareCustomName string = 'appa-app1-dev-use2-001'
+param appAttachFileShareCustomName string = 'appa-app1-${toLower(deploymentEnvironment)}-use2-001'
 
 //@maxLength(64)
 //@sys.description('AVD fslogix storage account office container file share prefix custom name. (Default: fslogix-oc-app1-dev-001)')
@@ -478,22 +479,22 @@ param departmentTag string = 'Contoso-AVD'
 param workloadCriticalityTag string = 'Low'
 
 @sys.description('Tag value for custom criticality value. (Default: Contoso-Critical)')
-param workloadCriticalityCustomValueTag string = 'Contoso-Critical'
+param workloadCriticalityCustomValueTag string = 'ARPA-H-Critical'
 
 @sys.description('Details about the application.')
-param applicationNameTag string = 'Contoso-App'
+param applicationNameTag string = 'ARPA-H-AVD'
 
 @sys.description('Service level agreement level of the worload. (Contoso-SLA)')
-param workloadSlaTag string = 'Contoso-SLA'
+param workloadSlaTag string = 'ARPA-H-SLA'
 
 @sys.description('Team accountable for day-to-day operations. (workload-admins@Contoso.com)')
-param opsTeamTag string = 'workload-admins@Contoso.com'
+param opsTeamTag string = 'workload-admins@arpa-h.gov'
 
 @sys.description('Organizational owner of the AVD deployment. (Default: workload-owner@Contoso.com)')
-param ownerTag string = 'workload-owner@Contoso.com'
+param ownerTag string = 'workload-owner@arpa-h.gov'
 
 @sys.description('Cost center of owner team. (Default: Contoso-CC)')
-param costCenterTag string = 'Contoso-CC'
+param costCenterTag string = 'ARPA-H-CC'
 //
 
 //@sys.description('Remove resources not needed afdter deployment. (Default: false)')
@@ -588,7 +589,7 @@ var varWrklKvName = avdUseCustomNaming ? '${avdWrklKvPrefixCustomName}-${varComp
 var varWrklKvPrivateEndpointName = 'pe-${varWrklKvName}-vault'
 var varWrklKeyVaultSku = (varAzureCloudName == 'AzureCloud' || varAzureCloudName == 'AzureUSGovernment') ? 'premium' : (varAzureCloudName == 'AzureChinaCloud' ? 'standard' : null)
 var varSessionHostNamePrefix = avdUseCustomNaming ? avdSessionHostCustomNamePrefix : 'vm${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varSessionHostLocationAcronym}'
-var varVmssFlexNamePrefix = avdUseCustomNaming ? '${vmssFlexCustomNamePrefix}-${varComputeStorageResourcesNamingStandard}' : 'vmss-${varComputeStorageResourcesNamingStandard}'
+//var varVmssFlexNamePrefix = avdUseCustomNaming ? '${vmssFlexCustomNamePrefix}-${varComputeStorageResourcesNamingStandard}' : 'vmss-${varComputeStorageResourcesNamingStandard}'
 var varStorageManagedIdentityName = 'id-storage-${varComputeStorageResourcesNamingStandard}-001'
 var varFslogixFileShareName = avdUseCustomNaming ? fslogixFileShareCustomName : 'fslogix-pc-${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}-001'
 var varAppAttachFileShareName = avdUseCustomNaming ? appAttachFileShareCustomName : 'appa-${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}-001'
@@ -625,10 +626,10 @@ var varMaxSessionHostsPerTemplate = 10
 var varMaxSessionHostsDivisionValue = avdDeploySessionHostsCount / varMaxSessionHostsPerTemplate
 var varMaxSessionHostsDivisionRemainderValue = avdDeploySessionHostsCount % varMaxSessionHostsPerTemplate
 var varSessionHostBatchCount = varMaxSessionHostsDivisionRemainderValue > 0 ? varMaxSessionHostsDivisionValue + 1 : varMaxSessionHostsDivisionValue
-var varMaxVmssFlexMembersCount = 999
-var varDivisionVmssFlexValue = avdDeploySessionHostsCount / varMaxVmssFlexMembersCount
-var varDivisionAvsetRemainderValue = avdDeploySessionHostsCount % varMaxVmssFlexMembersCount
-var varVmssFlexCount = varDivisionAvsetRemainderValue > 0 ? varDivisionVmssFlexValue + 1 : varDivisionVmssFlexValue
+// var varMaxVmssFlexMembersCount = 999
+// var varDivisionVmssFlexValue = avdDeploySessionHostsCount / varMaxVmssFlexMembersCount
+// var varDivisionAvsetRemainderValue = avdDeploySessionHostsCount % varMaxVmssFlexMembersCount
+// var varVmssFlexCount = varDivisionAvsetRemainderValue > 0 ? varDivisionVmssFlexValue + 1 : varDivisionVmssFlexValue
 var varHostPoolAgentUpdateSchedule = [
   {
     dayOfWeek: 'Tuesday'
@@ -1441,22 +1442,22 @@ module appAttachAzureFilesStorage './modules/storageAzureFiles/deploy.bicep' = i
 }
 
 // VMSS Flex
-module vmScaleSetFlex './modules/avdSessionHosts/.bicep/vmScaleSet.bicep' = if (avdDeploySessionHosts && deployVmssFlex) {
-  name: 'AVD-VMSS-Flex-${time}'
-  scope: resourceGroup('${avdWorkloadSubsId}', '${varComputeObjectsRgName}')
-  params: {
-    namePrefix: varVmssFlexNamePrefix
-    location: avdSessionHostLocation
-    count: varVmssFlexCount
-    platformFaultDomainCount: vmssFlatformFaultDomainCount
-    useAvailabilityZones: availabilityZonesCompute
-    tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
-  }
-  dependsOn: [
-    baselineResourceGroups
-    monitoringDiagnosticSettings
-  ]
-}
+// module vmScaleSetFlex './modules/avdSessionHosts/.bicep/vmScaleSet.bicep' = if (avdDeploySessionHosts && deployVmssFlex) {
+//   name: 'AVD-VMSS-Flex-${time}'
+//   scope: resourceGroup('${avdWorkloadSubsId}', '${varComputeObjectsRgName}')
+//   params: {
+//     namePrefix: varVmssFlexNamePrefix
+//     location: avdSessionHostLocation
+//     count: varVmssFlexCount
+//     platformFaultDomainCount: vmssFlatformFaultDomainCount
+//     useAvailabilityZones: availabilityZonesCompute
+//     tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
+//   }
+//   dependsOn: [
+//     baselineResourceGroups
+//     monitoringDiagnosticSettings
+//   ]
+// }
 
 // Session hosts
 @batchSize(3)
@@ -1471,9 +1472,9 @@ module sessionHosts './modules/avdSessionHosts/deploy.bicep' = [
         : ''
       identityServiceProvider: avdIdentityServiceProvider
       createIntuneEnrollment: createIntuneEnrollment
-      maxVmssFlexMembersCount: varMaxVmssFlexMembersCount
-      vmssFlexNamePrefix: varVmssFlexNamePrefix
-      useVmssFlex: deployVmssFlex
+      // maxVmssFlexMembersCount: varMaxVmssFlexMembersCount
+      // vmssFlexNamePrefix: varVmssFlexNamePrefix
+      //useVmssFlex: deployVmssFlex
       batchId: i - 1
       computeObjectsRgName: varComputeObjectsRgName
       count: i == varSessionHostBatchCount && varMaxSessionHostsDivisionRemainderValue > 0
@@ -1525,7 +1526,7 @@ module sessionHosts './modules/avdSessionHosts/deploy.bicep' = [
       fslogixAzureFilesStorage
       baselineResourceGroups
       wrklKeyVault
-      vmScaleSetFlex
+      //vmScaleSetFlex
       managementPLane
     ]
   }

@@ -45,14 +45,34 @@ jobs:
       #   run: |
       #     echo "${{ env.vnet-address }}"
 
-      - name: Deploy AVD Personal Host Pool
+      # - name: Deploy AVD Personal Host Pool
+      #   uses: azure/arm-deploy@v2
+      #   with:
+      #     scope: subscription
+      #     subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+      #     region: centralus
+      #     template: ./workload/bicep/deploy-baseline-personal-host-pool-arpah.bicep
+      #     parameters: ./workload/bicep/parameters/deploy-baseline-parameters-personal-host-pool-arpah.json avdWorkloadSubsId=${{ secrets.SUBSCRIPTION_ID }} avdVmLocalUserName=${{ env.vm-local-user }} avdVmLocalUserPassword=${{ env.vm-local-password }} avdEnterpriseAppObjectId=${{ secrets.AZURE_AVD_OBJECT_ID }} existingHubVnetResourceId=${{ env.hub-id }} avdVnetworkAddressPrefixes=${{ env.vnet-address }} vNetworkAvdSubnetAddressPrefix=${{ env.subnet-address }} vNetworkPrivateEndpointSubnetAddressPrefix=${{ env.pep-subnet-address }}
+      #     additionalArguments:
+      #       #avdWorkloadSubsId=${{ secrets.SUBSCRIPTION_ID }} 
+      #       # avdVmLocalUserName=${{ env.vm-local-user }} 
+      #       # avdVmLocalUserPassword=${{ env.vm-local-password }} 
+      #       # avdEnterpriseAppObjectId=${{ secrets.AZURE_AVD_OBJECT_ID }} 
+      #       # existingHubVnetResourceId=${{ env.hub-id }}
+      #       # avdVnetworkAddressPrefixes=${{ env.vnet-address }} 
+      #       # vNetworkAvdSubnetAddressPrefix=${{ env.subnet-address }} 
+      #       # vNetworkPrivateEndpointSubnetAddressPrefix=${{ env.pep-subnet-address }} 
+      #     failOnStdErr: false
+
+
+      - name: Deploy baseline example
         uses: azure/arm-deploy@v2
         with:
           scope: subscription
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           region: centralus
-          template: ./workload/bicep/deploy-baseline-personal-host-pool-arpah.bicep
-          parameters: ./workload/bicep/parameters/deploy-baseline-parameters-personal-host-pool-arpah.json avdWorkloadSubsId=${{ secrets.SUBSCRIPTION_ID }} avdVmLocalUserName=${{ env.vm-local-user }} avdVmLocalUserPassword=${{ env.vm-local-password }} avdEnterpriseAppObjectId=${{ secrets.AZURE_AVD_OBJECT_ID }} existingHubVnetResourceId=${{ env.hub-id }} avdVnetworkAddressPrefixes=${{ env.vnet-address }} vNetworkAvdSubnetAddressPrefix=${{ env.subnet-address }} vNetworkPrivateEndpointSubnetAddressPrefix=${{ env.pep-subnet-address }}
+          template: ./workload/bicep/deploy-baseline.bicep
+          parameters: ./workload/bicep/parameters/deploy-baseline-parameters-example.json avdWorkloadSubsId=${{ secrets.SUBSCRIPTION_ID }} avdVmLocalUserName=${{ env.vm-local-user }} avdVmLocalUserPassword=${{ env.vm-local-password }} avdEnterpriseAppObjectId=${{ secrets.AZURE_AVD_OBJECT_ID }} existingHubVnetResourceId=${{ env.hub-id }} avdVnetworkAddressPrefixes=${{ env.vnet-address }} vNetworkAvdSubnetAddressPrefix=${{ env.subnet-address }} vNetworkPrivateEndpointSubnetAddressPrefix=${{ env.pep-subnet-address }}
           additionalArguments:
             #avdWorkloadSubsId=${{ secrets.SUBSCRIPTION_ID }} 
             # avdVmLocalUserName=${{ env.vm-local-user }} 

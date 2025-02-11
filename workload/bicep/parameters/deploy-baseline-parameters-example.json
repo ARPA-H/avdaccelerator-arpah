@@ -9,10 +9,10 @@
             "value": false
         },
         "avdSessionHostLocation": {
-            "value": "<<region>>"
+            "value": "centralus"
         },
         "avdManagementPlaneLocation": {
-            "value": "<<region>>"
+            "value": "centralus"
         },
         "avdDeployMonitoring": {
             "value": false

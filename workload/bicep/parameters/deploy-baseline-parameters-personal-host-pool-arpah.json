@@ -17,6 +17,9 @@
         "avdManagementPlaneLocation": {
             "value": "centralus"
         },
+        "regionAcronym": {
+            "value": "usc"
+        },
         "avdSessionHostCustomNamePrefix": {
             "value": "arpahavd"
         },

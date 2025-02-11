@@ -317,63 +317,63 @@ param avdUseCustomNaming bool = true
 
 @maxLength(90)
 @sys.description('AVD service resources resource group custom name. (Default: rg-avd-arpah-dev-use2-service-objects)')
-param avdServiceObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-use2-service-objects'
+param avdServiceObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-service-objects'
 
 @maxLength(90)
 @sys.description('AVD network resources resource group custom name. (Default: rg-avd-arpah-dev-use2-network)')
-param avdNetworkObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-use2-network'
+param avdNetworkObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-network'
 
 @maxLength(90)
 @sys.description('AVD network resources resource group custom name. (Default: rg-avd-arpah-dev-use2-pool-compute)')
-param avdComputeObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-use2-pool-compute'
+param avdComputeObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-pool-compute'
 
 @maxLength(90)
 @sys.description('AVD network resources resource group custom name. (Default: rg-avd-arpah-dev-use2-storage)')
-param avdStorageObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-use2-storage'
+param avdStorageObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-storage'
 
 @maxLength(90)
 @sys.description('AVD monitoring resource group custom name. (Default: rg-avd-dev-use2-monitoring)')
-param avdMonitoringRgCustomName string = 'rg-avd-${toLower(deploymentEnvironment)}-use2-monitoring'
+param avdMonitoringRgCustomName string = 'rg-avd-${toLower(deploymentEnvironment)}-${regionAcronym}-monitoring'
 
 @maxLength(64)
 @sys.description('AVD virtual network custom name. (Default: vnet-arpah-dev-use2-001)')
-param avdVnetworkCustomName string = 'vnet-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param avdVnetworkCustomName string = 'vnet-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD Azure log analytics workspace custom name. (Default: log-avd-arpah-dev-use2)')
-param avdAlaWorkspaceCustomName string = 'log-avd-${toLower(deploymentEnvironment)}-dev-use2'
+param avdAlaWorkspaceCustomName string = 'log-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}'
 
 @maxLength(80)
 @sys.description('AVD virtual network subnet custom name. (Default: snet-avd-arpah-dev-use2-001)')
-param avdVnetworkSubnetCustomName string = 'snet-avd-${toLower(deploymentEnvironment)}-dev-use2-001'
+param avdVnetworkSubnetCustomName string = 'snet-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
 @sys.description('private endpoints virtual network subnet custom name. (Default: snet-pe-arpah-dev-use2-001)')
-param privateEndpointVnetworkSubnetCustomName string = 'snet-pe-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param privateEndpointVnetworkSubnetCustomName string = 'snet-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
 @sys.description('AVD network security group custom name. (Default: nsg-avd-arpah-dev-use2-001)')
-param avdNetworksecurityGroupCustomName string = 'nsg-avd-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param avdNetworksecurityGroupCustomName string = 'nsg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
 @sys.description('Private endpoint network security group custom name. (Default: nsg-pe-arpah-dev-use2-001)')
-param privateEndpointNetworksecurityGroupCustomName string = 'nsg-pe-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param privateEndpointNetworksecurityGroupCustomName string = 'nsg-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
 @sys.description('AVD route table custom name. (Default: route-avd-arpah-dev-use2-001)')
-param avdRouteTableCustomName string = 'route-avd-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param avdRouteTableCustomName string = 'route-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
 @sys.description('Private endpoint route table custom name. (Default: route-avd-arpah-dev-use2-001)')
-param privateEndpointRouteTableCustomName string = 'route-pe-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param privateEndpointRouteTableCustomName string = 'route-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
 @sys.description('AVD application security custom name. (Default: asg-arpah-dev-use2-001)')
-param avdApplicationSecurityGroupCustomName string = 'asg-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param avdApplicationSecurityGroupCustomName string = 'asg-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD workspace custom name. (Default: vdws-arpah-dev-use2-001)')
-param avdWorkSpaceCustomName string = 'vdws-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param avdWorkSpaceCustomName string = 'vdws-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD workspace custom friendly (Display) name. (Default: arpah - Dev - East US 2 - 001)')
@@ -381,23 +381,23 @@ param avdWorkSpaceCustomFriendlyName string = 'arpah - ${toLower(deploymentEnvir
 
 @maxLength(64)
 @sys.description('AVD host pool custom name. (Default: vdpool-arpah-dev-use2-001)')
-param avdHostPoolCustomName string = 'vdpool-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param avdHostPoolCustomName string = 'vdpool-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD host pool custom friendly (Display) name. (Default: arpah - East US - Dev - 001)')
-param avdHostPoolCustomFriendlyName string = 'arpah - ${toLower(deploymentEnvironment)} - ${avdSessionHostLocation} - 001'
+param avdHostPoolCustomFriendlyName string = 'ARPA-H on ARPA-H Network'
 
 @maxLength(64)
 @sys.description('AVD scaling plan custom name. (Default: vdscaling-arpah-dev-use2-001)')
-param avdScalingPlanCustomName string = 'vdscaling-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param avdScalingPlanCustomName string = 'vdscaling-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD desktop application group custom name. (Default: vdag-desktop-arpah-dev-use2-001)')
-param avdApplicationGroupCustomName string = 'vdag-desktop-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param avdApplicationGroupCustomName string = 'vdag-desktop-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD desktop application group custom friendly (Display) name. (Default: Desktops - arpah - East US - Dev - 001)')
-param avdApplicationGroupCustomFriendlyName string = 'Desktops - arpah - ${toLower(deploymentEnvironment)} - ${avdSessionHostLocation} - 001'
+param avdApplicationGroupCustomFriendlyName string = 'ARPA-H on ARPA-H Network'
 
 @maxLength(11)
 @sys.description('AVD session host prefix custom name. (Default: vmarpahduse2)')
@@ -412,10 +412,10 @@ param avdSessionHostCustomNamePrefix string = 'arpahavd'
 param storageAccountPrefixCustomName string = 'st'
 
 @sys.description('FSLogix file share name. (Default: fslogix-pc-arpah-dev-001)')
-param fslogixFileShareCustomName string = 'fslogix-pc-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param fslogixFileShareCustomName string = 'fslogix-pc-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @sys.description('App Attach file share name. (Default: appa-arpah-dev-001)')
-param appAttachFileShareCustomName string = 'appa-arpah-${toLower(deploymentEnvironment)}-use2-001'
+param appAttachFileShareCustomName string = 'appa-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 //@maxLength(64)
 //@sys.description('AVD fslogix storage account office container file share prefix custom name. (Default: fslogix-oc-arpah-dev-001)')
@@ -532,6 +532,9 @@ param enableDefForKeyVault bool = true
 
 @sys.description('Enable Microsoft Defender for Azure Resource Manager. (Default: true)')
 param enableDefForArm bool = true
+
+@sys.description('Enable Microsoft Defender for Azure Kubernetes Service. (Default: true)') 
+param regionAcronym string = 'usc'
 
 // =========== //
 // Variable declaration //

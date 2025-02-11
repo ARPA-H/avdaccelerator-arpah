@@ -9,10 +9,10 @@
             "value": false
         },
         "avdSessionHostLocation": {
-            "value": "centralus"
+            "value": "<<region>>"
         },
         "avdManagementPlaneLocation": {
-            "value": "centralus"
+            "value": "<<region>>"
         },
         "avdDeployMonitoring": {
             "value": false
@@ -30,10 +30,10 @@
             "value": "<<localUserPassword>>"
         },
         "avdIdentityServiceProvider": {
-            "value": "EntraID"
+            "value": "<<IdentityServiceProviderType>>"
         },     
         "createIntuneEnrollment": {
-            "value": true
+            "value": false
         },            
         "securityPrincipalId": {
             "value": ""
@@ -139,6 +139,12 @@
         },
         "zoneRedundantStorage": {
             "value": false
+        },
+        "avsetFaultDomainCount": {
+            "value": 2
+        },
+        "avsetUpdateDomainCount": {
+            "value": 5
         },
         "fslogixStoragePerformance": {
             "value": "Premium"

@@ -1339,7 +1339,7 @@ module managementVm './modules/storageAzureFiles/.bicep/managementVm.bicep' = if
     tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
   }
   dependsOn: [
-    baselineStorageResourceGroup
+    //baselineStorageResourceGroup
     wrklKeyVault
   ]
 }
@@ -1389,7 +1389,7 @@ module fslogixAzureFilesStorage './modules/storageAzureFiles/deploy.bicep' = if 
       : ''
   }
   dependsOn: [
-    baselineStorageResourceGroup
+    //baselineStorageResourceGroup
     wrklKeyVault
     managementVm
   ]
@@ -1441,7 +1441,7 @@ module appAttachAzureFilesStorage './modules/storageAzureFiles/deploy.bicep' = i
   }
   dependsOn: [
     fslogixAzureFilesStorage
-    baselineStorageResourceGroup
+    //baselineStorageResourceGroup
     wrklKeyVault
     managementVm
   ]

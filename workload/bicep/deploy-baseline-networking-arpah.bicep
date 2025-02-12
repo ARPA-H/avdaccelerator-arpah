@@ -21,10 +21,10 @@ param deploymentPrefix string = 'AVD1'
 @sys.description('The name of the resource group to deploy. (Default: Dev)')
 param deploymentEnvironment string = 'Dev'
 
-@maxValue(730)
-@minValue(30)
-@sys.description('This value is used to set the expiration date on the disk encryption key. (Default: 60)')
-param diskEncryptionKeyExpirationInDays int = 60
+// @maxValue(730)
+// @minValue(30)
+// @sys.description('This value is used to set the expiration date on the disk encryption key. (Default: 60)')
+// param diskEncryptionKeyExpirationInDays int = 60
 
 @sys.description('Required. Location where to deploy compute services.')
 param avdSessionHostLocation string
@@ -219,10 +219,10 @@ param avdAlaWorkspaceDataRetention int = 90
 @sys.description('Existing Azure log analytics workspace resource ID to connect to. (Default: "")')
 param alaExistingWorkspaceResourceId string = ''
 
-@minValue(1)
-@maxValue(100)
-@sys.description('Quantity of session hosts to deploy. (Default: 1)')
-param avdDeploySessionHostsCount int = 1
+// @minValue(1)
+// @maxValue(100)
+// @sys.description('Quantity of session hosts to deploy. (Default: 1)')
+// param avdDeploySessionHostsCount int = 1
 
 // @sys.description('The session host number to begin with for the deployment. This is important when adding virtual machines to ensure the names do not conflict. (Default: 0)')
 // param avdSessionHostCountIndex int = 0

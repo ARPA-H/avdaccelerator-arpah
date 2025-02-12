@@ -337,7 +337,7 @@ param avdMonitoringRgCustomName string = 'rg-avd-${toLower(deploymentEnvironment
 
 @maxLength(64)
 @sys.description('AVD virtual network custom name. (Default: vnet-arpah-dev-use2-001)')
-param avdVnetworkCustomName string = 'vnet-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
+param avdVnetworkCustomName string = 'vnet-avd-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD Azure log analytics workspace custom name. (Default: log-avd-arpah-dev-use2)')
@@ -942,15 +942,15 @@ var varResourceGroups = [
       ? union(varCustomResourceTags, varAvdDefaultTags)
       : union(varAvdDefaultTags, varAllComputeStorageTags)
   }
-  {
-    purpose: 'Pool-Compute'
-    name: varComputeObjectsRgName
-    location: avdSessionHostLocation
-    enableDefaultTelemetry: false
-    tags: createResourceTags
-      ? union(varAllComputeStorageTags, varAvdDefaultTags)
-      : union(varAvdDefaultTags, varAllComputeStorageTags)
-  }
+  // {
+  //   purpose: 'Pool-Compute'
+  //   name: varComputeObjectsRgName
+  //   location: avdSessionHostLocation
+  //   enableDefaultTelemetry: false
+  //   tags: createResourceTags
+  //     ? union(varAllComputeStorageTags, varAvdDefaultTags)
+  //     : union(varAvdDefaultTags, varAllComputeStorageTags)
+  // }
 ]
 
 // =========== //
@@ -974,16 +974,16 @@ resource telemetrydeployment 'Microsoft.Resources/deployments@2024-03-01' = if (
 // Resource groups.
 // Compute, service objects, network
 // Network
-module baselineNetworkResourceGroup '../../avm/1.0.0/res/resources/resource-group/main.bicep' = if (createAvdVnet || createPrivateDnsZones) {
-  scope: subscription(avdWorkloadSubsId)
-  name: 'Deploy-Network-RG-${time}'
-  params: {
-    name: varNetworkObjectsRgName
-    location: avdSessionHostLocation
-    enableTelemetry: false
-    tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
-  }
-}
+// module baselineNetworkResourceGroup '../../avm/1.0.0/res/resources/resource-group/main.bicep' = if (createAvdVnet || createPrivateDnsZones) {
+//   scope: subscription(avdWorkloadSubsId)
+//   name: 'Deploy-Network-RG-${time}'
+//   params: {
+//     name: varNetworkObjectsRgName
+//     location: avdSessionHostLocation
+//     enableTelemetry: false
+//     tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
+//   }
+// }
 
 // Compute, service objects
 module baselineResourceGroups '../../avm/1.0.0/res/resources/resource-group/main.bicep' = [
@@ -1000,18 +1000,18 @@ module baselineResourceGroups '../../avm/1.0.0/res/resources/resource-group/main
 ]
 
 // Storage
-module baselineStorageResourceGroup '../../avm/1.0.0/res/resources/resource-group/main.bicep' = if (varCreateStorageDeployment) {
-  scope: subscription(avdWorkloadSubsId)
-  name: 'Storage-RG-${time}'
-  params: {
-    name: varStorageObjectsRgName
-    location: avdSessionHostLocation
-    enableTelemetry: false
-    tags: createResourceTags
-      ? union(varAllComputeStorageTags, varAvdDefaultTags)
-      : union(varAvdDefaultTags, varAllComputeStorageTags)
-  }
-}
+// module baselineStorageResourceGroup '../../avm/1.0.0/res/resources/resource-group/main.bicep' = if (varCreateStorageDeployment) {
+//   scope: subscription(avdWorkloadSubsId)
+//   name: 'Storage-RG-${time}'
+//   params: {
+//     name: varStorageObjectsRgName
+//     location: avdSessionHostLocation
+//     enableTelemetry: false
+//     tags: createResourceTags
+//       ? union(varAllComputeStorageTags, varAvdDefaultTags)
+//       : union(varAvdDefaultTags, varAllComputeStorageTags)
+//   }
+// }
 
 // Azure Policies for monitoring Diagnostic settings. Performance couunters on new or existing Log Analytics workspace. New workspace if needed.
 module monitoringDiagnosticSettings './modules/avdInsightsMonitoring/deploy.bicep' = if (avdDeployMonitoring) {
@@ -1033,9 +1033,9 @@ module monitoringDiagnosticSettings './modules/avdInsightsMonitoring/deploy.bice
     tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
   }
   dependsOn: [
-    baselineNetworkResourceGroup
+    //baselineNetworkResourceGroup
     baselineResourceGroups
-    baselineStorageResourceGroup
+    //baselineStorageResourceGroup
   ]
 }
 
@@ -1065,7 +1065,8 @@ module networking './modules/networking/deploy.bicep' = if (createAvdVnet || cre
     createVnetPeering: varCreateVnetPeering
     deployDDoSNetworkProtection: deployDDoSNetworkProtection
     ddosProtectionPlanName: varDDosProtectionPlanName
-    deployPrivateEndpointSubnet: (deployPrivateEndpointKeyvaultStorage || deployAvdPrivateLinkService) ? true : false //adding logic that will be used when also including AVD control plane PEs
+    //deployPrivateEndpointSubnet: (deployPrivateEndpointKeyvaultStorage || deployAvdPrivateLinkService) ? true : false //adding logic that will be used when also including AVD control plane PEs
+    deployPrivateEndpointSubnet: false //adding logic that will be used when also including AVD control plane PEs
     deployAvdPrivateLinkService: deployAvdPrivateLinkService
     vNetworkGatewayOnHub: vNetworkGatewayOnHub
     existingHubVnetResourceId: existingHubVnetResourceId
@@ -1083,7 +1084,7 @@ module networking './modules/networking/deploy.bicep' = if (createAvdVnet || cre
     customStaticRoutes: customStaticRoutes
   }
   dependsOn: [
-    baselineNetworkResourceGroup
+    //baselineNetworkResourceGroup
     baselineResourceGroups
   ]
 }
@@ -1172,7 +1173,7 @@ module identity './modules/identity/deploy.bicep' = {
   }
   dependsOn: [
     baselineResourceGroups
-    baselineStorageResourceGroup
+    //baselineStorageResourceGroup
     monitoringDiagnosticSettings
   ]
 }
@@ -1206,7 +1207,7 @@ module zeroTrust './modules/zeroTrust/deploy.bicep' = if (diskZeroTrust && avdDe
   }
   dependsOn: [
     baselineResourceGroups
-    baselineStorageResourceGroup
+    //baselineStorageResourceGroup
     identity
   ]
 }

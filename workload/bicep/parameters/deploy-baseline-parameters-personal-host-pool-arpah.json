@@ -24,7 +24,7 @@
             "value": "arpahavd"
         },
         "avdDeployMonitoring": {
-            "value": true
+            "value": false
         },   
         "avdWorkloadSubsId": {
             "value": "<<subscriptionId>>"
@@ -90,7 +90,7 @@
             "value": true
         },
         "createAvdVnet": {
-            "value": true
+            "value": false
         },
         "existingVnetAvdSubnetResourceId": {
             "value": ""
@@ -192,7 +192,7 @@
             "value": false
         },
         "deployAlaWorkspace": {
-            "value": true
+            "value": false
         },  
         "alaExistingWorkspaceResourceId": {
             "value": ""

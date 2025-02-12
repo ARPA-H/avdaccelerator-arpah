@@ -1,4 +1,4 @@
-name: Deploy AVD to the ARPA-H Tenant
+name: Deploy AVD Networting to the ARPA-H Tenant
 on:
     workflow_dispatch:
       inputs:
@@ -45,7 +45,7 @@ jobs:
       #   run: |
       #     echo "${{ env.vnet-address }}"
 
-      - name: Deploy AVD Personal Host Pool
+      - name: Deploy AVD Networking
         uses: azure/arm-deploy@v2
         with:
           scope: subscription

@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "deploymentPrefix": {
-            "value": "AVDA"
+            "value": "avda"
         },
         "deploymentEnvironment":{
             "value": "Prod"
@@ -16,6 +16,9 @@
         },
         "avdManagementPlaneLocation": {
             "value": "centralus"
+        },
+        "regionAcronym": {
+            "value": "usc"
         },
         "avdSessionHostCustomNamePrefix": {
             "value": "arpahavd"
@@ -37,7 +40,10 @@
         },
         "avdIdentityServiceProvider": {
             "value": "EntraID"
-        },     
+        },
+        "avdApplicationGroupCustomFriendlyName": {
+            "value": "ARPA-H Admin Windows Desktop"
+        },
         "createIntuneEnrollment": {
             "value": true
         },            
@@ -146,12 +152,6 @@
         "zoneRedundantStorage": {
             "value": false
         },
-        "avsetFaultDomainCount": {
-            "value": 2
-        },
-        "avsetUpdateDomainCount": {
-            "value": 5
-        },
         "fslogixStoragePerformance": {
             "value": "Premium"
         },
@@ -159,7 +159,7 @@
             "value": "Premium"
         },
         "avdSessionHostsSize": {
-            "value": "Standard_D2s_v3"
+            "value": "Standard_E4s_v5"
         },
         "avdSessionHostDiskType": {
             "value": "Premium_LRS"
@@ -214,9 +214,6 @@
         },
         "deployGpuPolicies": {
             "value": false
-        },
-        "deployVmssFlex": {
-            "value": true
         },
         "deployAntiMalwareExt": {
             "value": true

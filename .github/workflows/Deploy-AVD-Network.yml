@@ -32,13 +32,13 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            echo vnet-address=$(az keyvault secret show --vault-name kv-github-workloads-usc --name avd-vnet-address-prefix --query value --out tsv) >> $GITHUB_ENV
-            echo subnet-address=$(az keyvault secret show --vault-name kv-github-workloads-usc --name avd-subnet-address-prefix --query value --out tsv) >> $GITHUB_ENV
-            echo pep-subnet-address=$(az keyvault secret show --vault-name kv-github-workloads-usc --name avd-pep-subnet-address-prefix --query value --out tsv) >> $GITHUB_ENV
+            echo vnet-address=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT }} --name avd-vnet-address-prefix --query value --out tsv) >> $GITHUB_ENV
+            echo subnet-address=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT }} --name avd-subnet-address-prefix --query value --out tsv) >> $GITHUB_ENV
+            echo pep-subnet-address=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT }} --name avd-pep-subnet-address-prefix --query value --out tsv) >> $GITHUB_ENV
 
-            echo vm-local-user=$(az keyvault secret show --vault-name kv-github-workloads-usc --name avd-vm-localuser-name --query value --out tsv) >> $GITHUB_ENV
-            echo vm-local-password=$(az keyvault secret show --vault-name kv-github-workloads-usc --name avd-vm-localuser-password --query value --out tsv) >> $GITHUB_ENV
-            echo hub-id=$(az keyvault secret show --vault-name kv-github-workloads-usc --name avd-hub-resource-id --query value --out tsv) >> $GITHUB_ENV
+            echo vm-local-user=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT }} --name avd-vm-localuser-name --query value --out tsv) >> $GITHUB_ENV
+            echo vm-local-password=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT }} --name avd-vm-localuser-password --query value --out tsv) >> $GITHUB_ENV
+            echo hub-id=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT }} --name avd-hub-resource-id --query value --out tsv) >> $GITHUB_ENV
       
       # - name: Use the value
       #   id: step_two

@@ -182,6 +182,11 @@ resource keyVaultZt 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
     scope: resourceGroup('${subscriptionId}', '${serviceObjectsRgName}')
 }
 
+resource key 'Microsoft.KeyVault/vaults/keys@2019-09-01' existing = {
+    name: ztKvKeyName
+    parent: keyVaultZt
+  }
+
 // Session hosts
 module sessionHosts '../../../../avm/1.0.0/res/compute/virtual-machine/main.bicep' = [for i in range(1, count): {
     scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
@@ -256,7 +261,7 @@ module sessionHosts '../../../../avm/1.0.0/res/compute/virtual-machine/main.bice
                 encryptionOperation: 'EnableEncryption'
                 keyVaultUrl: keyVaultZt.properties.vaultUri
                 keyVaultResourceId: keyVaultZt.id
-                keyEncryptionKeyUrl: '${keyVaultZt.properties.vaultUri}/keys/$ztKvKeyName}/${local.keyversion}'
+                keyEncryptionKeyUrl: key.properties.keyUriWithVersion
                 keyEncryptionKeyVaultResourceId: keyVaultZt.id
                 keyEncryptionAlgorithm: 'RSA-OAEP'
                 volumeType: 'All'

@@ -242,3 +242,6 @@ module ztKeyVault './.bicep/zeroTrustKeyVault.bicep' = if (diskZeroTrust) {
 // =========== //
 
 output ztDiskEncryptionSetResourceId string = diskZeroTrust ? ztKeyVault.outputs.ztDiskEncryptionSetResourceId : ''
+
+// added by ARpa-h 
+output ztKvKeyName string = diskZeroTrust ? ztKeyVault.outputs.ztKvKeyName : ''

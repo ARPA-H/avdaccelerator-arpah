@@ -612,10 +612,6 @@ var varFslogixSharePath = createAvdFslogixDeployment ? '\\\\${varFslogixStorageN
 var varBaseScriptUri = 'https://raw.githubusercontent.com/Azure/avdaccelerator/main/workload/'
 var varSessionHostConfigurationScriptUri = '${varBaseScriptUri}scripts/Set-SessionHostConfiguration.ps1'
 var varSessionHostConfigurationScript = './Set-SessionHostConfiguration.ps1'
-// var varDiskEncryptionKeyExpirationInEpoch = dateTimeToEpoch(dateTimeAdd(
-//   time,
-//   'P${string(diskEncryptionKeyExpirationInDays)}D'
-// ))
 var varCreateStorageDeployment = (createAvdFslogixDeployment || varCreateAppAttachDeployment == true) ? true : false
 var varFslogixStorageSku = zoneRedundantStorage ? '${fslogixStoragePerformance}_ZRS' : '${fslogixStoragePerformance}_LRS'
 var varAppAttachStorageSku = zoneRedundantStorage ? '${appAttachStoragePerformance}_ZRS' : '${appAttachStoragePerformance}_LRS'
@@ -1190,7 +1186,6 @@ module zeroTrust './modules/zeroTrust/deploy.bicep' = if (diskZeroTrust && avdDe
     computeObjectsRgName: varComputeObjectsRgName
     vaultSku: varWrklKeyVaultSku
     diskEncryptionKeyExpirationInDays: diskEncryptionKeyExpirationInDays
-    //diskEncryptionKeyExpirationInEpoch: varDiskEncryptionKeyExpirationInEpoch
     diskEncryptionSetName: varDiskEncryptionSetName
     ztKvName: varZtKvName
     ztKvPrivateEndpointName: varZtKvPrivateEndpointName

@@ -124,7 +124,7 @@ param avdStorageObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentE
 
 @maxLength(90)
 @sys.description('AVD monitoring resource group custom name. (Default: rg-avd-dev-use2-monitoring)')
-param avdMonitoringRgCustomName string = 'rg-avd-${toLower(deploymentEnvironment)}-${regionAcronym}-monitoring'
+param avdMonitoringRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-monitoring'
 
 @maxLength(64)
 @sys.description('AVD virtual network custom name. (Default: vnet-arpah-dev-use2-001)')

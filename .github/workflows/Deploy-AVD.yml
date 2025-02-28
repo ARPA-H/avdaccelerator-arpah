@@ -15,6 +15,7 @@ permissions:
 jobs:
   build-and-deploy:
     #runs-on: windows-latest
+    environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

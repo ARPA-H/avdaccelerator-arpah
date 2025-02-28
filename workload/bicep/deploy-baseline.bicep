@@ -56,11 +56,8 @@ param avdIdentityServiceProvider string = 'ADDS'
 @sys.description('Required, Eronll session hosts on Intune. (Default: false)')
 param createIntuneEnrollment bool = false
 
-@sys.description('Optional, Identity ID to grant RBAC role to access AVD application group and NTFS permissions. (Default: "")')
-param securityPrincipalId string = ''
-
-@sys.description('Optional, Identity name to grant RBAC role to access AVD application group and NTFS permissions. (Default: "")')
-param securityPrincipalName string = ''
+@sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
+param avdSecurityGroups array = []
 
 @sys.description('FQDN of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "")')
 param identityDomainName string = 'none'
@@ -606,10 +603,6 @@ var varFslogixSharePath = createAvdFslogixDeployment ? '\\\\${varFslogixStorageN
 var varBaseScriptUri = 'https://raw.githubusercontent.com/Azure/avdaccelerator/main/workload/'
 var varSessionHostConfigurationScriptUri = '${varBaseScriptUri}scripts/Set-SessionHostConfiguration.ps1'
 var varSessionHostConfigurationScript = './Set-SessionHostConfiguration.ps1'
-var varDiskEncryptionKeyExpirationInEpoch = dateTimeToEpoch(dateTimeAdd(
-  time,
-  'P${string(diskEncryptionKeyExpirationInDays)}D'
-))
 var varCreateStorageDeployment = (createAvdFslogixDeployment || varCreateAppAttachDeployment == true) ? true : false
 var varFslogixStorageSku = zoneRedundantStorage ? '${fslogixStoragePerformance}_ZRS' : '${fslogixStoragePerformance}_LRS'
 var varAppAttachStorageSku = zoneRedundantStorage ? '${appAttachStoragePerformance}_ZRS' : '${appAttachStoragePerformance}_LRS'
@@ -947,6 +940,10 @@ var varResourceGroups = [
   }
 ]
 
+// security Principals (you can add support for more than one because it is an array. Future)
+var varSecurityPrincipalId = !empty(avdSecurityGroups) ? avdSecurityGroups[0].objectId : ''
+var varSecurityPrincipalName = !empty(avdSecurityGroups) ? avdSecurityGroups[0].displayName : ''
+
 // =========== //
 // Deployments //
 // =========== //
@@ -1112,7 +1109,7 @@ module managementPLane './modules/avdManagementPlane/deploy.bicep' = {
     startVmOnConnect: avdStartVmOnConnect
     subscriptionId: avdWorkloadSubsId
     identityServiceProvider: avdIdentityServiceProvider
-    securityPrincipalId: !empty(securityPrincipalId) ? securityPrincipalId : ''
+    securityPrincipalId: varSecurityPrincipalId
     tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
     alaWorkspaceResourceId: avdDeployMonitoring
       ? (deployAlaWorkspace
@@ -1161,7 +1158,7 @@ module identity './modules/identity/deploy.bicep' = {
     enableStartVmOnConnect: avdStartVmOnConnect
     identityServiceProvider: avdIdentityServiceProvider
     createStorageDeployment: varCreateStorageDeployment
-    securityPrincipalId: !empty(securityPrincipalId) ? securityPrincipalId : ''
+    securityPrincipalId: varSecurityPrincipalId
     tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
   }
   dependsOn: [
@@ -1181,9 +1178,8 @@ module zeroTrust './modules/zeroTrust/deploy.bicep' = if (diskZeroTrust && avdDe
     diskZeroTrust: diskZeroTrust
     serviceObjectsRgName: varServiceObjectsRgName
     computeObjectsRgName: varComputeObjectsRgName
-    vaultSku: varWrklKeyVaultSku
+    vaultSku: any(varWrklKeyVaultSku)
     diskEncryptionKeyExpirationInDays: diskEncryptionKeyExpirationInDays
-    diskEncryptionKeyExpirationInEpoch: varDiskEncryptionKeyExpirationInEpoch
     diskEncryptionSetName: varDiskEncryptionSetName
     ztKvName: varZtKvName
     ztKvPrivateEndpointName: varZtKvPrivateEndpointName
@@ -1358,7 +1354,7 @@ module fslogixAzureFilesStorage './modules/storageAzureFiles/deploy.bicep' = if 
     deployPrivateEndpoint: deployPrivateEndpointKeyvaultStorage
     ouStgPath: varOuStgPath
     managedIdentityClientId: varCreateStorageDeployment ? identity.outputs.managedIdentityStorageClientId : ''
-    securityPrincipalName: !empty(securityPrincipalName) ? securityPrincipalName : ''
+    securityPrincipalName: varSecurityPrincipalName
     domainJoinUserName: avdDomainJoinUserName
     wrklKvName: varWrklKvName
     serviceObjectsRgName: varServiceObjectsRgName
@@ -1409,7 +1405,7 @@ module appAttachAzureFilesStorage './modules/storageAzureFiles/deploy.bicep' = i
     deployPrivateEndpoint: deployPrivateEndpointKeyvaultStorage
     ouStgPath: varOuStgPath
     managedIdentityClientId: varCreateStorageDeployment ? identity.outputs.managedIdentityStorageClientId : ''
-    securityPrincipalName: !empty(securityPrincipalName) ? securityPrincipalName : ''
+    securityPrincipalName: varSecurityPrincipalName
     domainJoinUserName: avdDomainJoinUserName
     wrklKvName: varWrklKvName
     serviceObjectsRgName: varServiceObjectsRgName

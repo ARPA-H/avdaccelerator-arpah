@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "3282208684113992366"
+      "templateHash": "4667874415365759690"
     },
     "name": "AVD Accelerator - Baseline Deployment",
     "description": "AVD Accelerator - Deployment Baseline",
@@ -99,18 +99,11 @@
         "description": "Required, Eronll session hosts on Intune. (Default: false)"
       }
     },
-    "securityPrincipalId": {
-      "type": "string",
-      "defaultValue": "",
+    "avdSecurityGroups": {
+      "type": "array",
+      "defaultValue": [],
       "metadata": {
-        "description": "Optional, Identity ID to grant RBAC role to access AVD application group and NTFS permissions. (Default: \"\")"
-      }
-    },
-    "securityPrincipalName": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Optional, Identity name to grant RBAC role to access AVD application group and NTFS permissions. (Default: \"\")"
+        "description": "Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])"
       }
     },
     "identityDomainName": {
@@ -1435,7 +1428,6 @@
     "varBaseScriptUri": "https://raw.githubusercontent.com/Azure/avdaccelerator/main/workload/",
     "varSessionHostConfigurationScriptUri": "[format('{0}scripts/Set-SessionHostConfiguration.ps1', variables('varBaseScriptUri'))]",
     "varSessionHostConfigurationScript": "./Set-SessionHostConfiguration.ps1",
-    "varDiskEncryptionKeyExpirationInEpoch": "[dateTimeToEpoch(dateTimeAdd(parameters('time'), format('P{0}D', string(parameters('diskEncryptionKeyExpirationInDays')))))]",
     "varCreateStorageDeployment": "[if(or(parameters('createAvdFslogixDeployment'), equals(variables('varCreateAppAttachDeployment'), true())), true(), false())]",
     "varFslogixStorageSku": "[if(parameters('zoneRedundantStorage'), format('{0}_ZRS', parameters('fslogixStoragePerformance')), format('{0}_LRS', parameters('fslogixStoragePerformance')))]",
     "varAppAttachStorageSku": "[if(parameters('zoneRedundantStorage'), format('{0}_ZRS', parameters('appAttachStoragePerformance')), format('{0}_LRS', parameters('appAttachStoragePerformance')))]",
@@ -1739,7 +1731,9 @@
         "enableDefaultTelemetry": false,
         "tags": "[if(parameters('createResourceTags'), union(variables('varAllComputeStorageTags'), variables('varAvdDefaultTags')), union(variables('varAvdDefaultTags'), variables('varAllComputeStorageTags')))]"
       }
-    ]
+    ],
+    "varSecurityPrincipalId": "[if(not(empty(parameters('avdSecurityGroups'))), parameters('avdSecurityGroups')[0].objectId, '')]",
+    "varSecurityPrincipalName": "[if(not(empty(parameters('avdSecurityGroups'))), parameters('avdSecurityGroups')[0].displayName, '')]"
   },
   "resources": [
     {
@@ -8650,7 +8644,9 @@
           "identityServiceProvider": {
             "value": "[parameters('avdIdentityServiceProvider')]"
           },
-          "securityPrincipalId": "[if(not(empty(parameters('securityPrincipalId'))), createObject('value', parameters('securityPrincipalId')), createObject('value', ''))]",
+          "securityPrincipalId": {
+            "value": "[variables('varSecurityPrincipalId')]"
+          },
           "tags": "[if(parameters('createResourceTags'), createObject('value', union(variables('varCustomResourceTags'), variables('varAvdDefaultTags'))), createObject('value', variables('varAvdDefaultTags')))]",
           "alaWorkspaceResourceId": "[if(parameters('avdDeployMonitoring'), if(parameters('deployAlaWorkspace'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('Monitoring-{0}', parameters('time'))), '2022-09-01').outputs.avdAlaWorkspaceResourceId.value), createObject('value', parameters('alaExistingWorkspaceResourceId'))), createObject('value', ''))]",
           "hostPoolAgentUpdateSchedule": {
@@ -12739,7 +12735,9 @@
           "createStorageDeployment": {
             "value": "[variables('varCreateStorageDeployment')]"
           },
-          "securityPrincipalId": "[if(not(empty(parameters('securityPrincipalId'))), createObject('value', parameters('securityPrincipalId')), createObject('value', ''))]",
+          "securityPrincipalId": {
+            "value": "[variables('varSecurityPrincipalId')]"
+          },
           "tags": "[if(parameters('createResourceTags'), createObject('value', union(variables('varCustomResourceTags'), variables('varAvdDefaultTags'))), createObject('value', variables('varAvdDefaultTags')))]"
         },
         "template": {
@@ -14230,9 +14228,6 @@
           "diskEncryptionKeyExpirationInDays": {
             "value": "[parameters('diskEncryptionKeyExpirationInDays')]"
           },
-          "diskEncryptionKeyExpirationInEpoch": {
-            "value": "[variables('varDiskEncryptionKeyExpirationInEpoch')]"
-          },
           "diskEncryptionSetName": {
             "value": "[variables('varDiskEncryptionSetName')]"
           },
@@ -14262,7 +14257,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.33.93.31351",
-              "templateHash": "10703368545591314389"
+              "templateHash": "8370040284189693367"
             }
           },
           "parameters": {
@@ -14297,12 +14292,6 @@
               }
             },
             "diskEncryptionKeyExpirationInDays": {
-              "type": "int",
-              "metadata": {
-                "description": "This value is used to set the expiration date on the disk encryption key."
-              }
-            },
-            "diskEncryptionKeyExpirationInEpoch": {
               "type": "int",
               "metadata": {
                 "description": "This value is used to set the expiration date on the disk encryption key."
@@ -15980,9 +15969,6 @@
                   "diskEncryptionKeyExpirationInDays": {
                     "value": "[parameters('diskEncryptionKeyExpirationInDays')]"
                   },
-                  "diskEncryptionKeyExpirationInEpoch": {
-                    "value": "[parameters('diskEncryptionKeyExpirationInEpoch')]"
-                  },
                   "diskEncryptionSetName": {
                     "value": "[parameters('diskEncryptionSetName')]"
                   },
@@ -16000,7 +15986,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.33.93.31351",
-                      "templateHash": "9820967518177630734"
+                      "templateHash": "14616528108278942259"
                     }
                   },
                   "parameters": {
@@ -16053,12 +16039,6 @@
                       }
                     },
                     "diskEncryptionKeyExpirationInDays": {
-                      "type": "int",
-                      "metadata": {
-                        "description": "This value is used to set the expiration date on the disk encryption key."
-                      }
-                    },
-                    "diskEncryptionKeyExpirationInEpoch": {
                       "type": "int",
                       "metadata": {
                         "description": "This value is used to set the expiration date on the disk encryption key."
@@ -18878,9 +18858,6 @@
                         "parameters": {
                           "attributesEnabled": {
                             "value": true
-                          },
-                          "attributesExp": {
-                            "value": "[parameters('diskEncryptionKeyExpirationInEpoch')]"
                           },
                           "keySize": {
                             "value": 4096
@@ -22715,7 +22692,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.33.93.31351",
-              "templateHash": "4158990381758564962"
+              "templateHash": "145165832351743331"
             }
           },
           "parameters": {
@@ -22932,6 +22909,7 @@
                     "value": {
                       "createOption": "FromImage",
                       "deleteOption": "Delete",
+                      "caching": "ReadWrite",
                       "managedDisk": "[variables('varManagedDisk')]"
                     }
                   },
@@ -26659,7 +26637,9 @@
             "value": "[variables('varOuStgPath')]"
           },
           "managedIdentityClientId": "[if(variables('varCreateStorageDeployment'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('Identities-And-RoleAssign-{0}', parameters('time'))), '2022-09-01').outputs.managedIdentityStorageClientId.value), createObject('value', ''))]",
-          "securityPrincipalName": "[if(not(empty(parameters('securityPrincipalName'))), createObject('value', parameters('securityPrincipalName')), createObject('value', ''))]",
+          "securityPrincipalName": {
+            "value": "[variables('varSecurityPrincipalName')]"
+          },
           "domainJoinUserName": {
             "value": "[parameters('avdDomainJoinUserName')]"
           },
@@ -29615,7 +29595,9 @@
             "value": "[variables('varOuStgPath')]"
           },
           "managedIdentityClientId": "[if(variables('varCreateStorageDeployment'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('Identities-And-RoleAssign-{0}', parameters('time'))), '2022-09-01').outputs.managedIdentityStorageClientId.value), createObject('value', ''))]",
-          "securityPrincipalName": "[if(not(empty(parameters('securityPrincipalName'))), createObject('value', parameters('securityPrincipalName')), createObject('value', ''))]",
+          "securityPrincipalName": {
+            "value": "[variables('varSecurityPrincipalName')]"
+          },
           "domainJoinUserName": {
             "value": "[parameters('avdDomainJoinUserName')]"
           },
@@ -32644,7 +32626,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.33.93.31351",
-              "templateHash": "16593509271852742672"
+              "templateHash": "18304255021868622646"
             }
           },
           "parameters": {
@@ -32908,11 +32890,13 @@
             "varOsDiskProperties": {
               "createOption": "FromImage",
               "deleteOption": "Delete",
+              "caching": "ReadWrite",
               "managedDisk": "[variables('varManagedDisk')]"
             },
             "varCustomOsDiskProperties": {
               "createOption": "FromImage",
               "deleteOption": "Delete",
+              "caching": "ReadWrite",
               "managedDisk": "[variables('varManagedDisk')]",
               "diskSizeGB": "[if(not(empty(parameters('customOsDiskSizeGB'))), parameters('customOsDiskSizeGB'), null())]"
             }

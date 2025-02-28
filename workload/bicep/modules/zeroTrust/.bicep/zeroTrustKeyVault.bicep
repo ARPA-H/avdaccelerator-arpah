@@ -156,3 +156,6 @@ module ztDiskEncryptionSet '../../../../../avm/1.0.0/res/compute/disk-encryption
 
 output ztDiskEncryptionSetResourceId string = ztDiskEncryptionSet.outputs.resourceId
 output ztDiskEncryptionSetPrincipalId string = ztDiskEncryptionSet.outputs.systemAssignedMIPrincipalId
+
+// added by ARPA-H
+output ztKvKeyName string = ztKeyVaultKey.outputs.name

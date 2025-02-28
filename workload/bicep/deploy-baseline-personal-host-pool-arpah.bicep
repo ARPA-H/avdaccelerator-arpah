@@ -254,7 +254,7 @@ param fslogixStoragePerformance string = 'Premium'
 param appAttachStoragePerformance string = 'Premium'
 
 @sys.description('Enables a zero trust configuration on the session host disks. (Default: false)')
-param diskZeroTrust bool = false
+param diskZeroTrust bool = true
 
 @sys.description('Session host VM size. (Default: Standard_D4ads_v5)')
 param avdSessionHostsSize string = 'Standard_D4ads_v5'
@@ -1331,7 +1331,8 @@ module managementVm './modules/storageAzureFiles/.bicep/managementVm.bicep' = if
     vTpmEnabled: vTpmEnabled
     vmLocalUserName: avdVmLocalUserName
     workloadSubsId: avdWorkloadSubsId
-    encryptionAtHost: diskZeroTrust
+    //encryptionAtHost: diskZeroTrust
+    encryptionAtHost: false
     storageManagedIdentityResourceId: varCreateStorageDeployment
       ? identity.outputs.managedIdentityStorageResourceId
       : ''
@@ -1467,7 +1468,7 @@ module appAttachAzureFilesStorage './modules/storageAzureFiles/deploy.bicep' = i
 
 // Session hosts
 @batchSize(3)
-module sessionHosts './modules/avdSessionHosts/deploy.bicep' = [
+module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
   for i in range(1, varSessionHostBatchCount): if (avdDeploySessionHosts) {
     name: 'SH-Batch-${i - 1}-${time}'
     params: {
@@ -1491,6 +1492,8 @@ module sessionHosts './modules/avdSessionHosts/deploy.bicep' = [
         : (((i - 1) * varMaxSessionHostsPerTemplate) + avdSessionHostCountIndex)
       domainJoinUserName: avdDomainJoinUserName
       wrklKvName: varWrklKvName
+      ztKvName: varZtKvName
+      ztKvKeyName: zeroTrust.outputs.ztKvKeyName
       serviceObjectsRgName: varServiceObjectsRgName
       identityDomainName: identityDomainName
       avdImageTemplateDefinitionId: avdImageTemplateDefinitionId
@@ -1510,7 +1513,8 @@ module sessionHosts './modules/avdSessionHosts/deploy.bicep' = [
       useAvailabilityZones: availabilityZonesCompute
       vmLocalUserName: avdVmLocalUserName
       subscriptionId: avdWorkloadSubsId
-      encryptionAtHost: diskZeroTrust
+      //encryptionAtHost: diskZeroTrust
+      encryptionAtHost: false
       createAvdFslogixDeployment: createAvdFslogixDeployment
       fslogixSharePath: varFslogixSharePath
       fslogixStorageFqdn: varFslogixStorageFqdn

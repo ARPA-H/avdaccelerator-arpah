@@ -136,7 +136,7 @@ param avdHostPoolRdpProperties string = 'audiocapturemode:i:1;audiomode:i:0;driv
 param avdDeployScalingPlan bool = true
 
 @sys.description('Create new virtual network. (Default: true)')
-param createAvdVnet bool = true
+param createAvdVnet bool = false
 
 @sys.description('Existing virtual network subnet for AVD. (Default: "")')
 param existingVnetAvdSubnetResourceId string = ''

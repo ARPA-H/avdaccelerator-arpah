@@ -154,4 +154,4 @@ output ztDiskEncryptionSetResourceId string = ztDiskEncryptionSet.outputs.resour
 output ztDiskEncryptionSetPrincipalId string = ztDiskEncryptionSet.outputs.systemAssignedMIPrincipalId
 
 // added by ARPA-H
-output ztKvKeyName string = ztKeyVaultKey.outputs.name
+//output ztKvKeyName string = ztKeyVaultKey.outputs.name

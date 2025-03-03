@@ -1488,7 +1488,8 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       domainJoinUserName: avdDomainJoinUserName
       wrklKvName: varWrklKvName
       ztKvName: varZtKvName
-      ztKvKeyName: zeroTrust.outputs.ztKvKeyName
+      //ztKvKeyName: zeroTrust.outputs.ztKvKeyName
+      ztKvKeyName: 'DiskEncryptionKey'
       serviceObjectsRgName: varServiceObjectsRgName
       identityDomainName: identityDomainName
       avdImageTemplateDefinitionId: avdImageTemplateDefinitionId

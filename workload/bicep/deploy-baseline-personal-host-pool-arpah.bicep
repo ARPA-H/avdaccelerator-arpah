@@ -1175,7 +1175,8 @@ module identity './modules/identity/deploy.bicep' = {
 }
 
 // Zero trust
-module zeroTrust './modules/zeroTrust/deploy.bicep' = if (diskZeroTrust && avdDeploySessionHosts) {
+//module zeroTrust './modules/zeroTrust/deploy.bicep' = if (diskZeroTrust && avdDeploySessionHosts) {
+module zeroTrust './modules/zeroTrust/deploy.bicep' = {
   scope: subscription(avdWorkloadSubsId)
   name: 'Zero-Trust-${time}'
   params: {

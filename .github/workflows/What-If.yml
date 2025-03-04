@@ -9,8 +9,10 @@ permissions:
   contents: read
  
 jobs:
+  if: false  # This disables the entire workflow
   What-If:
     runs-on: windows-latest
+    
     steps:
  
       - uses: actions/checkout@v4

@@ -254,7 +254,7 @@ param fslogixStoragePerformance string = 'Premium'
 param appAttachStoragePerformance string = 'Premium'
 
 @sys.description('Enables a zero trust configuration on the session host disks. (Default: false)')
-param diskZeroTrust bool = true
+param diskZeroTrust bool = false
 
 @sys.description('Session host VM size. (Default: Standard_D4ads_v5)')
 param avdSessionHostsSize string = 'Standard_D4ads_v5'
@@ -1470,8 +1470,84 @@ module appAttachAzureFilesStorage './modules/storageAzureFiles/deploy.bicep' = i
 // }
 
 // Session hosts
+// @batchSize(3)
+// module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
+//   for i in range(1, varSessionHostBatchCount): if (avdDeploySessionHosts) {
+//     name: 'SH-Batch-${i - 1}-${time}'
+//     params: {
+//       diskEncryptionSetResourceId: diskZeroTrust ? zeroTrust.outputs.ztDiskEncryptionSetResourceId : ''
+//       timeZone: varTimeZoneSessionHosts
+//       asgResourceId: (avdDeploySessionHosts || createAvdFslogixDeployment || varCreateAppAttachDeployment)
+//         ? '${networking.outputs.applicationSecurityGroupResourceId}'
+//         : ''
+//       identityServiceProvider: avdIdentityServiceProvider
+//       createIntuneEnrollment: createIntuneEnrollment
+//       // maxVmssFlexMembersCount: varMaxVmssFlexMembersCount
+//       // vmssFlexNamePrefix: varVmssFlexNamePrefix
+//       //useVmssFlex: deployVmssFlex
+//       batchId: i - 1
+//       computeObjectsRgName: varComputeObjectsRgName
+//       count: i == varSessionHostBatchCount && varMaxSessionHostsDivisionRemainderValue > 0
+//         ? varMaxSessionHostsDivisionRemainderValue
+//         : varMaxSessionHostsPerTemplate
+//       countIndex: i == 1
+//         ? avdSessionHostCountIndex
+//         : (((i - 1) * varMaxSessionHostsPerTemplate) + avdSessionHostCountIndex)
+//       domainJoinUserName: avdDomainJoinUserName
+//       wrklKvName: varWrklKvName
+//       ztKvName: varZtKvName
+//       //ztKvKeyName: zeroTrust.outputs.ztKvKeyName
+//       ztKvKeyName: 'DiskEncryptionKey'
+//       serviceObjectsRgName: varServiceObjectsRgName
+//       identityDomainName: identityDomainName
+//       avdImageTemplateDefinitionId: avdImageTemplateDefinitionId
+//       sessionHostOuPath: avdOuPath
+//       diskType: avdSessionHostDiskType
+//       customOsDiskSizeGB: customOsDiskSizeGb
+//       location: avdSessionHostLocation
+//       namePrefix: varSessionHostNamePrefix
+//       vmSize: avdSessionHostsSize
+//       enableAcceleratedNetworking: enableAcceleratedNetworking
+//       securityType: securityType == 'Standard' ? '' : securityType
+//       secureBootEnabled: secureBootEnabled
+//       vTpmEnabled: vTpmEnabled
+//       subnetId: createAvdVnet
+//         ? '${networking.outputs.virtualNetworkResourceId}/subnets/${varVnetAvdSubnetName}'
+//         : existingVnetAvdSubnetResourceId
+//       useAvailabilityZones: availabilityZonesCompute
+//       vmLocalUserName: avdVmLocalUserName
+//       subscriptionId: avdWorkloadSubsId
+//       //encryptionAtHost: diskZeroTrust
+//       encryptionAtHost: false
+//       createAvdFslogixDeployment: createAvdFslogixDeployment
+//       fslogixSharePath: varFslogixSharePath
+//       fslogixStorageFqdn: varFslogixStorageFqdn
+//       sessionHostConfigurationScriptUri: varSessionHostConfigurationScriptUri
+//       sessionHostConfigurationScript: varSessionHostConfigurationScript
+//       marketPlaceGalleryWindows: varMarketPlaceGalleryWindows[avdOsImage]
+//       useSharedImage: useSharedImage
+//       tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
+//       deployMonitoring: avdDeployMonitoring
+//       alaWorkspaceResourceId: avdDeployMonitoring
+//         ? (deployAlaWorkspace
+//             ? monitoringDiagnosticSettings.outputs.avdAlaWorkspaceResourceId
+//             : alaExistingWorkspaceResourceId)
+//         : ''
+//       dataCollectionRuleId: avdDeployMonitoring ? monitoringDiagnosticSettings.outputs.dataCollectionRuleId : ''
+//       deployAntiMalwareExt: deployAntiMalwareExt
+//     }
+//     dependsOn: [
+//       fslogixAzureFilesStorage
+//       baselineResourceGroups
+//       wrklKeyVault
+//       //vmScaleSetFlex
+//       managementPLane
+//     ]
+//   }
+// ]
+
 @batchSize(3)
-module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
+module sessionHosts './modules/avdSessionHosts/deploy.bicep' = [
   for i in range(1, varSessionHostBatchCount): if (avdDeploySessionHosts) {
     name: 'SH-Batch-${i - 1}-${time}'
     params: {
@@ -1495,9 +1571,6 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
         : (((i - 1) * varMaxSessionHostsPerTemplate) + avdSessionHostCountIndex)
       domainJoinUserName: avdDomainJoinUserName
       wrklKvName: varWrklKvName
-      ztKvName: varZtKvName
-      //ztKvKeyName: zeroTrust.outputs.ztKvKeyName
-      ztKvKeyName: 'DiskEncryptionKey'
       serviceObjectsRgName: varServiceObjectsRgName
       identityDomainName: identityDomainName
       avdImageTemplateDefinitionId: avdImageTemplateDefinitionId
@@ -1517,8 +1590,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       useAvailabilityZones: availabilityZonesCompute
       vmLocalUserName: avdVmLocalUserName
       subscriptionId: avdWorkloadSubsId
-      //encryptionAtHost: diskZeroTrust
-      encryptionAtHost: false
+      encryptionAtHost: diskZeroTrust
       createAvdFslogixDeployment: createAvdFslogixDeployment
       fslogixSharePath: varFslogixSharePath
       fslogixStorageFqdn: varFslogixStorageFqdn

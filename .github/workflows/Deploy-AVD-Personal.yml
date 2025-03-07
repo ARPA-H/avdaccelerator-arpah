@@ -1,4 +1,4 @@
-name: Deploy AVD to the ARPA-H Tenant
+name: Deploy Admin AVD to the ARPA-H Tenant
 on:
     workflow_dispatch:
       inputs:

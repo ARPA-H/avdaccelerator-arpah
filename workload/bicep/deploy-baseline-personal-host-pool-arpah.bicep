@@ -1175,8 +1175,7 @@ module identity './modules/identity/deploy.bicep' = {
 }
 
 // Zero trust
-//module zeroTrust './modules/zeroTrust/deploy.bicep' = if (diskZeroTrust && avdDeploySessionHosts) {
-module zeroTrust './modules/zeroTrust/deploy.bicep' = {
+module zeroTrust './modules/zeroTrust/deploy.bicep' = if (diskZeroTrust && avdDeploySessionHosts) {
   scope: subscription(avdWorkloadSubsId)
   name: 'Zero-Trust-${time}'
   params: {
@@ -1185,7 +1184,7 @@ module zeroTrust './modules/zeroTrust/deploy.bicep' = {
     diskZeroTrust: diskZeroTrust
     serviceObjectsRgName: varServiceObjectsRgName
     computeObjectsRgName: varComputeObjectsRgName
-    vaultSku: varWrklKeyVaultSku
+    vaultSku: any(varWrklKeyVaultSku)
     diskEncryptionKeyExpirationInDays: diskEncryptionKeyExpirationInDays
     diskEncryptionSetName: varDiskEncryptionSetName
     ztKvName: varZtKvName

@@ -1,0 +1,84 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "deploymentPrefix": {
+            "value": "avda"
+        },
+        "deploymentEnvironment":{
+            "value": "Prod"
+        },
+        "avdUseCustomNaming": {
+            "value": true
+        },
+        "avdSessionHostLocation": {
+            "value": "centralus"
+        },
+        "avdManagementPlaneLocation": {
+            "value": "centralus"
+        },
+        "regionAcronym": {
+            "value": "usc"
+        },
+        "avdDeployMonitoring": {
+            "value": true
+        },   
+        "avdWorkloadSubsId": {
+            "value": "<<subscriptionId>>"
+        },
+        "avdIdentityServiceProvider": {
+            "value": "EntraID"
+        },              
+        "identityDomainName": {
+            "value": "none"
+        },
+        "createAvdVnet": {
+            "value": true
+        },
+        "existingVnetAvdSubnetResourceId": {
+            "value": ""
+        },
+        "existingHubVnetResourceId": {
+            "value": ""
+        },
+        "avdVnetworkAddressPrefixes": {
+            "value": "10.10.0.0/23"
+        },
+        "vNetworkAvdSubnetAddressPrefix": {
+            "value": "10.10.0.0/24"
+        },
+        "vNetworkPrivateEndpointSubnetAddressPrefix": {
+            "value": "10.10.1.0/27"
+        },
+        "customDnsIps": {
+            "value": ""
+        },
+        "createPrivateDnsZones": {
+            "value": false
+        },
+        "vNetworkGatewayOnHub": {
+            "value": false
+        },
+        "createAvdFslogixDeployment": {
+            "value": true
+        },
+        "createAppAttachDeployment": {
+            "value": false
+        },
+        "avdDeploySessionHosts": {
+            "value": true
+        },
+        "createResourceTags": {
+            "value": true
+        },
+        "deployAlaWorkspace": {
+            "value": true
+        },  
+        "alaExistingWorkspaceResourceId": {
+            "value": ""
+        },           
+        "avdAlaWorkspaceDataRetention": {
+            "value": 90
+        }
+    }
+}

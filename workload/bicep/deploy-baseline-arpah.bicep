@@ -55,10 +55,10 @@ param avdVmLocalUserPassword string
   'EntraIDKerberos' // Microsoft Entra ID Kerberos, Users are Hybrid, Devices are EntraID Joined.
 ])
 @sys.description('Required, The service providing domain services for Azure Virtual Desktop. (Default: ADDS)')
-param avdIdentityServiceProvider string = 'ADDS'
+param avdIdentityServiceProvider string = 'EntraID'
 
 @sys.description('Required, Enroll session hosts on Intune. (Default: false)')
-param createIntuneEnrollment bool = false
+param createIntuneEnrollment bool = true
 
 @sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
 param avdSecurityGroups array = []
@@ -245,7 +245,7 @@ param availability string = 'None'
 param availabilityZones array = ['1', '2', '3']
 
 @sys.description('When true, Zone Redundant Storage (ZRS) is used, when set to false, Locally Redundant Storage (LRS) is used. (Default: false)')
-param zoneRedundantStorage bool = false
+param zoneRedundantStorage bool = true
 
 // @sys.description('Deploys a VMSS Flex group and associates session hosts with it for availability purposes. (Default: true)')
 // param deployVmssFlex bool = true
@@ -322,60 +322,64 @@ param storageOuPath string = ''
 param avdUseCustomNaming bool = false
 
 @maxLength(90)
-@sys.description('AVD service resources resource group custom name. (Default: rg-avd-app1-dev-use2-service-objects)')
-param avdServiceObjectsRgCustomName string = 'rg-avd-app1-dev-use2-service-objects'
+@sys.description('AVD service resources resource group custom name. (Default: rg-avd-arpah-dev-use2-service-objects)')
+param avdServiceObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-service-objects'
 
 @maxLength(90)
-@sys.description('AVD network resources resource group custom name. (Default: rg-avd-app1-dev-use2-network)')
-param avdNetworkObjectsRgCustomName string = 'rg-avd-app1-dev-use2-network'
+@sys.description('AVD network resources resource group custom name. (Default: rg-avd-arpah-dev-use2-network)')
+param avdNetworkObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-network'
 
 @maxLength(90)
-@sys.description('AVD network resources resource group custom name. (Default: rg-avd-app1-dev-use2-pool-compute)')
-param avdComputeObjectsRgCustomName string = 'rg-avd-app1-dev-use2-pool-compute'
+@sys.description('AVD network resources resource group custom name. (Default: rg-avd-arpah-dev-use2-pool-compute)')
+param avdComputeObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-pool-compute'
 
 @maxLength(90)
-@sys.description('AVD network resources resource group custom name. (Default: rg-avd-app1-dev-use2-storage)')
-param avdStorageObjectsRgCustomName string = 'rg-avd-app1-dev-use2-storage'
+@sys.description('AVD network resources resource group custom name. (Default: rg-avd-arpah-dev-use2-storage)')
+param avdStorageObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-storage'
 
 @maxLength(90)
 @sys.description('AVD monitoring resource group custom name. (Default: rg-avd-dev-use2-monitoring)')
-param avdMonitoringRgCustomName string = 'rg-avd-dev-use2-monitoring'
+param avdMonitoringRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-monitoring'
 
 @maxLength(64)
 @sys.description('AVD virtual network custom name. (Default: vnet-app1-dev-use2-001)')
-param avdVnetworkCustomName string = 'vnet-app1-dev-use2-001'
+param avdVnetworkCustomName string = 'vnet-arpa-h-it-avd-${toLower(deploymentEnvironment)}-spoke-${regionAcronym}-001'
+//param avdVnetworkCustomName string = 'vnet-avd-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
+//nih-arpa-h-it-vdi-nih-prod-vnet-spoke-az
+//vnet-arpa-h-it-hub-usc
+//vnet-arpa-h-it-avd-test-spoke-usc
 
 @maxLength(64)
-@sys.description('AVD Azure log analytics workspace custom name. (Default: log-avd-app1-dev-use2)')
-param avdAlaWorkspaceCustomName string = 'log-avd-app1-dev-use2'
+@sys.description('AVD Azure log analytics workspace custom name. (Default: log-avd-arpah-dev-use2)')
+param avdAlaWorkspaceCustomName string = 'log-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}'
 
 @maxLength(80)
-@sys.description('AVD virtual network subnet custom name. (Default: snet-avd-app1-dev-use2-001)')
-param avdVnetworkSubnetCustomName string = 'snet-avd-app1-dev-use2-001'
+@sys.description('AVD virtual network subnet custom name. (Default: snet-avd-arpah-dev-use2-001)')
+param avdVnetworkSubnetCustomName string = 'snet-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
-@sys.description('private endpoints virtual network subnet custom name. (Default: snet-pe-app1-dev-use2-001)')
-param privateEndpointVnetworkSubnetCustomName string = 'snet-pe-app1-dev-use2-001'
+@sys.description('private endpoints virtual network subnet custom name. (Default: snet-pe-arpah-dev-use2-001)')
+param privateEndpointVnetworkSubnetCustomName string = 'snet-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
-@sys.description('AVD network security group custom name. (Default: nsg-avd-app1-dev-use2-001)')
-param avdNetworksecurityGroupCustomName string = 'nsg-avd-app1-dev-use2-001'
+@sys.description('AVD network security group custom name. (Default: nsg-avd-arpah-dev-use2-001)')
+param avdNetworksecurityGroupCustomName string = 'nsg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
-@sys.description('Private endpoint network security group custom name. (Default: nsg-pe-app1-dev-use2-001)')
-param privateEndpointNetworksecurityGroupCustomName string = 'nsg-pe-app1-dev-use2-001'
+@sys.description('Private endpoint network security group custom name. (Default: nsg-pe-arpah-dev-use2-001)')
+param privateEndpointNetworksecurityGroupCustomName string = 'nsg-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
-@sys.description('AVD route table custom name. (Default: route-avd-app1-dev-use2-001)')
-param avdRouteTableCustomName string = 'route-avd-app1-dev-use2-001'
+@sys.description('AVD route table custom name. (Default: route-avd-arpah-dev-use2-001)')
+param avdRouteTableCustomName string = 'route-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
-@sys.description('Private endpoint route table custom name. (Default: route-avd-app1-dev-use2-001)')
-param privateEndpointRouteTableCustomName string = 'route-pe-app1-dev-use2-001'
+@sys.description('Private endpoint route table custom name. (Default: route-avd-arpah-dev-use2-001)')
+param privateEndpointRouteTableCustomName string = 'route-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
-@sys.description('AVD application security custom name. (Default: asg-app1-dev-use2-001)')
-param avdApplicationSecurityGroupCustomName string = 'asg-app1-dev-use2-001'
+@sys.description('AVD application security custom name. (Default: asg-arpah-dev-use2-001)')
+param avdApplicationSecurityGroupCustomName string = 'asg-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD workspace custom name. (Default: vdws-app1-dev-use2-001)')
@@ -537,6 +541,9 @@ param enableDefForKeyVault bool = true
 
 @sys.description('Enable Microsoft Defender for Azure Resource Manager. (Default: true)')
 param enableDefForArm bool = true
+
+@sys.description('Region acronym.  Cant use the var: varLocations in params') 
+param regionAcronym string = 'usc'
 
 // =========== //
 // Variable declaration //

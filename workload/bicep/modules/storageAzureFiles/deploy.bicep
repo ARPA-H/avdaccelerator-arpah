@@ -142,7 +142,8 @@ module storageAndFile '../../../../avm/1.0.0/res/storage/storage-account/main.bi
     skuName: storageSku
     allowBlobPublicAccess: false
     publicNetworkAccess: deployPrivateEndpoint ? 'Disabled' : 'Enabled'
-    kind: ((storageSku == 'Premium_LRS') || (storageSku == 'Premium_ZRS')) ? 'FileStorage' : 'StorageV2'
+    // kind: ((storageSku == 'Premium_LRS') || (storageSku == 'Premium_ZRS')) ? 'FileStorage' : 'StorageV2'
+    kind: ((storageSku == 'Premium_LRS') || (storageSku == 'Premium_ZRS')) ? 'BlobStorage' : 'StorageV2'
     largeFileSharesState: (storageSku == 'Standard_LRS') || (storageSku == 'Standard_ZRS') ? 'Enabled' : 'Disabled'
     azureFilesIdentityBasedAuthentication: identityServiceProvider != 'EntraID'
       ? {

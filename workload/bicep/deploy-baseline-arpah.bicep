@@ -496,14 +496,14 @@ param applicationNameTag string = 'Contoso-App'
 @sys.description('Service level agreement level of the worload. (Contoso-SLA)')
 param workloadSlaTag string = 'Contoso-SLA'
 
-@sys.description('Team accountable for day-to-day operations. (workload-admins@Contoso.com)')
-param opsTeamTag string = 'workload-admins@Contoso.com'
+@sys.description('Team accountable for day-to-day operations. (workload-admins@arpa-h.gov)')
+param opsTeamTag string = 'workload-admins@arpa-h.gov'
 
-@sys.description('Organizational owner of the AVD deployment. (Default: workload-owner@Contoso.com)')
-param ownerTag string = 'workload-owner@Contoso.com'
+@sys.description('Organizational owner of the AVD deployment. (Default: workload-owner@arpa-h.gov)')
+param ownerTag string = 'workload-owner@arpa-h.gov'
 
 @sys.description('Cost center of owner team. (Default: Contoso-CC)')
-param costCenterTag string = 'Contoso-CC'
+param costCenterTag string = 'ARPA-H-CC'
 //
 
 //@sys.description('Remove resources not needed afdter deployment. (Default: false)')
@@ -1644,7 +1644,7 @@ module gpuPolicies './modules/azurePolicies/gpuExtensionsSubscriptions.bicep' = 
     subscriptionId: avdWorkloadSubsId
   }
   dependsOn: [
-    sessionHosts
+    fslogixAzureFilesStorage
   ]
 }
 
@@ -1658,6 +1658,6 @@ module defenderPolicySet './modules/azurePolicies/defenderSubscription.bicep' = 
     enableDefForArm: enableDefForArm
   }
   dependsOn: [
-    sessionHosts
+    gpuPolicies
   ]
 }

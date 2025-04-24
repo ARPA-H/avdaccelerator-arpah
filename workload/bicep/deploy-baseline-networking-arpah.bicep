@@ -140,7 +140,7 @@ param avdVnetworkSubnetCustomName string = 'snet-avd-arpah-${toLower(deploymentE
 
 @maxLength(80)
 @sys.description('private endpoints virtual network subnet custom name. (Default: snet-pe-arpah-dev-use2-001)')
-param privateEndpointVnetworkSubnetCustomName string = 'snet-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
+param privateEndpointVnetworkSubnetCustomName string = 'snet-avd-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
 @sys.description('AVD network security group custom name. (Default: nsg-avd-arpah-dev-use2-001)')

@@ -49,13 +49,24 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
 
-    env:
-      VNET_ADDRESS_PREFIX: ${{ secrets.VNET_ADDRESS_PREFIX }}
-      SUBNET_ADDRESS_PREFIX: ${{ secrets.SUBNET_ADDRESS_PREFIX }}
-      PE_SUBNET_ADDRESS_PREFIX: ${{ secrets.PE_SUBNET_ADDRESS_PREFIX }}
+    # env:
+    #   VNET_ADDRESS_PREFIX: ${{ secrets.VNET_ADDRESS_PREFIX }}
+    #   SUBNET_ADDRESS_PREFIX: ${{ secrets.SUBNET_ADDRESS_PREFIX }}
+    #   PE_SUBNET_ADDRESS_PREFIX: ${{ secrets.PE_SUBNET_ADDRESS_PREFIX }}
 
     steps:
 
+    - name: Di8splay secret
+      env:
+        VNET_ADDRESS_PREFIX: ${{ secrets.VNET_ADDRESS_PREFIX }}
+        SUBNET_ADDRESS_PREFIX: ${{ secrets.SUBNET_ADDRESS_PREFIX }}
+        PE_SUBNET_ADDRESS_PREFIX: ${{ secrets.PE_SUBNET_ADDRESS_PREFIX }}
+
+      run: |
+        echo "VNET_ADDRESS_PREFIX: $VNET_ADDRESS_PREFIX"
+        echo "SUBNET_ADDRESS_PREFIX: $SUBNET_ADDRESS_PREFIX"
+        echo "PE_SUBNET_ADDRESS_PREFIX: $PE_SUBNET_ADDRESS_PREFIX"
+        
     - name: Checkout code
       uses: actions/checkout@main
 

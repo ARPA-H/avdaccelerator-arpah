@@ -75,7 +75,7 @@ param deployAvdPrivateLinkService bool = false
 param createPrivateDnsZones bool = true
 
 @sys.description('Does the hub contains a virtual network gateway. (Default: false)')
-param vNetworkGatewayOnHub bool = false
+param vNetworkGatewayOnHub bool = true
 
 @sys.description('Deploy Fslogix setup. (Default: true)')
 param createAvdFslogixDeployment bool = true
@@ -127,8 +127,8 @@ param avdStorageObjectsRgCustomName string = 'rg-avd-arpah-${toLower(deploymentE
 param avdMonitoringRgCustomName string = 'rg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-monitoring'
 
 @maxLength(64)
-@sys.description('AVD virtual network custom name. (Default: vnet-arpah-dev-use2-001)')
-param avdVnetworkCustomName string = 'vnet-avd-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
+@sys.description('AVD virtual network custom name. (Default: vnet-app1-dev-use2-001)')
+param avdVnetworkCustomName string = 'vnet-arpa-h-it-avd-${toLower(deploymentEnvironment)}-spoke-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD Azure log analytics workspace custom name. (Default: log-avd-arpah-dev-use2)')
@@ -162,10 +162,9 @@ param privateEndpointRouteTableCustomName string = 'route-pe-arpah-${toLower(dep
 @sys.description('AVD application security custom name. (Default: asg-arpah-dev-use2-001)')
 param avdApplicationSecurityGroupCustomName string = 'asg-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
-@maxLength(64)
-@sys.description('AVD host pool custom name. (Default: vdpool-arpah-dev-use2-001)')
-param avdHostPoolCustomName string = 'vdpool-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
-
+// @maxLength(64)
+// @sys.description('AVD host pool custom name. (Default: vdpool-app1-dev-use2-001)')
+// param avdHostPoolCustomName string = 'vdpool-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 //
 // Resource tagging
 //
@@ -173,7 +172,7 @@ param avdHostPoolCustomName string = 'vdpool-arpah-${toLower(deploymentEnvironme
 param createResourceTags bool = false
 
 @sys.description('The name of workload for tagging purposes. (Default: Contoso-Workload)')
-param workloadNameTag string = 'Contoso-Workload'
+param workloadNameTag string = 'ARPA-H-AVD-Workload'
 
 @allowed([
   'Light'
@@ -268,7 +267,7 @@ var varAvdRouteTableName = avdUseCustomNaming ? avdRouteTableCustomName : 'route
 var varPrivateEndpointRouteTableName = avdUseCustomNaming ? privateEndpointRouteTableCustomName : 'route-pe-${varComputeStorageResourcesNamingStandard}-001'
 var varApplicationSecurityGroupName = avdUseCustomNaming ? avdApplicationSecurityGroupCustomName : 'asg-${varComputeStorageResourcesNamingStandard}-001'
 var varDDosProtectionPlanName = 'ddos-${varVnetName}'
-var varHostPoolName = avdUseCustomNaming ? avdHostPoolCustomName : 'vdpool-${varManagementPlaneNamingStandard}-001'
+//var varHostPoolName = avdUseCustomNaming ? avdHostPoolCustomName : 'vdpool-${varManagementPlaneNamingStandard}-001'
 var varCreateAppAttachDeployment = (varAzureCloudName == 'AzureChinaCloud') ? false : createAppAttachDeployment
 var varAlaWorkspaceName = avdUseCustomNaming ? avdAlaWorkspaceCustomName : 'log-avd-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}'
 var varDataCollectionRulesName = 'microsoft-avdi-${varSessionHostLocationLowercase}' // 'dcr-avd-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}'
@@ -297,23 +296,23 @@ var varAllComputeStorageTags = {
   IdentityServiceProvider: avdIdentityServiceProvider
 }
 var varAvdDefaultTags = {
-  'cm-resource-parent': '/subscriptions/${avdWorkloadSubsId}/resourceGroups/${varServiceObjectsRgName}/providers/Microsoft.DesktopVirtualization/hostpools/${varHostPoolName}'
+  // 'cm-resource-parent': '/subscriptions/${avdWorkloadSubsId}/resourceGroups/${varServiceObjectsRgName}/providers/Microsoft.DesktopVirtualization/hostpools/${varHostPoolName}'
   Environment: deploymentEnvironment
-  ServiceWorkload: 'AVD'
+  ServiceWorkload: 'ARPA-H-AVD'
   CreationTimeUTC: time
 }
 
 var varTelemetryId = 'pid-2ce4228c-d72c-43fb-bb5b-cd8f3ba2138e-${avdManagementPlaneLocation}'
 var varResourceGroups = [
-  // {
-  //   purpose: 'Service-Objects'
-  //   name: varServiceObjectsRgName
-  //   location: avdManagementPlaneLocation
-  //   enableDefaultTelemetry: false
-  //   tags: createResourceTags
-  //     ? union(varCustomResourceTags, varAvdDefaultTags)
-  //     : union(varAvdDefaultTags, varAllComputeStorageTags)
-  // }
+  {
+    purpose: 'Service-Objects'
+    name: varServiceObjectsRgName
+    location: avdManagementPlaneLocation
+    enableDefaultTelemetry: false
+    tags: createResourceTags
+      ? union(varCustomResourceTags, varAvdDefaultTags)
+      : union(varAvdDefaultTags, varAllComputeStorageTags)
+  }
   {
     purpose: 'Pool-Compute'
     name: varComputeObjectsRgName
@@ -372,18 +371,18 @@ module baselineResourceGroups '../../avm/1.0.0/res/resources/resource-group/main
 ]
 
 // Storage
-// module baselineStorageResourceGroup '../../avm/1.0.0/res/resources/resource-group/main.bicep' = if (varCreateStorageDeployment) {
-//   scope: subscription(avdWorkloadSubsId)
-//   name: 'Storage-RG-${time}'
-//   params: {
-//     name: varStorageObjectsRgName
-//     location: avdSessionHostLocation
-//     enableTelemetry: false
-//     tags: createResourceTags
-//       ? union(varAllComputeStorageTags, varAvdDefaultTags)
-//       : union(varAvdDefaultTags, varAllComputeStorageTags)
-//   }
-// }
+module baselineStorageResourceGroup '../../avm/1.0.0/res/resources/resource-group/main.bicep' = if (varCreateStorageDeployment) {
+  scope: subscription(avdWorkloadSubsId)
+  name: 'Storage-RG-${time}'
+  params: {
+    name: varStorageObjectsRgName
+    location: avdSessionHostLocation
+    enableTelemetry: false
+    tags: createResourceTags
+      ? union(varAllComputeStorageTags, varAvdDefaultTags)
+      : union(varAvdDefaultTags, varAllComputeStorageTags)
+  }
+}
 
 // Azure Policies for monitoring Diagnostic settings. Performance couunters on new or existing Log Analytics workspace. New workspace if needed.
 module monitoringDiagnosticSettings './modules/avdInsightsMonitoring/deploy.bicep' = if (avdDeployMonitoring) {

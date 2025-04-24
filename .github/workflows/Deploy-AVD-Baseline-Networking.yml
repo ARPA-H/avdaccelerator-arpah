@@ -17,10 +17,10 @@ on:
       #   - Pooled
       #   - Personal
       #   default: 'Personal'
-      # deployment_stack_name: 
-      #   type: string
-      #   description: Name of deployment stack to delete
-      #   default: 'Test-DevHostPool-Stack'
+      deployment_stack_name: 
+        type: string
+        description: Name of deployment stack to delete
+        default: 'AVDNetworking-Stack'
       update_existing_stack: 
         type: boolean
         description: Update existing stack if it exists

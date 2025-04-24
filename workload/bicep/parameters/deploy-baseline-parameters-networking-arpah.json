@@ -6,7 +6,7 @@
             "value": "avda"
         },
         "deploymentEnvironment":{
-            "value": "Prod"
+            "value": "Test"
         },
         "avdUseCustomNaming": {
             "value": true

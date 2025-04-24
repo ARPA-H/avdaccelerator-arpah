@@ -49,6 +49,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
 
+    env:
+      VNET_ADDRESS_PREFIX: ${{ secrets.VNET_ADDRESS_PREFIX }}
+      SUBNET_ADDRESS_PREFIX: ${{ secrets.SUBNET_ADDRESS_PREFIX }}
+      PE_SUBNET_ADDRESS_PREFIX: ${{ secrets.PE_SUBNET_ADDRESS_PREFIX }}
+
     steps:
 
     - name: Checkout code
@@ -72,13 +77,13 @@ jobs:
     #     parameters: ./workload/bicep/parameters/deploy-baseline-parameters-arpah.json avdWorkloadSubsId=${{ secrets.SUBSCRIPTION_ID }} existingHubVnetResourceId=${{ secrets.AVD_HUB_RESOURCE_ID }} avdVnetworkAddressPrefixes=${{ secrets.AVD_VNET_ADDRESS_PREFIX }} vNetworkAvdSubnetAddressPrefix=${{ secrets.AVD_SUBNET_ADDRESS_PREFIX }} vNetworkPrivateEndpointSubnetAddressPrefix=${{ secrets.AVD_PEP_SUBNET_ADDRESS_PREFIX }}
     #     failOnStdErr: false
 
-    - name: Deploy deployment stack to the ${{ inputs.environment }} environment
-      uses: azure/powershell@v2
-      with:
-        inlineScript: ./.github/workflows/scripts/DeploymentStack-Baseline-Networking.ps1 -DeploymentStackName ${{ inputs.deployment_stack_name }} -Location 'centralus' `
-          -TemplateFile './workload/bicep/deploy-baseline-networking-arpah.bicep' -ParametersFile './workload/bicep/parameters/deploy-baseline-parameters-networking-arpah.json' `
-          -deploymentEnvironment ${{ inputs.environment }} -avdWorkloadSubsId ${{ secrets.SUBSCRIPTION_ID }} -existingHubVnetResourceId=${{ secrets.AVD_HUB_RESOURCE_ID }} `
-          -avdVnetworkAddressPrefixes=${{ secrets.VNET_ADDRESS_PREFIX }} -vNetworkAvdSubnetAddressPrefix=${{ secrets.SUBNET_ADDRESS_PREFIX }} `
-          -vNetworkPrivateEndpointSubnetAddressPrefix=${{ secrets.PE_SUBNET_ADDRESS_PREFIX }} -update_existing_stack ${{ inputs.update_existing_stack }}
-        azPSVersion: "latest"
-        errorActionPreference: stop
+    # - name: Deploy deployment stack to the ${{ inputs.environment }} environment
+    #   uses: azure/powershell@v2
+    #   with:
+    #     inlineScript: ./.github/workflows/scripts/DeploymentStack-Baseline-Networking.ps1 -DeploymentStackName ${{ inputs.deployment_stack_name }} -Location 'centralus' `
+    #       -TemplateFile './workload/bicep/deploy-baseline-networking-arpah.bicep' -ParametersFile './workload/bicep/parameters/deploy-baseline-parameters-networking-arpah.json' `
+    #       -deploymentEnvironment ${{ inputs.environment }} -avdWorkloadSubsId ${{ secrets.SUBSCRIPTION_ID }} -existingHubVnetResourceId=${{ secrets.AVD_HUB_RESOURCE_ID }} `
+    #       -avdVnetworkAddressPrefixes=${{ secrets.VNET_ADDRESS_PREFIX }} -vNetworkAvdSubnetAddressPrefix=${{ secrets.SUBNET_ADDRESS_PREFIX }} `
+    #       -vNetworkPrivateEndpointSubnetAddressPrefix=${{ secrets.PE_SUBNET_ADDRESS_PREFIX }} -update_existing_stack ${{ inputs.update_existing_stack }}
+    #     azPSVersion: "latest"
+    #     errorActionPreference: stop

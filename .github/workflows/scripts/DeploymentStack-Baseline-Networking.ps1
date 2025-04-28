@@ -17,7 +17,7 @@ if ($update_existing_stack -eq 'true') {
     Set-AzSubscriptionDeploymentStack -Name $DeploymentStackName -Location $Location -TemplateFile $TemplateFile -TemplateParameterFile $ParametersFile -P -ActionOnUnmanage "detachAll" -DenySettingsMode "none" `
         -deploymentEnvironment $deploymentEnvironment `
         -avdWorkloadSubsId $avdWorkloadSubsId -avdVnetworkAddressPrefixes $avdVnetworkAddressPrefixes `
-        -existingHubVnetResourceId $existingHubVnetResourceId -vNetworkAvdSubnetAddressPrefix vNetworkAvdSubnetAddressPrefix `
+        -existingHubVnetResourceId $existingHubVnetResourceId -vNetworkAvdSubnetAddressPrefix $vNetworkAvdSubnetAddressPrefix `
         -vNetworkPrivateEndpointSubnetAddressPrefix $vNetworkPrivateEndpointSubnetAddressPrefix
     return
 } else {
@@ -25,7 +25,7 @@ if ($update_existing_stack -eq 'true') {
     New-AzSubscriptionDeploymentStack -Name $DeploymentStackName -Location $Location -TemplateFile $TemplateFile -TemplateParameterFile $ParametersFile -P -ActionOnUnmanage "detachAll" -DenySettingsMode "none" `
     -deploymentEnvironment $deploymentEnvironment `
     -avdWorkloadSubsId $avdWorkloadSubsId -avdVnetworkAddressPrefixes $avdVnetworkAddressPrefixes `
-    -existingHubVnetResourceId $existingHubVnetResourceId -vNetworkAvdSubnetAddressPrefix vNetworkAvdSubnetAddressPrefix `
+    -existingHubVnetResourceId $existingHubVnetResourceId -vNetworkAvdSubnetAddressPrefix $vNetworkAvdSubnetAddressPrefix `
     -vNetworkPrivateEndpointSubnetAddressPrefix $vNetworkPrivateEndpointSubnetAddressPrefix
     return
 }

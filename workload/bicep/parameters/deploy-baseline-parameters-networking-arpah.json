@@ -54,10 +54,10 @@
             "value": ""
         },
         "createPrivateDnsZones": {
-            "value": false
+            "value": true
         },
         "vNetworkGatewayOnHub": {
-            "value": false
+            "value": true
         },
         "createAvdFslogixDeployment": {
             "value": true

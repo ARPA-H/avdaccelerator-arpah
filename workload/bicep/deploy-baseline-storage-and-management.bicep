@@ -38,8 +38,8 @@ param avdWorkloadSubsId string
 @sys.description('Azure Virtual Desktop Enterprise Application object ID (Enterprise app name: Azure Virtual Desktop) . (Default: "")')
 param avdServicePrincipalObjectId string = ''
 
-@sys.description('Azure Virtual Desktop ARM Enterprise Application Object Id (Enterprise app name: Azure Virtual Desktop ARM Provider). Required for the deployment of App Attach File Share with EntraID identity provider. (Default: "")')
-param avdArmServicePrincipalObjectId string = ''
+// @sys.description('Azure Virtual Desktop ARM Enterprise Application Object Id (Enterprise app name: Azure Virtual Desktop ARM Provider). Required for the deployment of App Attach File Share with EntraID identity provider. (Default: "")')
+// param avdArmServicePrincipalObjectId string = ''
 
 @sys.description('AVD session host local username.')
 param avdVmLocalUserName string
@@ -55,7 +55,7 @@ param avdVmLocalUserPassword string
   'EntraIDKerberos' // Microsoft Entra ID Kerberos, Users are Hybrid, Devices are EntraID Joined.
 ])
 @sys.description('Required, The service providing domain services for Azure Virtual Desktop. (Default: ADDS)')
-param avdIdentityServiceProvider string = 'ADDS'
+param avdIdentityServiceProvider string = 'EntraID'
 
 // @sys.description('Required, Enroll session hosts on Intune. (Default: false)')
 // param createIntuneEnrollment bool = false
@@ -63,18 +63,18 @@ param avdIdentityServiceProvider string = 'ADDS'
 @sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
 param avdSecurityGroups array = []
 
-@sys.description('FQDN of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "none")')
-param identityDomainName string = 'none'
+// @sys.description('FQDN of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "none")')
+// param identityDomainName string = 'none'
 
-@sys.description('GUID of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "")')
-param identityDomainGuid string = ''
+// @sys.description('GUID of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "")')
+// param identityDomainGuid string = ''
 
-@sys.description('AVD session host domain join user principal name. (Default: "none")')
-param avdDomainJoinUserName string = 'none'
+// @sys.description('AVD session host domain join user principal name. (Default: "none")')
+// param avdDomainJoinUserName string = 'none'
 
-@sys.description('AVD session host domain join password. (Default: "none")')
-@secure()
-param avdDomainJoinUserPassword string = 'none'
+// @sys.description('AVD session host domain join password. (Default: "none")')
+// @secure()
+// param avdDomainJoinUserPassword string = 'none'
 
 // @sys.description('OU path to join AVd VMs. (Default: "")')
 // param avdOuPath string = ''
@@ -319,7 +319,7 @@ param diskZeroTrust bool = true
 // Custom Naming
 // Input must followe resource naming rules on https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules
 @sys.description('AVD resources custom naming. (Default: false)')
-param avdUseCustomNaming bool = false
+param avdUseCustomNaming bool = true
 
 @maxLength(90)
 @sys.description('AVD service resources resource group custom name. (Default: rg-avd-arpah-dev-use2-service-objects)')
@@ -443,10 +443,10 @@ param ztKvPrefixCustomName string = 'kv-key'
 // Resource tagging
 //
 @sys.description('Apply tags on resources and resource groups. (Default: false)')
-param createResourceTags bool = false
+param createResourceTags bool = true
 
 @sys.description('The name of workload for tagging purposes. (Default: Contoso-Workload)')
-param workloadNameTag string = 'Contoso-Workload'
+param workloadNameTag string = 'ARPA-H-AVD-Workload'
 
 @allowed([
   ''
@@ -456,7 +456,7 @@ param workloadNameTag string = 'Contoso-Workload'
   'Power'
 ])
 @sys.description('Reference to the size of the VM for your workloads (Default: Light)')
-param workloadTypeTag string = 'Light'
+param workloadTypeTag string = 'Medium'
 
 @allowed([
   ''
@@ -467,10 +467,10 @@ param workloadTypeTag string = 'Light'
   'Highly-confidential'
 ])
 @sys.description('Sensitivity of data hosted (Default: Non-business)')
-param dataClassificationTag string = 'Non-business'
+param dataClassificationTag string = 'General'
 
 @sys.description('Department that owns the deployment, (Dafult: Contoso-AVD)')
-param departmentTag string = 'Contoso-AVD'
+param departmentTag string = 'ARPA-H-AVD'
 
 @allowed([
   ''
@@ -484,22 +484,22 @@ param departmentTag string = 'Contoso-AVD'
 param workloadCriticalityTag string = 'Low'
 
 @sys.description('Tag value for custom criticality value. (Default: Contoso-Critical)')
-param workloadCriticalityCustomValueTag string = 'Contoso-Critical'
+param workloadCriticalityCustomValueTag string = 'ARPA-H-AVD-Critical'
 
 @sys.description('Details about the application.')
-param applicationNameTag string = 'Contoso-App'
+param applicationNameTag string = 'ARPA-H-AVD-App'
 
 @sys.description('Service level agreement level of the worload. (Contoso-SLA)')
-param workloadSlaTag string = 'Contoso-SLA'
+param workloadSlaTag string = 'ARPA-H-AVD-SLA'
 
 @sys.description('Team accountable for day-to-day operations. (workload-admins@Contoso.com)')
-param opsTeamTag string = 'workload-admins@Contoso.com'
+param opsTeamTag string = 'workload-admins@arpa-h.com'
 
 @sys.description('Organizational owner of the AVD deployment. (Default: workload-owner@Contoso.com)')
-param ownerTag string = 'workload-owner@Contoso.com'
+param ownerTag string = 'workload-owner@arpa-h.com'
 
 @sys.description('Cost center of owner team. (Default: Contoso-CC)')
-param costCenterTag string = 'Contoso-CC'
+param costCenterTag string = 'ARPA-H-AVD-CC'
 //
 
 //@sys.description('Remove resources not needed afdter deployment. (Default: false)')
@@ -524,7 +524,7 @@ param enableKvPurgeProtection bool = true
 // Parameters for Microsoft Defender
 //
 @sys.description('Enable Microsoft Defender on the subscription. (Default: false)')
-param deployDefender bool = false
+param deployDefender bool = true
 
 @sys.description('Enable Microsoft Defender for servers. (Default: true)')
 param enableDefForServers bool = true
@@ -1242,7 +1242,7 @@ module identity './modules/identity/deploy.bicep' = {
     serviceObjectsRgName: varServiceObjectsRgName
     storageObjectsRgName: varStorageObjectsRgName
     avdServicePrincipalObjectId: avdServicePrincipalObjectId
-    avdArmServicePrincipalObjectId: avdArmServicePrincipalObjectId
+    avdArmServicePrincipalObjectId: ''
     deployScalingPlan: !empty(avdServicePrincipalObjectId) ? varDeployScalingPlan : false
     storageManagedIdentityName: varStorageManagedIdentityName
     enableStartVmOnConnect: avdStartVmOnConnect
@@ -1358,16 +1358,16 @@ module wrklKeyVault '../../avm/1.0.0/res/key-vault/vault/main.bicep' = {
             value: avdVmLocalUserName
             contentType: 'Session host local user credentials'
           }
-          {
-            name: 'domainJoinUserName'
-            value: avdDomainJoinUserName
-            contentType: 'Domain join credentials'
-          }
-          {
-            name: 'domainJoinUserPassword'
-            value: avdDomainJoinUserPassword
-            contentType: 'Domain join credentials'
-          }
+          // {
+          //   name: 'domainJoinUserName'
+          //   value: avdDomainJoinUserName
+          //   contentType: 'Domain join credentials'
+          // }
+          // {
+          //   name: 'domainJoinUserPassword'
+          //   value: avdDomainJoinUserPassword
+          //   contentType: 'Domain join credentials'
+          // }
         ]
       : [
           {
@@ -1380,16 +1380,16 @@ module wrklKeyVault '../../avm/1.0.0/res/key-vault/vault/main.bicep' = {
             value: avdVmLocalUserName
             contentType: 'Session host local user credentials'
           }
-          {
-            name: 'domainJoinUserName'
-            value: 'NoUsername'
-            contentType: 'Domain join credentials'
-          }
-          {
-            name: 'domainJoinUserPassword'
-            value: 'NoPassword'
-            contentType: 'Domain join credentials'
-          }
+          // {
+          //   name: 'domainJoinUserName'
+          //   value: 'NoUsername'
+          //   contentType: 'Domain join credentials'
+          // }
+          // {
+          //   name: 'domainJoinUserPassword'
+          //   value: 'NoPassword'
+          //   contentType: 'Domain join credentials'
+          // }
         ]
     tags: createResourceTags
       ? union(varCustomResourceTags, varAvdDefaultTags, varWorkloadKeyvaultTag)
@@ -1467,7 +1467,7 @@ module fslogixAzureFilesStorage './modules/storageAzureFiles/deploy-arpah.bicep'
     storageAccountName: varFslogixStorageName
     // storageToDomainScript: varStorageToDomainScript
     // storageToDomainScriptUri: varStorageToDomainScriptUri
-    identityServiceProvider: avdIdentityServiceProvider
+    // identityServiceProvider: avdIdentityServiceProvider
     // dscAgentPackageLocation: varStorageAzureFilesDscAgentPackageLocation
     // storageCustomOuPath: varStorageCustomOuPath
     // managementVmName: varManagementVmName
@@ -1481,8 +1481,8 @@ module fslogixAzureFilesStorage './modules/storageAzureFiles/deploy-arpah.bicep'
     // domainJoinUserName: avdDomainJoinUserName
     // wrklKvName: varWrklKvName
     // serviceObjectsRgName: varServiceObjectsRgName
-    identityDomainName: identityDomainName
-    identityDomainGuid: identityDomainGuid
+    // identityDomainName: identityDomainName
+    // identityDomainGuid: identityDomainGuid
     location: avdSessionHostLocation
     storageObjectsRgName: varStorageObjectsRgName
     privateEndpointSubnetId: '${existingVnet.id}/subnets/${varVnetPrivateEndpointSubnetName}'

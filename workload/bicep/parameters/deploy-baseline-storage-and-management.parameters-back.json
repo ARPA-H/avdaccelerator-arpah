@@ -3,21 +3,18 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "deploymentPrefix": {
-        "value": "avda"
+      "value": "avda"
+    },
+    "deploymentEnvironment":{
+        "value": "Test"
     },
     "avdSessionHostLocation": {
-        "value": "centralus"
-    },
-    "avdManagementPlaneLocation": {
-        "value": "centralus"
+      "value": "centralus"
     },
     "avdWorkloadSubsId": {
       "value": ""
     },
     "avdServicePrincipalObjectId": {
-      "value": ""
-    },
-    "avdArmServicePrincipalObjectId": {
       "value": ""
     },
     "avdVmLocalUserName": {
@@ -26,14 +23,13 @@
     "avdVmLocalUserPassword": {
       "value": ""
     },
-    "avdIdentityServiceProvider": {
-        "value": "EntraID"
-    }, 
-    "createIntuneEnrollment": {
-      "value": false
-    },
     "avdSecurityGroups": {
-      "value": ["ARPA-H AVD Test"]
+      "value": [
+        {
+          "objectid": "39d73622-aedc-4432-ad47-b193bdd18d1a",
+          "displayName": "ARPA-H-AVD Test"
+        }
+      ]
     },
     "identityDomainName": {
       "value": ""
@@ -47,163 +43,27 @@
     "avdDomainJoinUserPassword": {
       "value": ""
     },
-    "avdOuPath": {
-      "value": ""
-    },
-    "avdHostPoolType": {},
-    "hostPoolPreferredAppGroupType": {},
-    "hostPoolPublicNetworkAccess": {},
-    "workspacePublicNetworkAccess": {},
-    "avdPersonalAssignType": {},
-    "avdHostPoolLoadBalancerType": {},
-    "hostPoolMaxSessions": {
-      "value": 0
-    },
     "avdStartVmOnConnect": {
       "value": false
     },
-    "avdHostPoolRdpProperties": {
-      "value": ""
-    },
     "avdDeployScalingPlan": {
-      "value": false
-    },
-    "createAvdVnet": {
-      "value": false
-    },
-    "existingVnetAvdSubnetResourceId": {
-      "value": ""
-    },
-    "existingVnetPrivateEndpointSubnetResourceId": {
-      "value": ""
-    },
-    "existingHubVnetResourceId": {
-      "value": ""
-    },
-    "avdVnetworkAddressPrefixes": {
-      "value": ""
-    },
-    "vNetworkAvdSubnetAddressPrefix": {
-      "value": ""
-    },
-    "vNetworkPrivateEndpointSubnetAddressPrefix": {
-      "value": ""
-    },
-    "customDnsIps": {
-      "value": ""
-    },
-    "deployDDoSNetworkProtection": {
       "value": false
     },
     "deployPrivateEndpointKeyvaultStorage": {
       "value": false
     },
-    "deployAvdPrivateLinkService": {
-      "value": false
-    },
-    "createPrivateDnsZones": {
-      "value": false
-    },
-    "avdVnetPrivateDnsZoneConnectionResourceId": {
-      "value": ""
-    },
-    "avdVnetPrivateDnsZoneDiscoveryResourceId": {
-      "value": ""
-    },
-    "avdVnetPrivateDnsZoneFilesId": {
-      "value": ""
-    },
-    "avdVnetPrivateDnsZoneKeyvaultId": {
-      "value": ""
-    },
-    "vNetworkGatewayOnHub": {
-      "value": false
-    },
     "createAvdFslogixDeployment": {
-      "value": false
-    },
-    "createAppAttachDeployment": {
-      "value": false
-    },
-    "fslogixFileShareQuotaSize": {
-      "value": 0
-    },
-    "appAttachFileShareQuotaSize": {
-      "value": 0
-    },
-    "avdDeploySessionHosts": {
       "value": false
     },
     "deployGpuPolicies": {
       "value": false
     },
-    "avdDeployMonitoring": {
-      "value": false
-    },
-    "deployAlaWorkspace": {
-      "value": false
-    },
-    "deployCustomPolicyMonitoring": {
-      "value": false
-    },
-    "avdAlaWorkspaceDataRetention": {
-      "value": 0
-    },
-    "alaExistingWorkspaceResourceId": {
-      "value": ""
-    },
-    "avdDeploySessionHostsCount": {
-      "value": 0
-    },
-    "avdSessionHostCountIndex": {
-      "value": 0
-    },
-    "availability": {},
-    "availabilityZones": {},
     "zoneRedundantStorage": {
       "value": false
     },
     "fslogixStoragePerformance": {},
-    "appAttachStoragePerformance": {},
     "diskZeroTrust": {
       "value": false
-    },
-    "avdSessionHostsSize": {
-      "value": ""
-    },
-    "avdSessionHostDiskType": {
-      "value": ""
-    },
-    "customOsDiskSizeGB": {
-      "value": 0
-    },
-    "enableAcceleratedNetworking": {
-      "value": false
-    },
-    "securityType": {},
-    "secureBootEnabled": {
-      "value": false
-    },
-    "vTpmEnabled": {
-      "value": false
-    },
-    "useSharedImage": {
-      "value": false
-    },
-    "mpImageOffer": {
-      "value": ""
-    },
-    "mpImageSku": {
-      "value": ""
-    },
-    "avdCustomImageDefinitionId": {
-      "value": ""
-    },
-    "managementVmOsImage": {
-      "value": ""
-    },
-    "storageOuPath": {
-      "value": ""
     },
     "avdUseCustomNaming": {
       "value": false
@@ -235,52 +95,10 @@
     "privateEndpointVnetworkSubnetCustomName": {
       "value": ""
     },
-    "avdNetworksecurityGroupCustomName": {
-      "value": ""
-    },
-    "privateEndpointNetworksecurityGroupCustomName": {
-      "value": ""
-    },
-    "avdRouteTableCustomName": {
-      "value": ""
-    },
-    "privateEndpointRouteTableCustomName": {
-      "value": ""
-    },
     "avdApplicationSecurityGroupCustomName": {
       "value": ""
     },
-    "avdWorkSpaceCustomName": {
-      "value": ""
-    },
-    "avdWorkSpaceCustomFriendlyName": {
-      "value": ""
-    },
-    "avdHostPoolCustomName": {
-      "value": ""
-    },
-    "avdHostPoolCustomFriendlyName": {
-      "value": ""
-    },
-    "avdScalingPlanCustomName": {
-      "value": ""
-    },
-    "avdApplicationGroupCustomName": {
-      "value": ""
-    },
-    "avdApplicationGroupCustomFriendlyName": {
-      "value": ""
-    },
-    "avdSessionHostCustomNamePrefix": {
-      "value": ""
-    },
     "storageAccountPrefixCustomName": {
-      "value": ""
-    },
-    "fslogixFileShareCustomName": {
-      "value": ""
-    },
-    "appAttachFileShareCustomName": {
       "value": ""
     },
     "avdWrklKvPrefixCustomName": {
@@ -325,17 +143,8 @@
     "time": {
       "value": ""
     },
-    "enableTelemetry": {
-      "value": false
-    },
     "enableKvPurgeProtection": {
       "value": false
-    },
-    "deployAntiMalwareExt": {
-      "value": false
-    },
-    "customStaticRoutes": {
-      "value": []
     },
     "deployDefender": {
       "value": false

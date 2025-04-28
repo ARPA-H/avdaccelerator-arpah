@@ -14,8 +14,8 @@ param workloadSubsId string
 @sys.description('Resource Group Name for Azure Files.')
 param storageObjectsRgName string
 
-@sys.description('Required, The service providing domain services for Azure Virtual Desktop.')
-param identityServiceProvider string
+// @sys.description('Required, The service providing domain services for Azure Virtual Desktop.')
+// param identityServiceProvider string
 
 // @sys.description('Resource Group Name for management VM.')
 // param serviceObjectsRgName string
@@ -38,11 +38,11 @@ param location string
 // @sys.description('File share SMB multichannel.')
 // param fileShareMultichannel bool
 
-@sys.description('Identity domain name.')
-param identityDomainName string
+// @sys.description('Identity domain name.')
+// param identityDomainName string
 
-@sys.description('AD domain GUID.')
-param identityDomainGuid string
+// @sys.description('AD domain GUID.')
+// param identityDomainGuid string
 
 // @sys.description('Keyvault name to get credentials from.')
 // param wrklKvName string
@@ -144,19 +144,7 @@ module storageAndFile '../../../../avm/1.0.0/res/storage/storage-account/main.bi
     publicNetworkAccess: deployPrivateEndpoint ? 'Disabled' : 'Enabled'
     kind: ((storageSku == 'Premium_LRS') || (storageSku == 'Premium_ZRS')) ? 'BlobStorage' : 'StorageV2'
     largeFileSharesState: (storageSku == 'Standard_LRS') || (storageSku == 'Standard_ZRS') ? 'Enabled' : 'Disabled'
-    azureFilesIdentityBasedAuthentication: identityServiceProvider != 'EntraID'
-      ? {
-          directoryServiceOptions: identityServiceProvider == 'EntraDS'
-            ? 'AADDS'
-            : identityServiceProvider == 'EntraIDKerberos' ? 'AADKERB' : 'none'
-          activeDirectoryProperties: (identityServiceProvider == 'EntraIDKerberos')
-            ? {
-                domainGuid: identityDomainGuid
-                domainName: identityDomainName
-              }
-            : {}
-        }
-      : null
+    azureFilesIdentityBasedAuthentication: null
     accessTier: 'Hot'
     networkAcls: deployPrivateEndpoint ? {
         bypass: 'AzureServices'

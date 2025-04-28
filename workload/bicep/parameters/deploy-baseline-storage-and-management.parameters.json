@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "deploymentPrefix": {
+      "value": "avda"
+    },
+    "deploymentEnvironment":{
+        "value": "Test"
+    },
+    "avdSessionHostLocation": {
+      "value": "centralus"
+    },
+    "avdWorkloadSubsId": {
+      "value": ""
+    },
+    "avdServicePrincipalObjectId": {
+      "value": ""
+    },
+    "avdVmLocalUserName": {
+      "value": ""
+    },
+    "avdVmLocalUserPassword": {
+      "value": ""
+    },
+    "avdSecurityGroups": {
+      "value": [
+        {
+          "objectid": "39d73622-aedc-4432-ad47-b193bdd18d1a",
+          "displayName": "ARPA-H-AVD Test"
+        }
+      ]
+    },
+    "diskZeroTrust": {
+      "value": true
+    }
+  }
+}

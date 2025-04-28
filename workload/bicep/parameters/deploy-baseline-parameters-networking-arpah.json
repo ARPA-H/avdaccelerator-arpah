@@ -57,7 +57,7 @@
             "value": true
         },
         "vNetworkGatewayOnHub": {
-            "value": true
+            "value": false
         },
         "createAvdFslogixDeployment": {
             "value": true

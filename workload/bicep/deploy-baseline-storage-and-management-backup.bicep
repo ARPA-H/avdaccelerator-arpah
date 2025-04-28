@@ -57,8 +57,8 @@ param avdVmLocalUserPassword string
 @sys.description('Required, The service providing domain services for Azure Virtual Desktop. (Default: ADDS)')
 param avdIdentityServiceProvider string = 'ADDS'
 
-// @sys.description('Required, Enroll session hosts on Intune. (Default: false)')
-// param createIntuneEnrollment bool = false
+@sys.description('Required, Enroll session hosts on Intune. (Default: false)')
+param createIntuneEnrollment bool = false
 
 @sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
 param avdSecurityGroups array = []
@@ -79,58 +79,58 @@ param avdDomainJoinUserPassword string = 'none'
 @sys.description('OU path to join AVd VMs. (Default: "")')
 param avdOuPath string = ''
 
-// @allowed([
-//   'Personal'
-//   'Pooled'
-// ])
-// @sys.description('AVD host pool type. (Default: Pooled)')
-// param avdHostPoolType string = 'Pooled'
+@allowed([
+  'Personal'
+  'Pooled'
+])
+@sys.description('AVD host pool type. (Default: Pooled)')
+param avdHostPoolType string = 'Pooled'
 
-// @sys.description('Optional. The type of preferred application group type, default to Desktop Application Group.')
-// @allowed([
-//   'Desktop'
-//   'RemoteApp'
-// ])
-// param hostPoolPreferredAppGroupType string = 'Desktop'
+@sys.description('Optional. The type of preferred application group type, default to Desktop Application Group.')
+@allowed([
+  'Desktop'
+  'RemoteApp'
+])
+param hostPoolPreferredAppGroupType string = 'Desktop'
 
-// @allowed([
-//   'Disabled' // Blocks public access and requires both clients and session hosts to use the private endpoints
-//   'Enabled' // Allow clients and session hosts to communicate over the public network
-//   'EnabledForClientsOnly' // Allows only clients to access AVD over public network
-//   'EnabledForSessionHostsOnly' // Allows only the session hosts to communicate over the public network
-// ])
-// @sys.description('Enables or Disables public network access on the host pool. (Default: Enabled.)')
-// param hostPoolPublicNetworkAccess string = 'Enabled'
+@allowed([
+  'Disabled' // Blocks public access and requires both clients and session hosts to use the private endpoints
+  'Enabled' // Allow clients and session hosts to communicate over the public network
+  'EnabledForClientsOnly' // Allows only clients to access AVD over public network
+  'EnabledForSessionHostsOnly' // Allows only the session hosts to communicate over the public network
+])
+@sys.description('Enables or Disables public network access on the host pool. (Default: Enabled.)')
+param hostPoolPublicNetworkAccess string = 'Enabled'
 
-// @allowed([
-//   'Disabled'
-//   'Enabled'
-// ])
-// @sys.description('Default to Enabled. Enables or Disables public network access on the workspace.')
-// param workspacePublicNetworkAccess string = 'Enabled'
+@allowed([
+  'Disabled'
+  'Enabled'
+])
+@sys.description('Default to Enabled. Enables or Disables public network access on the workspace.')
+param workspacePublicNetworkAccess string = 'Enabled'
 
-// @allowed([
-//   'Automatic'
-//   'Direct'
-// ])
-// @sys.description('AVD host pool type. (Default: Automatic)')
-// param avdPersonalAssignType string = 'Automatic'
+@allowed([
+  'Automatic'
+  'Direct'
+])
+@sys.description('AVD host pool type. (Default: Automatic)')
+param avdPersonalAssignType string = 'Automatic'
 
-// @allowed([
-//   'BreadthFirst'
-//   'DepthFirst'
-// ])
-// @sys.description('AVD host pool load balacing type. (Default: BreadthFirst)')
-// param avdHostPoolLoadBalancerType string = 'BreadthFirst'
+@allowed([
+  'BreadthFirst'
+  'DepthFirst'
+])
+@sys.description('AVD host pool load balacing type. (Default: BreadthFirst)')
+param avdHostPoolLoadBalancerType string = 'BreadthFirst'
 
-// @sys.description('AVD host pool maximum number of user sessions per session host. (Default: 8)')
-// param hostPoolMaxSessions int = 8
+@sys.description('AVD host pool maximum number of user sessions per session host. (Default: 8)')
+param hostPoolMaxSessions int = 8
 
 @sys.description('AVD host pool start VM on Connect. (Default: true)')
 param avdStartVmOnConnect bool = true
 
-// @sys.description('AVD host pool Custom RDP properties. (Default: audiocapturemode:i:1;audiomode:i:0;drivestoredirect:s:;redirectclipboard:i:1;redirectcomports:i:1;redirectprinters:i:1;redirectsmartcards:i:1;screen mode id:i:2)')
-// param avdHostPoolRdpProperties string = 'audiocapturemode:i:1;audiomode:i:0;drivestoredirect:s:;redirectclipboard:i:1;redirectcomports:i:1;redirectprinters:i:1;redirectsmartcards:i:1;screen mode id:i:2'
+@sys.description('AVD host pool Custom RDP properties. (Default: audiocapturemode:i:1;audiomode:i:0;drivestoredirect:s:;redirectclipboard:i:1;redirectcomports:i:1;redirectprinters:i:1;redirectsmartcards:i:1;screen mode id:i:2)')
+param avdHostPoolRdpProperties string = 'audiocapturemode:i:1;audiomode:i:0;drivestoredirect:s:;redirectclipboard:i:1;redirectcomports:i:1;redirectprinters:i:1;redirectsmartcards:i:1;screen mode id:i:2'
 
 @sys.description('AVD deploy scaling plan. (Default: true)')
 param avdDeployScalingPlan bool = true
@@ -144,47 +144,47 @@ param existingVnetAvdSubnetResourceId string = ''
 @sys.description('Existing virtual network subnet for private endpoints. (Default: "")')
 param existingVnetPrivateEndpointSubnetResourceId string = ''
 
-// @sys.description('Existing hub virtual network for perring. (Default: "")')
-// param existingHubVnetResourceId string = ''
+@sys.description('Existing hub virtual network for perring. (Default: "")')
+param existingHubVnetResourceId string = ''
 
-// @sys.description('AVD virtual network address prefixes. (Default: 10.10.0.0/16)')
-// param avdVnetworkAddressPrefixes string = '10.10.0.0/16'
+@sys.description('AVD virtual network address prefixes. (Default: 10.10.0.0/16)')
+param avdVnetworkAddressPrefixes string = '10.10.0.0/16'
 
-// @sys.description('AVD virtual network subnet address prefix. (Default: 10.10.1.0/24)')
-// param vNetworkAvdSubnetAddressPrefix string = '10.10.1.0/24'
+@sys.description('AVD virtual network subnet address prefix. (Default: 10.10.1.0/24)')
+param vNetworkAvdSubnetAddressPrefix string = '10.10.1.0/24'
 
-// @sys.description('private endpoints virtual network subnet address prefix. (Default: 10.10.2.0/27)')
-// param vNetworkPrivateEndpointSubnetAddressPrefix string = '10.10.2.0/27'
+@sys.description('private endpoints virtual network subnet address prefix. (Default: 10.10.2.0/27)')
+param vNetworkPrivateEndpointSubnetAddressPrefix string = '10.10.2.0/27'
 
-// @sys.description('custom DNS servers IPs. (Default: "")')
-// param customDnsIps string = ''
+@sys.description('custom DNS servers IPs. (Default: "")')
+param customDnsIps string = ''
 
-// @sys.description('Deploy DDoS Network Protection for virtual network. (Default: true)')
-// param deployDDoSNetworkProtection bool = false
+@sys.description('Deploy DDoS Network Protection for virtual network. (Default: true)')
+param deployDDoSNetworkProtection bool = false
 
 @sys.description('Deploy private endpoints for key vault and storage. (Default: true)')
 param deployPrivateEndpointKeyvaultStorage bool = true
 
-// @sys.description('Deploys the private link for AVD. Requires resource provider registration or re-registration. (Default: false)')
-// param deployAvdPrivateLinkService bool = false
+@sys.description('Deploys the private link for AVD. Requires resource provider registration or re-registration. (Default: false)')
+param deployAvdPrivateLinkService bool = false
 
 @sys.description('Create new  Azure private DNS zones for private endpoints. (Default: true)')
 param createPrivateDnsZones bool = true
 
-// @sys.description('The ResourceID of the AVD Private DNS Zone for Connection. (privatelink.wvd.azure.com). Only required if createPrivateDNSZones is set to false.')
-// param avdVnetPrivateDnsZoneConnectionResourceId string = ''
+@sys.description('The ResourceID of the AVD Private DNS Zone for Connection. (privatelink.wvd.azure.com). Only required if createPrivateDNSZones is set to false.')
+param avdVnetPrivateDnsZoneConnectionResourceId string = ''
 
-// @sys.description('The ResourceID of the AVD Private DNS Zone for Discovery. (privatelink-global.wvd.azure.com). Only required if createPrivateDNSZones is set to false.')
-// param avdVnetPrivateDnsZoneDiscoveryResourceId string = ''
+@sys.description('The ResourceID of the AVD Private DNS Zone for Discovery. (privatelink-global.wvd.azure.com). Only required if createPrivateDNSZones is set to false.')
+param avdVnetPrivateDnsZoneDiscoveryResourceId string = ''
 
-// @sys.description('Use existing Azure private DNS zone for Azure files. (Default: "")')
-// param avdVnetPrivateDnsZoneFilesId string = ''
+@sys.description('Use existing Azure private DNS zone for Azure files. (Default: "")')
+param avdVnetPrivateDnsZoneFilesId string = ''
 
 @sys.description('Use existing Azure private DNS zone for key vault privatelink.vaultcore.azure.net or privatelink.vaultcore.usgovcloudapi.net. (Default: "")')
 param avdVnetPrivateDnsZoneKeyvaultId string = ''
 
-// @sys.description('Does the hub contains a virtual network gateway. (Default: false)')
-// param vNetworkGatewayOnHub bool = false
+@sys.description('Does the hub contains a virtual network gateway. (Default: false)')
+param vNetworkGatewayOnHub bool = false
 
 @sys.description('Deploy Fslogix setup. (Default: true)')
 param createAvdFslogixDeployment bool = true
@@ -195,8 +195,8 @@ param createAppAttachDeployment bool = false
 @sys.description('Fslogix file share size. (Default: 1)')
 param fslogixFileShareQuotaSize int = 1
 
-// @sys.description('App Attach file share size. (Default: 1)')
-// param appAttachFileShareQuotaSize int = 1
+@sys.description('App Attach file share size. (Default: 1)')
+param appAttachFileShareQuotaSize int = 1
 
 @sys.description('Deploy new session hosts. (Default: true)')
 param avdDeploySessionHosts bool = true
@@ -204,45 +204,45 @@ param avdDeploySessionHosts bool = true
 @sys.description('Deploy VM GPU extension policies. (Default: false)')
 param deployGpuPolicies bool = false
 
-// @sys.description('Deploy AVD monitoring resources and setings. (Default: false)')
-// param avdDeployMonitoring bool = false
+@sys.description('Deploy AVD monitoring resources and setings. (Default: false)')
+param avdDeployMonitoring bool = false
 
-// @sys.description('Deploy AVD Azure log analytics workspace. (Default: true)')
-// param deployAlaWorkspace bool = true
+@sys.description('Deploy AVD Azure log analytics workspace. (Default: true)')
+param deployAlaWorkspace bool = true
 
-// @sys.description('Create and assign custom Azure Policy for diagnostic settings for the AVD Log Analytics workspace. (Default: false)')
-// param deployCustomPolicyMonitoring bool = false
+@sys.description('Create and assign custom Azure Policy for diagnostic settings for the AVD Log Analytics workspace. (Default: false)')
+param deployCustomPolicyMonitoring bool = false
 
-// @sys.description('AVD Azure log analytics workspace data retention. (Default: 90)')
-// param avdAlaWorkspaceDataRetention int = 90
+@sys.description('AVD Azure log analytics workspace data retention. (Default: 90)')
+param avdAlaWorkspaceDataRetention int = 90
 
-// @sys.description('Existing Azure log analytics workspace resource ID to connect to. (Default: "")')
-// param alaExistingWorkspaceResourceId string = ''
+@sys.description('Existing Azure log analytics workspace resource ID to connect to. (Default: "")')
+param alaExistingWorkspaceResourceId string = ''
 
-// @minValue(1)
-// @maxValue(1999)
-// @sys.description('Quantity of session hosts to deploy. (Default: 1)')
-// param avdDeploySessionHostsCount int = 1
+@minValue(1)
+@maxValue(1999)
+@sys.description('Quantity of session hosts to deploy. (Default: 1)')
+param avdDeploySessionHostsCount int = 1
 
-// @minValue(1)
-// @maxValue(9998)
-// @sys.description('The session host number to begin with for the deployment. This is important when adding virtual machines to host pool ensure the names do not conflict. (Default: 1)')
-// param avdSessionHostCountIndex int = 1
+@minValue(1)
+@maxValue(9998)
+@sys.description('The session host number to begin with for the deployment. This is important when adding virtual machines to host pool ensure the names do not conflict. (Default: 1)')
+param avdSessionHostCountIndex int = 1
 
-// @sys.description('When true VMs are distributed across availability zones, when set to false, VMs will be deployed at regional level.')
-// @allowed([
-//   'None'
-//   'AvailabilityZones'
-// ])
-// param availability string = 'None'
+@sys.description('When true VMs are distributed across availability zones, when set to false, VMs will be deployed at regional level.')
+@allowed([
+  'None'
+  'AvailabilityZones'
+])
+param availability string = 'None'
 
-// @sys.description('The Availability Zones to use for the session hosts.')
-// @allowed([
-//   '1'
-//   '2'
-//   '3'
-// ])
-// param availabilityZones array = ['1', '2', '3']
+@sys.description('The Availability Zones to use for the session hosts.')
+@allowed([
+  '1'
+  '2'
+  '3'
+])
+param availabilityZones array = ['1', '2', '3']
 
 @sys.description('When true, Zone Redundant Storage (ZRS) is used, when set to false, Locally Redundant Storage (LRS) is used. (Default: false)')
 param zoneRedundantStorage bool = false
@@ -260,12 +260,12 @@ param zoneRedundantStorage bool = false
 @sys.description('Storage account SKU for FSLogix storage. Recommended tier is Premium (Default: Premium)')
 param fslogixStoragePerformance string = 'Premium'
 
-// @allowed([
-//   'Standard'
-//   'Premium'
-// ])
-// @sys.description('Storage account SKU for App Attach storage. Recommended tier is Premium. (Default: Premium)')
-// param appAttachStoragePerformance string = 'Premium'
+@allowed([
+  'Standard'
+  'Premium'
+])
+@sys.description('Storage account SKU for App Attach storage. Recommended tier is Premium. (Default: Premium)')
+param appAttachStoragePerformance string = 'Premium'
 
 @sys.description('Enables a zero trust configuration on the session host disks. (Default: false)')
 param diskZeroTrust bool = false
@@ -273,17 +273,17 @@ param diskZeroTrust bool = false
 @sys.description('Session host VM size. (Default: Standard_D4ads_v5)')
 param avdSessionHostsSize string = 'Standard_D4ads_v5'
 
-// @sys.description('OS disk type for session host. (Default: Premium_LRS)')
-// param avdSessionHostDiskType string = 'Premium_LRS'
+@sys.description('OS disk type for session host. (Default: Premium_LRS)')
+param avdSessionHostDiskType string = 'Premium_LRS'
 
-// @sys.description('Optional. Custom OS Disk Size.')
-// param customOsDiskSizeGB int = 0
+@sys.description('Optional. Custom OS Disk Size.')
+param customOsDiskSizeGB int = 0
 
-// @sys.description('''Enables accelerated Networking on the session hosts.
-// If using a Azure Compute Gallery Image, the Image Definition must have been configured with
-// the \'isAcceleratedNetworkSupported\' property set to \'true\'.
-// ''')
-// param enableAcceleratedNetworking bool = true
+@sys.description('''Enables accelerated Networking on the session hosts.
+If using a Azure Compute Gallery Image, the Image Definition must have been configured with
+the \'isAcceleratedNetworkSupported\' property set to \'true\'.
+''')
+param enableAcceleratedNetworking bool = true
 
 @allowed([
   'Standard'
@@ -298,17 +298,17 @@ param secureBootEnabled bool = true
 @sys.description('Specifies whether vTPM should be enabled on the virtual machine. This parameter is part of the UefiSettings. securityType should be set to TrustedLaunch or ConfidentialVM to enable UefiSettings. (Default: true)')
 param vTpmEnabled bool = true
 
-// @sys.description('Set to deploy image from Azure Compute Gallery. (Default: false)')
-// param useSharedImage bool = false
+@sys.description('Set to deploy image from Azure Compute Gallery. (Default: false)')
+param useSharedImage bool = false
 
-// @sys.description('AVD OS image offer. (Default: Office-365)')
-// param mpImageOffer string = 'Office-365'
+@sys.description('AVD OS image offer. (Default: Office-365)')
+param mpImageOffer string = 'Office-365'
 
-// @sys.description('AVD OS image SKU. (Default: win11-24h2-avd-m365)')
-// param mpImageSku string = 'win11-24h2-avd-m365'
+@sys.description('AVD OS image SKU. (Default: win11-24h2-avd-m365)')
+param mpImageSku string = 'win11-24h2-avd-m365'
 
-// @sys.description('Source custom image ID. (Default: "")')
-// param avdCustomImageDefinitionId string = ''
+@sys.description('Source custom image ID. (Default: "")')
+param avdCustomImageDefinitionId string = ''
 
 @sys.description('Management VM image SKU (Default: winServer_2022_Datacenter_smalldisk_g2)')
 param managementVmOsImage string = 'winServer_2022_Datacenter_smalldisk_g2'
@@ -357,57 +357,57 @@ param avdVnetworkSubnetCustomName string = 'snet-avd-arpah-${toLower(deploymentE
 @sys.description('private endpoints virtual network subnet custom name. (Default: snet-pe-arpah-dev-use2-001)')
 param privateEndpointVnetworkSubnetCustomName string = 'snet-avd-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
-// @maxLength(80)
-// @sys.description('AVD network security group custom name. (Default: nsg-avd-arpah-dev-use2-001)')
-// param avdNetworksecurityGroupCustomName string = 'nsg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
+@maxLength(80)
+@sys.description('AVD network security group custom name. (Default: nsg-avd-arpah-dev-use2-001)')
+param avdNetworksecurityGroupCustomName string = 'nsg-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
-// @maxLength(80)
-// @sys.description('Private endpoint network security group custom name. (Default: nsg-pe-arpah-dev-use2-001)')
-// param privateEndpointNetworksecurityGroupCustomName string = 'nsg-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
+@maxLength(80)
+@sys.description('Private endpoint network security group custom name. (Default: nsg-pe-arpah-dev-use2-001)')
+param privateEndpointNetworksecurityGroupCustomName string = 'nsg-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
-// @maxLength(80)
-// @sys.description('AVD route table custom name. (Default: route-avd-arpah-dev-use2-001)')
-// param avdRouteTableCustomName string = 'route-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
+@maxLength(80)
+@sys.description('AVD route table custom name. (Default: route-avd-arpah-dev-use2-001)')
+param avdRouteTableCustomName string = 'route-avd-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
-// @maxLength(80)
-// @sys.description('Private endpoint route table custom name. (Default: route-avd-arpah-dev-use2-001)')
-// param privateEndpointRouteTableCustomName string = 'route-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
+@maxLength(80)
+@sys.description('Private endpoint route table custom name. (Default: route-avd-arpah-dev-use2-001)')
+param privateEndpointRouteTableCustomName string = 'route-pe-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(80)
 @sys.description('AVD application security custom name. (Default: asg-arpah-dev-use2-001)')
 param avdApplicationSecurityGroupCustomName string = 'asg-arpah-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
-// @maxLength(64)
-// @sys.description('AVD workspace custom name. (Default: vdws-app1-dev-use2-001)')
-// param avdWorkSpaceCustomName string = 'vdws-app1-dev-use2-001'
+@maxLength(64)
+@sys.description('AVD workspace custom name. (Default: vdws-app1-dev-use2-001)')
+param avdWorkSpaceCustomName string = 'vdws-app1-dev-use2-001'
 
-// @maxLength(64)
-// @sys.description('AVD workspace custom friendly (Display) name. (Default: App1 - Dev - East US 2 - 001)')
-// param avdWorkSpaceCustomFriendlyName string = 'App1 - Dev - East US 2 - 001'
+@maxLength(64)
+@sys.description('AVD workspace custom friendly (Display) name. (Default: App1 - Dev - East US 2 - 001)')
+param avdWorkSpaceCustomFriendlyName string = 'App1 - Dev - East US 2 - 001'
 
 @maxLength(64)
 @sys.description('AVD host pool custom name. (Default: vdpool-app1-dev-use2-001)')
 param avdHostPoolCustomName string = 'vdpool-app1-dev-use2-001'
 
-// @maxLength(64)
-// @sys.description('AVD host pool custom friendly (Display) name. (Default: App1 - East US - Dev - 001)')
-// param avdHostPoolCustomFriendlyName string = 'App1 - Dev - East US 2 - 001'
+@maxLength(64)
+@sys.description('AVD host pool custom friendly (Display) name. (Default: App1 - East US - Dev - 001)')
+param avdHostPoolCustomFriendlyName string = 'App1 - Dev - East US 2 - 001'
 
-// @maxLength(64)
-// @sys.description('AVD scaling plan custom name. (Default: vdscaling-app1-dev-use2-001)')
-// param avdScalingPlanCustomName string = 'vdscaling-app1-dev-use2-001'
+@maxLength(64)
+@sys.description('AVD scaling plan custom name. (Default: vdscaling-app1-dev-use2-001)')
+param avdScalingPlanCustomName string = 'vdscaling-app1-dev-use2-001'
 
-// @maxLength(64)
-// @sys.description('AVD desktop application group custom name. (Default: vdag-desktop-app1-dev-use2-001)')
-// param avdApplicationGroupCustomName string = 'vdag-desktop-app1-dev-use2-001'
+@maxLength(64)
+@sys.description('AVD desktop application group custom name. (Default: vdag-desktop-app1-dev-use2-001)')
+param avdApplicationGroupCustomName string = 'vdag-desktop-app1-dev-use2-001'
 
-// @maxLength(64)
-// @sys.description('AVD desktop application group custom friendly (Display) name. (Default: Desktops - App1 - East US - Dev - 001)')
-// param avdApplicationGroupCustomFriendlyName string = 'Desktops - App1 - Dev - East US 2 - 001'
+@maxLength(64)
+@sys.description('AVD desktop application group custom friendly (Display) name. (Default: Desktops - App1 - East US - Dev - 001)')
+param avdApplicationGroupCustomFriendlyName string = 'Desktops - App1 - Dev - East US 2 - 001'
 
-// @maxLength(11)
-// @sys.description('AVD session host prefix custom name. (Default: vmapp1duse2)')
-// param avdSessionHostCustomNamePrefix string = 'vmapp1duse2'
+@maxLength(11)
+@sys.description('AVD session host prefix custom name. (Default: vmapp1duse2)')
+param avdSessionHostCustomNamePrefix string = 'vmapp1duse2'
 
 // @maxLength(9)
 // @sys.description('AVD VMSS Flex custom name. (Default: vmss)')
@@ -420,8 +420,8 @@ param storageAccountPrefixCustomName string = 'st'
 @sys.description('FSLogix file share name. (Default: fslogix-pc-app1-dev-001)')
 param fslogixFileShareCustomName string = 'fslogix-pc-app1-dev-use2-001'
 
-// @sys.description('App Attach file share name. (Default: appa-app1-dev-001)')
-// param appAttachFileShareCustomName string = 'appa-app1-dev-use2-001'
+@sys.description('App Attach file share name. (Default: appa-app1-dev-001)')
+param appAttachFileShareCustomName string = 'appa-app1-dev-use2-001'
 
 //@maxLength(64)
 //@sys.description('AVD fslogix storage account office container file share prefix custom name. (Default: fslogix-oc-app1-dev-001)')
@@ -508,17 +508,17 @@ param costCenterTag string = 'Contoso-CC'
 @sys.description('Do not modify, used to set unique value for resource deployment.')
 param time string = utcNow()
 
-// @sys.description('Enable usage and telemetry feedback to Microsoft.')
-// param enableTelemetry bool = true
+@sys.description('Enable usage and telemetry feedback to Microsoft.')
+param enableTelemetry bool = true
 
 @sys.description('Enable purge protection for the keyvaults. (Default: true)')
 param enableKvPurgeProtection bool = true
 
-// @sys.description('Deploys anti malware extension on session hosts. (Default: true)')
-// param deployAntiMalwareExt bool = true
+@sys.description('Deploys anti malware extension on session hosts. (Default: true)')
+param deployAntiMalwareExt bool = true
 
-// @sys.description('Additional customer-provided static routes to be added to the route tables.')
-// param customStaticRoutes array = []
+@sys.description('Additional customer-provided static routes to be added to the route tables.')
+param customStaticRoutes array = []
 
 //
 // Parameters for Microsoft Defender
@@ -579,60 +579,60 @@ var varStorageObjectsRgName = avdUseCustomNaming
 var varMonitoringRgName = avdUseCustomNaming
   ? avdMonitoringRgCustomName
   : 'rg-avd-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}-monitoring' // max length limit 90 characters
-// var varVnetName = avdUseCustomNaming ? avdVnetworkCustomName : 'vnet-${varComputeStorageResourcesNamingStandard}-001'
-// var varHubVnetName = (createAvdVnet && !empty(existingHubVnetResourceId))
-//   ? split(existingHubVnetResourceId, '/')[8]
-//   : ''
-// var varVnetPeeringName = 'peer-${varHubVnetName}'
-// var varRemoteVnetPeeringName = 'peer-${varVnetName}'
+var varVnetName = avdUseCustomNaming ? avdVnetworkCustomName : 'vnet-${varComputeStorageResourcesNamingStandard}-001'
+var varHubVnetName = (createAvdVnet && !empty(existingHubVnetResourceId))
+  ? split(existingHubVnetResourceId, '/')[8]
+  : ''
+var varVnetPeeringName = 'peer-${varHubVnetName}'
+var varRemoteVnetPeeringName = 'peer-${varVnetName}'
 var varVnetAvdSubnetName = avdUseCustomNaming
   ? avdVnetworkSubnetCustomName
   : 'snet-avd-${varComputeStorageResourcesNamingStandard}-001'
 var varVnetPrivateEndpointSubnetName = avdUseCustomNaming
   ? privateEndpointVnetworkSubnetCustomName
   : 'snet-pe-${varComputeStorageResourcesNamingStandard}-001'
-// var varAvdNetworksecurityGroupName = avdUseCustomNaming
-//   ? avdNetworksecurityGroupCustomName
-//   : 'nsg-avd-${varComputeStorageResourcesNamingStandard}-001'
-// var varPrivateEndpointNetworksecurityGroupName = avdUseCustomNaming
-//   ? privateEndpointNetworksecurityGroupCustomName
-//   : 'nsg-pe-${varComputeStorageResourcesNamingStandard}-001'
-// var varAvdRouteTableName = avdUseCustomNaming
-//   ? avdRouteTableCustomName
-//   : 'route-avd-${varComputeStorageResourcesNamingStandard}-001'
-// var varPrivateEndpointRouteTableName = avdUseCustomNaming
-//   ? privateEndpointRouteTableCustomName
-//   : 'route-pe-${varComputeStorageResourcesNamingStandard}-001'
+var varAvdNetworksecurityGroupName = avdUseCustomNaming
+  ? avdNetworksecurityGroupCustomName
+  : 'nsg-avd-${varComputeStorageResourcesNamingStandard}-001'
+var varPrivateEndpointNetworksecurityGroupName = avdUseCustomNaming
+  ? privateEndpointNetworksecurityGroupCustomName
+  : 'nsg-pe-${varComputeStorageResourcesNamingStandard}-001'
+var varAvdRouteTableName = avdUseCustomNaming
+  ? avdRouteTableCustomName
+  : 'route-avd-${varComputeStorageResourcesNamingStandard}-001'
+var varPrivateEndpointRouteTableName = avdUseCustomNaming
+  ? privateEndpointRouteTableCustomName
+  : 'route-pe-${varComputeStorageResourcesNamingStandard}-001'
 var varApplicationSecurityGroupName = avdUseCustomNaming
   ? avdApplicationSecurityGroupCustomName
   : 'asg-${varComputeStorageResourcesNamingStandard}-001'
-// var varDDosProtectionPlanName = 'ddos-${varVnetName}'
-// var varWorkSpaceName = avdUseCustomNaming ? avdWorkSpaceCustomName : 'vdws-${varManagementPlaneNamingStandard}-001'
-// var varWorkSpaceFriendlyName = avdUseCustomNaming
-//   ? avdWorkSpaceCustomFriendlyName
-//   : 'Workspace ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
+var varDDosProtectionPlanName = 'ddos-${varVnetName}'
+var varWorkSpaceName = avdUseCustomNaming ? avdWorkSpaceCustomName : 'vdws-${varManagementPlaneNamingStandard}-001'
+var varWorkSpaceFriendlyName = avdUseCustomNaming
+  ? avdWorkSpaceCustomFriendlyName
+  : 'Workspace ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
 var varHostPoolName = avdUseCustomNaming ? avdHostPoolCustomName : 'vdpool-${varManagementPlaneNamingStandard}-001'
-// var varHostFriendlyName = avdUseCustomNaming
-//   ? avdHostPoolCustomFriendlyName
-//   : 'Hostpool ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
-// var varHostPoolPreferredAppGroupType = toLower(hostPoolPreferredAppGroupType)
-// var varApplicationGroupName = avdUseCustomNaming
-//   ? avdApplicationGroupCustomName
-//   : 'vdag-${varHostPoolPreferredAppGroupType}-${varManagementPlaneNamingStandard}-001'
-// var varApplicationGroupFriendlyName = avdUseCustomNaming
-//   ? avdApplicationGroupCustomFriendlyName
-//   : '${varHostPoolPreferredAppGroupType} ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
+var varHostFriendlyName = avdUseCustomNaming
+  ? avdHostPoolCustomFriendlyName
+  : 'Hostpool ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
+var varHostPoolPreferredAppGroupType = toLower(hostPoolPreferredAppGroupType)
+var varApplicationGroupName = avdUseCustomNaming
+  ? avdApplicationGroupCustomName
+  : 'vdag-${varHostPoolPreferredAppGroupType}-${varManagementPlaneNamingStandard}-001'
+var varApplicationGroupFriendlyName = avdUseCustomNaming
+  ? avdApplicationGroupCustomFriendlyName
+  : '${varHostPoolPreferredAppGroupType} ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
 var varDeployScalingPlan = (varAzureCloudName == 'AzureChinaCloud') ? false : avdDeployScalingPlan
 var varCreateAppAttachDeployment = (varAzureCloudName == 'AzureChinaCloud') ? false : createAppAttachDeployment
-// var varScalingPlanName = avdUseCustomNaming
-//   ? avdScalingPlanCustomName
-//   : 'vdscaling-${varManagementPlaneNamingStandard}-001'
-// var varPrivateEndPointConnectionName = 'pe-${varHostPoolName}-connection'
-// var varPrivateEndPointDiscoveryName = 'pe-${varWorkSpaceName}-discovery'
-// var varPrivateEndPointWorkspaceName = 'pe-${varWorkSpaceName}-global'
-// var varScalingPlanExclusionTag = 'exclude-${varScalingPlanName}'
-// var varScalingPlanWeekdaysScheduleName = 'Weekdays-${varManagementPlaneNamingStandard}'
-// var varScalingPlanWeekendScheduleName = 'Weekend-${varManagementPlaneNamingStandard}'
+var varScalingPlanName = avdUseCustomNaming
+  ? avdScalingPlanCustomName
+  : 'vdscaling-${varManagementPlaneNamingStandard}-001'
+var varPrivateEndPointConnectionName = 'pe-${varHostPoolName}-connection'
+var varPrivateEndPointDiscoveryName = 'pe-${varWorkSpaceName}-discovery'
+var varPrivateEndPointWorkspaceName = 'pe-${varWorkSpaceName}-global'
+var varScalingPlanExclusionTag = 'exclude-${varScalingPlanName}'
+var varScalingPlanWeekdaysScheduleName = 'Weekdays-${varManagementPlaneNamingStandard}'
+var varScalingPlanWeekendScheduleName = 'Weekend-${varManagementPlaneNamingStandard}'
 var varWrklKvName = avdUseCustomNaming
   ? '${avdWrklKvPrefixCustomName}-${varComputeStorageResourcesNamingStandard}-${varNamingUniqueStringTwoChar}'
   : 'kv-sec-${varComputeStorageResourcesNamingStandard}-${varNamingUniqueStringTwoChar}' // max length limit 24 characters
@@ -640,50 +640,50 @@ var varWrklKvPrivateEndpointName = 'pe-${varWrklKvName}-vault'
 var varWrklKeyVaultSku = (varAzureCloudName == 'AzureCloud' || varAzureCloudName == 'AzureUSGovernment')
   ? 'premium'
   : (varAzureCloudName == 'AzureChinaCloud' ? 'standard' : null)
-// var varSessionHostNamePrefix = avdUseCustomNaming
-//   ? avdSessionHostCustomNamePrefix
-//   : 'vm${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varSessionHostLocationAcronym}'
+var varSessionHostNamePrefix = avdUseCustomNaming
+  ? avdSessionHostCustomNamePrefix
+  : 'vm${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varSessionHostLocationAcronym}'
 //var varVmssFlexNamePrefix = avdUseCustomNaming ? '${vmssFlexCustomNamePrefix}-${varComputeStorageResourcesNamingStandard}' : 'vmss-${varComputeStorageResourcesNamingStandard}'
 var varStorageManagedIdentityName = 'id-storage-${varComputeStorageResourcesNamingStandard}-001'
 var varFslogixFileShareName = avdUseCustomNaming
   ? fslogixFileShareCustomName
   : 'fslogix-pc-${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}-001'
-// var varAppAttachFileShareName = avdUseCustomNaming
-//   ? appAttachFileShareCustomName
-//   : 'appa-${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}-001'
+var varAppAttachFileShareName = avdUseCustomNaming
+  ? appAttachFileShareCustomName
+  : 'appa-${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}-001'
 var varFslogixStorageName = avdUseCustomNaming
   ? '${storageAccountPrefixCustomName}fsl${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varNamingUniqueStringThreeChar}'
   : 'stfsl${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varNamingUniqueStringThreeChar}'
 var varFslogixStorageFqdn = createAvdFslogixDeployment
   ? '${varFslogixStorageName}.file.${environment().suffixes.storage}'
   : ''
-// var varAppAttachStorageFqdn = '${varAppAttachStorageName}.file.${environment().suffixes.storage}'
-// var varAppAttachStorageName = avdUseCustomNaming
-//   ? '${storageAccountPrefixCustomName}appa${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varNamingUniqueStringThreeChar}'
-//   : 'stappa${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varNamingUniqueStringThreeChar}'
+var varAppAttachStorageFqdn = '${varAppAttachStorageName}.file.${environment().suffixes.storage}'
+var varAppAttachStorageName = avdUseCustomNaming
+  ? '${storageAccountPrefixCustomName}appa${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varNamingUniqueStringThreeChar}'
+  : 'stappa${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varNamingUniqueStringThreeChar}'
 var varManagementVmName = 'vmmgmt${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varSessionHostLocationAcronym}'
-// var varAlaWorkspaceName = avdUseCustomNaming
-//   ? avdAlaWorkspaceCustomName
-//   : 'log-avd-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}'
-// var varDataCollectionRulesName = 'microsoft-avdi-${varSessionHostLocationLowercase}' // 'dcr-avd-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}'
+var varAlaWorkspaceName = avdUseCustomNaming
+  ? avdAlaWorkspaceCustomName
+  : 'log-avd-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}'
+var varDataCollectionRulesName = 'microsoft-avdi-${varSessionHostLocationLowercase}' // 'dcr-avd-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}'
 var varZtKvName = avdUseCustomNaming
   ? '${ztKvPrefixCustomName}-${varComputeStorageResourcesNamingStandard}-${varNamingUniqueStringTwoChar}'
   : 'kv-key-${varComputeStorageResourcesNamingStandard}-${varNamingUniqueStringTwoChar}' // max length limit 24 characters
 var varZtKvPrivateEndpointName = 'pe-${varZtKvName}-vault'
 //
-// var varFslogixSharePath = createAvdFslogixDeployment
-//   ? '\\\\${varFslogixStorageName}.file.${environment().suffixes.storage}\\${varFslogixFileShareName}'
-//   : ''
+var varFslogixSharePath = createAvdFslogixDeployment
+  ? '\\\\${varFslogixStorageName}.file.${environment().suffixes.storage}\\${varFslogixFileShareName}'
+  : ''
 var varBaseScriptUri = 'https://raw.githubusercontent.com/azure/avdaccelerator/main/workload/'
-// var varSessionHostConfigurationScriptUri = '${varBaseScriptUri}scripts/Set-SessionHostConfiguration.ps1'
-// var varSessionHostConfigurationScript = 'Set-SessionHostConfiguration.ps1'
+var varSessionHostConfigurationScriptUri = '${varBaseScriptUri}scripts/Set-SessionHostConfiguration.ps1'
+var varSessionHostConfigurationScript = 'Set-SessionHostConfiguration.ps1'
 var varCreateStorageDeployment = (createAvdFslogixDeployment || varCreateAppAttachDeployment == true) ? true : false
 var varFslogixStorageSku = zoneRedundantStorage
   ? '${fslogixStoragePerformance}_ZRS'
   : '${fslogixStoragePerformance}_LRS'
-// var varAppAttachStorageSku = zoneRedundantStorage
-//   ? '${appAttachStoragePerformance}_ZRS'
-//   : '${appAttachStoragePerformance}_LRS'
+var varAppAttachStorageSku = zoneRedundantStorage
+  ? '${appAttachStoragePerformance}_ZRS'
+  : '${appAttachStoragePerformance}_LRS'
 var varMgmtVmSpecs = {
   osImage: varMarketPlaceGalleryWindows[managementVmOsImage]
   osDiskType: 'Standard_LRS'
@@ -694,269 +694,269 @@ var varMgmtVmSpecs = {
     ? '${existingVnet.id}/subnets/${varVnetAvdSubnetName}'
     : existingVnetAvdSubnetResourceId
 }
-// var varMaxSessionHostsPerTemplate = 10
-// var varMaxSessionHostsDivisionValue = avdDeploySessionHostsCount / varMaxSessionHostsPerTemplate
-// var varMaxSessionHostsDivisionRemainderValue = avdDeploySessionHostsCount % varMaxSessionHostsPerTemplate
-// var varSessionHostBatchCount = varMaxSessionHostsDivisionRemainderValue > 0
-//   ? varMaxSessionHostsDivisionValue + 1
-//   : varMaxSessionHostsDivisionValue
+var varMaxSessionHostsPerTemplate = 10
+var varMaxSessionHostsDivisionValue = avdDeploySessionHostsCount / varMaxSessionHostsPerTemplate
+var varMaxSessionHostsDivisionRemainderValue = avdDeploySessionHostsCount % varMaxSessionHostsPerTemplate
+var varSessionHostBatchCount = varMaxSessionHostsDivisionRemainderValue > 0
+  ? varMaxSessionHostsDivisionValue + 1
+  : varMaxSessionHostsDivisionValue
 // var varMaxVmssFlexMembersCount = 999
 // var varDivisionVmssFlexValue = avdDeploySessionHostsCount / varMaxVmssFlexMembersCount
 // var varDivisionAvsetRemainderValue = avdDeploySessionHostsCount % varMaxVmssFlexMembersCount
 // var varVmssFlexCount = varDivisionAvsetRemainderValue > 0 ? varDivisionVmssFlexValue + 1 : varDivisionVmssFlexValue
-// var varHostPoolAgentUpdateSchedule = [
-//   {
-//     dayOfWeek: 'Tuesday'
-//     hour: 18
-//   }
-//   {
-//     dayOfWeek: 'Friday'
-//     hour: 17
-//   }
-// ]
-// var varPersonalScalingPlanSchedules = [
-//   {
-//     daysOfWeek: [
-//       'Monday'
-//       'Wednesday'
-//       'Thursday'
-//       'Friday'
-//     ]
-//     name: varScalingPlanWeekdaysScheduleName
-//     offPeakStartTime: {
-//       hour: 20
-//       minute: 0
-//     }
-//     offPeakStartVMOnConnect: 'Enable'
-//     offPeakMinutesToWaitOnDisconnect: 30
-//     offPeakActionOnDisconnect: 'Hibernate'
-//     offPeakMinutesToWaitOnLogoff: 0
-//     offPeakActionOnLogoff: 'Deallocate'
-//     peakStartTime: {
-//       hour: 9
-//       minute: 0
-//     }
-//     peakStartVMOnConnect: 'Enable'
-//     peakMinutesToWaitOnDisconnect: 30
-//     peakActionOnDisconnect: 'Hibernate'
-//     peakMinutesToWaitOnLogoff: 0
-//     peakActionOnLogoff: 'Deallocate'
-//     rampDownStartTime: {
-//       hour: 18
-//       minute: 0
-//     }
-//     rampDownStartVMOnConnect: 'Enable'
-//     rampDownMinutesToWaitOnDisconnect: 30
-//     rampDownActionOnDisconnect: 'Hibernate'
-//     rampDownMinutesToWaitOnLogoff: 0
-//     rampDownActionOnLogoff: 'Deallocate'
-//     rampUpStartTime: {
-//       hour: 7
-//       minute: 0
-//     }
-//     rampUpAutoStartHosts: 'WithAssignedUser'
-//     rampUpStartVMOnConnect: 'Enable'
-//     rampUpMinutesToWaitOnDisconnect: 30
-//     rampUpActionOnDisconnect: 'Hibernate'
-//     rampUpMinutesToWaitOnLogoff: 0
-//     rampUpActionOnLogoff: 'Deallocate'
-//   }
-//   {
-//     daysOfWeek: [
-//       'Tuesday'
-//     ]
-//     name: '${varScalingPlanWeekdaysScheduleName}-agent-updates'
-//     offPeakStartTime: {
-//       hour: 20
-//       minute: 0
-//     }
-//     offPeakStartVMOnConnect: 'Enable'
-//     offPeakMinutesToWaitOnDisconnect: 30
-//     offPeakActionOnDisconnect: 'Hibernate'
-//     offPeakMinutesToWaitOnLogoff: 0
-//     offPeakActionOnLogoff: 'Deallocate'
-//     peakStartTime: {
-//       hour: 9
-//       minute: 0
-//     }
-//     peakStartVMOnConnect: 'Enable'
-//     peakMinutesToWaitOnDisconnect: 30
-//     peakActionOnDisconnect: 'Hibernate'
-//     peakMinutesToWaitOnLogoff: 0
-//     peakActionOnLogoff: 'Deallocate'
-//     rampDownStartTime: {
-//       hour: 18
-//       minute: 0
-//     }
-//     rampDownStartVMOnConnect: 'Enable'
-//     rampDownMinutesToWaitOnDisconnect: 30
-//     rampDownActionOnDisconnect: 'Hibernate'
-//     rampDownMinutesToWaitOnLogoff: 0
-//     rampDownActionOnLogoff: 'Deallocate'
-//     rampUpStartTime: {
-//       hour: 7
-//       minute: 0
-//     }
-//     rampUpAutoStartHosts: 'WithAssignedUser'
-//     rampUpStartVMOnConnect: 'Enable'
-//     rampUpMinutesToWaitOnDisconnect: 30
-//     rampUpActionOnDisconnect: 'Hibernate'
-//     rampUpMinutesToWaitOnLogoff: 0
-//     rampUpActionOnLogoff: 'Deallocate'
-//   }
-//   {
-//     daysOfWeek: [
-//       'Saturday'
-//       'Sunday'
-//     ]
-//     name: varScalingPlanWeekendScheduleName
-//     offPeakStartTime: {
-//       hour: 18
-//       minute: 0
-//     }
-//     offPeakStartVMOnConnect: 'Enable'
-//     offPeakMinutesToWaitOnDisconnect: 30
-//     offPeakActionOnDisconnect: 'Hibernate'
-//     offPeakMinutesToWaitOnLogoff: 0
-//     offPeakActionOnLogoff: 'Deallocate'
-//     peakStartTime: {
-//       hour: 10
-//       minute: 0
-//     }
-//     peakStartVMOnConnect: 'Enable'
-//     peakMinutesToWaitOnDisconnect: 30
-//     peakActionOnDisconnect: 'Hibernate'
-//     peakMinutesToWaitOnLogoff: 0
-//     peakActionOnLogoff: 'Deallocate'
-//     rampDownStartTime: {
-//       hour: 16
-//       minute: 0
-//     }
-//     rampDownStartVMOnConnect: 'Enable'
-//     rampDownMinutesToWaitOnDisconnect: 30
-//     rampDownActionOnDisconnect: 'Hibernate'
-//     rampDownMinutesToWaitOnLogoff: 0
-//     rampDownActionOnLogoff: 'Deallocate'
-//     rampUpStartTime: {
-//       hour: 9
-//       minute: 0
-//     }
-//     rampUpAutoStartHosts: 'None'
-//     rampUpStartVMOnConnect: 'Enable'
-//     rampUpMinutesToWaitOnDisconnect: 30
-//     rampUpActionOnDisconnect: 'Hibernate'
-//     rampUpMinutesToWaitOnLogoff: 0
-//     rampUpActionOnLogoff: 'Deallocate'
-//   }
-// ]
-// var varPooledScalingPlanSchedules = [
-//   {
-//     daysOfWeek: [
-//       'Monday'
-//       'Wednesday'
-//       'Thursday'
-//       'Friday'
-//     ]
-//     name: varScalingPlanWeekdaysScheduleName
-//     offPeakLoadBalancingAlgorithm: 'DepthFirst'
-//     offPeakStartTime: {
-//       hour: 20
-//       minute: 0
-//     }
-//     peakLoadBalancingAlgorithm: 'DepthFirst'
-//     peakStartTime: {
-//       hour: 9
-//       minute: 0
-//     }
-//     rampDownCapacityThresholdPct: 90
-//     rampDownForceLogoffUsers: true
-//     rampDownLoadBalancingAlgorithm: 'DepthFirst'
-//     rampDownMinimumHostsPct: 0 //10
-//     rampDownNotificationMessage: 'You will be logged off in 30 min. Make sure to save your work.'
-//     rampDownStartTime: {
-//       hour: 18
-//       minute: 0
-//     }
-//     rampDownStopHostsWhen: 'ZeroActiveSessions'
-//     rampDownWaitTimeMinutes: 30
-//     rampUpCapacityThresholdPct: 80
-//     rampUpLoadBalancingAlgorithm: 'BreadthFirst'
-//     rampUpMinimumHostsPct: 20
-//     rampUpStartTime: {
-//       hour: 7
-//       minute: 0
-//     }
-//   }
-//   {
-//     daysOfWeek: [
-//       'Tuesday'
-//     ]
-//     name: '${varScalingPlanWeekdaysScheduleName}-agent-updates'
-//     offPeakLoadBalancingAlgorithm: 'DepthFirst'
-//     offPeakStartTime: {
-//       hour: 20
-//       minute: 0
-//     }
-//     peakLoadBalancingAlgorithm: 'DepthFirst'
-//     peakStartTime: {
-//       hour: 9
-//       minute: 0
-//     }
-//     rampDownCapacityThresholdPct: 90
-//     rampDownForceLogoffUsers: true
-//     rampDownLoadBalancingAlgorithm: 'DepthFirst'
-//     rampDownMinimumHostsPct: 0 //10
-//     rampDownNotificationMessage: 'You will be logged off in 30 min. Make sure to save your work.'
-//     rampDownStartTime: {
-//       hour: 19
-//       minute: 0
-//     }
-//     rampDownStopHostsWhen: 'ZeroActiveSessions'
-//     rampDownWaitTimeMinutes: 30
-//     rampUpCapacityThresholdPct: 80
-//     rampUpLoadBalancingAlgorithm: 'BreadthFirst'
-//     rampUpMinimumHostsPct: 20
-//     rampUpStartTime: {
-//       hour: 7
-//       minute: 0
-//     }
-//   }
-//   {
-//     daysOfWeek: [
-//       'Saturday'
-//       'Sunday'
-//     ]
-//     name: varScalingPlanWeekendScheduleName
-//     offPeakLoadBalancingAlgorithm: 'DepthFirst'
-//     offPeakStartTime: {
-//       hour: 18
-//       minute: 0
-//     }
-//     peakLoadBalancingAlgorithm: 'DepthFirst'
-//     peakStartTime: {
-//       hour: 10
-//       minute: 0
-//     }
-//     rampDownCapacityThresholdPct: 90
-//     rampDownForceLogoffUsers: true
-//     rampDownLoadBalancingAlgorithm: 'DepthFirst'
-//     rampDownMinimumHostsPct: 0
-//     rampDownNotificationMessage: 'You will be logged off in 30 min. Make sure to save your work.'
-//     rampDownStartTime: {
-//       hour: 16
-//       minute: 0
-//     }
-//     rampDownStopHostsWhen: 'ZeroActiveSessions'
-//     rampDownWaitTimeMinutes: 30
-//     rampUpCapacityThresholdPct: 90
-//     rampUpLoadBalancingAlgorithm: 'DepthFirst'
-//     rampUpMinimumHostsPct: 0
-//     rampUpStartTime: {
-//       hour: 9
-//       minute: 0
-//     }
-//   }
-// ]
+var varHostPoolAgentUpdateSchedule = [
+  {
+    dayOfWeek: 'Tuesday'
+    hour: 18
+  }
+  {
+    dayOfWeek: 'Friday'
+    hour: 17
+  }
+]
+var varPersonalScalingPlanSchedules = [
+  {
+    daysOfWeek: [
+      'Monday'
+      'Wednesday'
+      'Thursday'
+      'Friday'
+    ]
+    name: varScalingPlanWeekdaysScheduleName
+    offPeakStartTime: {
+      hour: 20
+      minute: 0
+    }
+    offPeakStartVMOnConnect: 'Enable'
+    offPeakMinutesToWaitOnDisconnect: 30
+    offPeakActionOnDisconnect: 'Hibernate'
+    offPeakMinutesToWaitOnLogoff: 0
+    offPeakActionOnLogoff: 'Deallocate'
+    peakStartTime: {
+      hour: 9
+      minute: 0
+    }
+    peakStartVMOnConnect: 'Enable'
+    peakMinutesToWaitOnDisconnect: 30
+    peakActionOnDisconnect: 'Hibernate'
+    peakMinutesToWaitOnLogoff: 0
+    peakActionOnLogoff: 'Deallocate'
+    rampDownStartTime: {
+      hour: 18
+      minute: 0
+    }
+    rampDownStartVMOnConnect: 'Enable'
+    rampDownMinutesToWaitOnDisconnect: 30
+    rampDownActionOnDisconnect: 'Hibernate'
+    rampDownMinutesToWaitOnLogoff: 0
+    rampDownActionOnLogoff: 'Deallocate'
+    rampUpStartTime: {
+      hour: 7
+      minute: 0
+    }
+    rampUpAutoStartHosts: 'WithAssignedUser'
+    rampUpStartVMOnConnect: 'Enable'
+    rampUpMinutesToWaitOnDisconnect: 30
+    rampUpActionOnDisconnect: 'Hibernate'
+    rampUpMinutesToWaitOnLogoff: 0
+    rampUpActionOnLogoff: 'Deallocate'
+  }
+  {
+    daysOfWeek: [
+      'Tuesday'
+    ]
+    name: '${varScalingPlanWeekdaysScheduleName}-agent-updates'
+    offPeakStartTime: {
+      hour: 20
+      minute: 0
+    }
+    offPeakStartVMOnConnect: 'Enable'
+    offPeakMinutesToWaitOnDisconnect: 30
+    offPeakActionOnDisconnect: 'Hibernate'
+    offPeakMinutesToWaitOnLogoff: 0
+    offPeakActionOnLogoff: 'Deallocate'
+    peakStartTime: {
+      hour: 9
+      minute: 0
+    }
+    peakStartVMOnConnect: 'Enable'
+    peakMinutesToWaitOnDisconnect: 30
+    peakActionOnDisconnect: 'Hibernate'
+    peakMinutesToWaitOnLogoff: 0
+    peakActionOnLogoff: 'Deallocate'
+    rampDownStartTime: {
+      hour: 18
+      minute: 0
+    }
+    rampDownStartVMOnConnect: 'Enable'
+    rampDownMinutesToWaitOnDisconnect: 30
+    rampDownActionOnDisconnect: 'Hibernate'
+    rampDownMinutesToWaitOnLogoff: 0
+    rampDownActionOnLogoff: 'Deallocate'
+    rampUpStartTime: {
+      hour: 7
+      minute: 0
+    }
+    rampUpAutoStartHosts: 'WithAssignedUser'
+    rampUpStartVMOnConnect: 'Enable'
+    rampUpMinutesToWaitOnDisconnect: 30
+    rampUpActionOnDisconnect: 'Hibernate'
+    rampUpMinutesToWaitOnLogoff: 0
+    rampUpActionOnLogoff: 'Deallocate'
+  }
+  {
+    daysOfWeek: [
+      'Saturday'
+      'Sunday'
+    ]
+    name: varScalingPlanWeekendScheduleName
+    offPeakStartTime: {
+      hour: 18
+      minute: 0
+    }
+    offPeakStartVMOnConnect: 'Enable'
+    offPeakMinutesToWaitOnDisconnect: 30
+    offPeakActionOnDisconnect: 'Hibernate'
+    offPeakMinutesToWaitOnLogoff: 0
+    offPeakActionOnLogoff: 'Deallocate'
+    peakStartTime: {
+      hour: 10
+      minute: 0
+    }
+    peakStartVMOnConnect: 'Enable'
+    peakMinutesToWaitOnDisconnect: 30
+    peakActionOnDisconnect: 'Hibernate'
+    peakMinutesToWaitOnLogoff: 0
+    peakActionOnLogoff: 'Deallocate'
+    rampDownStartTime: {
+      hour: 16
+      minute: 0
+    }
+    rampDownStartVMOnConnect: 'Enable'
+    rampDownMinutesToWaitOnDisconnect: 30
+    rampDownActionOnDisconnect: 'Hibernate'
+    rampDownMinutesToWaitOnLogoff: 0
+    rampDownActionOnLogoff: 'Deallocate'
+    rampUpStartTime: {
+      hour: 9
+      minute: 0
+    }
+    rampUpAutoStartHosts: 'None'
+    rampUpStartVMOnConnect: 'Enable'
+    rampUpMinutesToWaitOnDisconnect: 30
+    rampUpActionOnDisconnect: 'Hibernate'
+    rampUpMinutesToWaitOnLogoff: 0
+    rampUpActionOnLogoff: 'Deallocate'
+  }
+]
+var varPooledScalingPlanSchedules = [
+  {
+    daysOfWeek: [
+      'Monday'
+      'Wednesday'
+      'Thursday'
+      'Friday'
+    ]
+    name: varScalingPlanWeekdaysScheduleName
+    offPeakLoadBalancingAlgorithm: 'DepthFirst'
+    offPeakStartTime: {
+      hour: 20
+      minute: 0
+    }
+    peakLoadBalancingAlgorithm: 'DepthFirst'
+    peakStartTime: {
+      hour: 9
+      minute: 0
+    }
+    rampDownCapacityThresholdPct: 90
+    rampDownForceLogoffUsers: true
+    rampDownLoadBalancingAlgorithm: 'DepthFirst'
+    rampDownMinimumHostsPct: 0 //10
+    rampDownNotificationMessage: 'You will be logged off in 30 min. Make sure to save your work.'
+    rampDownStartTime: {
+      hour: 18
+      minute: 0
+    }
+    rampDownStopHostsWhen: 'ZeroActiveSessions'
+    rampDownWaitTimeMinutes: 30
+    rampUpCapacityThresholdPct: 80
+    rampUpLoadBalancingAlgorithm: 'BreadthFirst'
+    rampUpMinimumHostsPct: 20
+    rampUpStartTime: {
+      hour: 7
+      minute: 0
+    }
+  }
+  {
+    daysOfWeek: [
+      'Tuesday'
+    ]
+    name: '${varScalingPlanWeekdaysScheduleName}-agent-updates'
+    offPeakLoadBalancingAlgorithm: 'DepthFirst'
+    offPeakStartTime: {
+      hour: 20
+      minute: 0
+    }
+    peakLoadBalancingAlgorithm: 'DepthFirst'
+    peakStartTime: {
+      hour: 9
+      minute: 0
+    }
+    rampDownCapacityThresholdPct: 90
+    rampDownForceLogoffUsers: true
+    rampDownLoadBalancingAlgorithm: 'DepthFirst'
+    rampDownMinimumHostsPct: 0 //10
+    rampDownNotificationMessage: 'You will be logged off in 30 min. Make sure to save your work.'
+    rampDownStartTime: {
+      hour: 19
+      minute: 0
+    }
+    rampDownStopHostsWhen: 'ZeroActiveSessions'
+    rampDownWaitTimeMinutes: 30
+    rampUpCapacityThresholdPct: 80
+    rampUpLoadBalancingAlgorithm: 'BreadthFirst'
+    rampUpMinimumHostsPct: 20
+    rampUpStartTime: {
+      hour: 7
+      minute: 0
+    }
+  }
+  {
+    daysOfWeek: [
+      'Saturday'
+      'Sunday'
+    ]
+    name: varScalingPlanWeekendScheduleName
+    offPeakLoadBalancingAlgorithm: 'DepthFirst'
+    offPeakStartTime: {
+      hour: 18
+      minute: 0
+    }
+    peakLoadBalancingAlgorithm: 'DepthFirst'
+    peakStartTime: {
+      hour: 10
+      minute: 0
+    }
+    rampDownCapacityThresholdPct: 90
+    rampDownForceLogoffUsers: true
+    rampDownLoadBalancingAlgorithm: 'DepthFirst'
+    rampDownMinimumHostsPct: 0
+    rampDownNotificationMessage: 'You will be logged off in 30 min. Make sure to save your work.'
+    rampDownStartTime: {
+      hour: 16
+      minute: 0
+    }
+    rampDownStopHostsWhen: 'ZeroActiveSessions'
+    rampDownWaitTimeMinutes: 30
+    rampUpCapacityThresholdPct: 90
+    rampUpLoadBalancingAlgorithm: 'DepthFirst'
+    rampUpMinimumHostsPct: 0
+    rampUpStartTime: {
+      hour: 9
+      minute: 0
+    }
+  }
+]
 var varMarketPlaceGalleryWindows = loadJsonContent('../variables/osMarketPlaceImages.json')
 var varStorageAzureFilesDscAgentPackageLocation = 'https://github.com/Azure/avdaccelerator/raw/main/workload/scripts/DSCStorageScripts/1.0.3/DSCStorageScripts.zip'
 var varStorageToDomainScriptUri = '${varBaseScriptUri}scripts/Manual-DSC-Storage-Scripts.ps1'
@@ -964,9 +964,9 @@ var varStorageToDomainScript = './Manual-DSC-Storage-Scripts.ps1'
 var varOuStgPath = !empty(storageOuPath) ? '"${storageOuPath}"' : '"${varDefaultStorageOuPath}"'
 var varDefaultStorageOuPath = (avdIdentityServiceProvider == 'EntraDS') ? 'AADDC Computers' : 'Computers'
 var varStorageCustomOuPath = !empty(storageOuPath) ? 'true' : 'false'
-// var varAllDnsServers = '${customDnsIps},168.63.129.16'
-// var varDnsServers = empty(customDnsIps) ? [] : (split(varAllDnsServers, ','))
-// var varCreateVnetPeering = !empty(existingHubVnetResourceId) ? true : false
+var varAllDnsServers = '${customDnsIps},168.63.129.16'
+var varDnsServers = empty(customDnsIps) ? [] : (split(varAllDnsServers, ','))
+var varCreateVnetPeering = !empty(existingHubVnetResourceId) ? true : false
 // Resource tagging
 // Tag Exclude-${varAvdScalingPlanName} is used by scaling plans to exclude session hosts from scaling. Exmaple: Exclude-vdscal-eus2-app1-dev-001
 
@@ -985,14 +985,14 @@ var varTagsWithValues = union(
   empty(costCenterTag) ? {} : { CostCenter: costCenterTag }
 )
 var varCustomResourceTags = createResourceTags ? varTagsWithValues : {}
-// var varAllComputeStorageTags = {
-//   DomainName: identityDomainName
-//   IdentityServiceProvider: avdIdentityServiceProvider
-//   SourceImage: useSharedImage ? split(avdCustomImageDefinitionId, '/')[8] : mpImageSku
-//   HotPoolName: varHostPoolName
-//   FSLogixPath: createAvdFslogixDeployment ? varFslogixSharePath : 'NA'
-//   OUPath: contains(avdIdentityServiceProvider, 'EntraID') ? 'NA' : avdOuPath
-// }
+var varAllComputeStorageTags = {
+  DomainName: identityDomainName
+  IdentityServiceProvider: avdIdentityServiceProvider
+  SourceImage: useSharedImage ? split(avdCustomImageDefinitionId, '/')[8] : mpImageSku
+  HotPoolName: varHostPoolName
+  FSLogixPath: createAvdFslogixDeployment ? varFslogixSharePath : 'NA'
+  OUPath: contains(avdIdentityServiceProvider, 'EntraID') ? 'NA' : avdOuPath
+}
 var varAvdDefaultTags = {
   'cm-resource-parent': '/subscriptions/${avdWorkloadSubsId}/resourceGroups/${varServiceObjectsRgName}/providers/Microsoft.DesktopVirtualization/hostpools/${varHostPoolName}'
   Environment: deploymentEnvironment
@@ -1006,27 +1006,27 @@ var varZtKeyvaultTag = {
   Purpose: 'Disk encryption keys for zero trust'
 }
 //
-// var varTelemetryId = 'pid-2ce4228c-d72c-43fb-bb5b-cd8f3ba2138e-${avdManagementPlaneLocation}'
-// var varResourceGroups = [
-//   {
-//     purpose: 'Service-Objects'
-//     name: varServiceObjectsRgName
-//     location: avdManagementPlaneLocation
-//     enableDefaultTelemetry: false
-//     tags: createResourceTags
-//       ? union(varCustomResourceTags, varAvdDefaultTags)
-//       : union(varAvdDefaultTags, varAllComputeStorageTags)
-//   }
-//   {
-//     purpose: 'Pool-Compute'
-//     name: varComputeObjectsRgName
-//     location: avdSessionHostLocation
-//     enableDefaultTelemetry: false
-//     tags: createResourceTags
-//       ? union(varAllComputeStorageTags, varAvdDefaultTags)
-//       : union(varAvdDefaultTags, varAllComputeStorageTags)
-//   }
-// ]
+var varTelemetryId = 'pid-2ce4228c-d72c-43fb-bb5b-cd8f3ba2138e-${avdManagementPlaneLocation}'
+var varResourceGroups = [
+  {
+    purpose: 'Service-Objects'
+    name: varServiceObjectsRgName
+    location: avdManagementPlaneLocation
+    enableDefaultTelemetry: false
+    tags: createResourceTags
+      ? union(varCustomResourceTags, varAvdDefaultTags)
+      : union(varAvdDefaultTags, varAllComputeStorageTags)
+  }
+  {
+    purpose: 'Pool-Compute'
+    name: varComputeObjectsRgName
+    location: avdSessionHostLocation
+    enableDefaultTelemetry: false
+    tags: createResourceTags
+      ? union(varAllComputeStorageTags, varAvdDefaultTags)
+      : union(varAvdDefaultTags, varAllComputeStorageTags)
+  }
+]
 
 // security Principals (you can add support for more than one because it is an array. Future)
 var varSecurityPrincipalId = !empty(avdSecurityGroups) ? avdSecurityGroups[0].objectId : ''

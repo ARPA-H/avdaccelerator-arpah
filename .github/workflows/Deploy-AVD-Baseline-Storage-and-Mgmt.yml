@@ -1,0 +1,61 @@
+﻿name: Deploy AVD Baseline Networking to ARPA-H Tenant
+
+on:
+  # for running manually  
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Choose environment to deploy
+        options: 
+        - Test
+        - Prod
+      # hostpool_type:
+      #   type: choice
+      #   description: Choose hostpool type
+      #   options: 
+      #   - Pooled
+      #   - Personal
+      #   default: 'Personal'
+      deployment_stack_name: 
+        type: string
+        description: Name of deployment stack to delete
+        default: 'AVDStorageAndMgmt-Stack'
+      update_existing_stack: 
+        type: boolean
+        description: Update existing stack if it exists
+        default: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@main
+
+    - name: Log into Azure
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.CLIENT_ID }}
+        tenant-id: ${{ secrets.TENANT_ID }}
+        subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+        # creds: ${{ secrets.AZURE_CREDENTIALS }} 
+        enable-AzPSSession: true
+
+    - name: Deploy deployment stack to the ${{ inputs.environment }} environment
+      uses: azure/powershell@v2
+      with:
+        inlineScript: ./.github/workflows/scripts/DeploymentStack-Baseline-Storage-Mgmt.ps1 -DeploymentStackName ${{ inputs.deployment_stack_name }} -Location 'centralus' `
+          -TemplateFile './workload/bicep/deploy-baseline-storage-and-management.bicep' -ParametersFile './workload/bicep/parameters/deploy-baseline-storage-and-management.parameters.json' `
+          -deploymentEnvironment ${{ inputs.environment }} -avdWorkloadSubsId ${{ secrets.SUBSCRIPTION_ID }} -update_existing_stack ${{ inputs.update_existing_stack }} `
+          -avdServicePrincipalObjectId ${{ secrets.AZURE_AVD_OBJECT_ID }} -avdVmLocalUserName ${{ secrets.AVD_VM_LOCAL_USER_NAME }} `
+          -avdVmLocalUserPassword ${{ secrets.AVD_VM_LOCAL_USER_PASSWORD }} - avdSecurityGroups ${{ secrets.AVD_SECURITY_GROUPS }} `
+        azPSVersion: "latest"
+        errorActionPreference: stop

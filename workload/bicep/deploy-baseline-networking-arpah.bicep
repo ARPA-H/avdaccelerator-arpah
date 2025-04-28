@@ -406,7 +406,7 @@ module monitoringDiagnosticSettings './modules/avdInsightsMonitoring/deploy.bice
   dependsOn: [
     baselineNetworkResourceGroup
     baselineResourceGroups
-    //baselineStorageResourceGroup
+    baselineStorageResourceGroup
   ]
 }
 

@@ -637,7 +637,7 @@ var varDeployScalingPlan = (varAzureCloudName == 'AzureChinaCloud') ? false : av
 // var varScalingPlanWeekdaysScheduleName = 'Weekdays-${varManagementPlaneNamingStandard}'
 // var varScalingPlanWeekendScheduleName = 'Weekend-${varManagementPlaneNamingStandard}'
 var varWrklKvName = avdUseCustomNaming
-  ? '${avdWrklKvPrefixCustomName}-${varComputeStorageResourcesNamingStandard}-${varNamingUniqueStringTwoChar}'
+  ? '${avdWrklKvPrefixCustomName}-${varComputeStorageResourcesNamingStandard}'
   : 'kv-sec-${varComputeStorageResourcesNamingStandard}-${varNamingUniqueStringTwoChar}' // max length limit 24 characters
 var varWrklKvPrivateEndpointName = 'pe-${varWrklKvName}-vault'
 var varWrklKeyVaultSku = (varAzureCloudName == 'AzureCloud' || varAzureCloudName == 'AzureUSGovernment')
@@ -670,7 +670,7 @@ var varFslogixStorageName = avdUseCustomNaming
 //   : 'log-avd-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}'
 // var varDataCollectionRulesName = 'microsoft-avdi-${varSessionHostLocationLowercase}' // 'dcr-avd-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}'
 var varZtKvName = avdUseCustomNaming
-  ? '${ztKvPrefixCustomName}-${varComputeStorageResourcesNamingStandard}-${varNamingUniqueStringTwoChar}'
+  ? '${ztKvPrefixCustomName}-${varComputeStorageResourcesNamingStandard}'
   : 'kv-key-${varComputeStorageResourcesNamingStandard}-${varNamingUniqueStringTwoChar}' // max length limit 24 characters
 var varZtKvPrivateEndpointName = 'pe-${varZtKvName}-vault'
 //
@@ -1447,7 +1447,7 @@ resource existingApplicationSecurityGroup 'Microsoft.Network/applicationSecurity
 // }
 
 resource existingPrivateDnsZoneAzureFiles 'Microsoft.Network/privateDnsZones@2020-06-01' existing = {
-  name: 'privatelink.file.core.windows.net'
+  name: 'privatelink.blob.core.windows.net'
   scope: resourceGroup('${avdWorkloadSubsId}', '${varNetworkObjectsRgName}')
 }
 

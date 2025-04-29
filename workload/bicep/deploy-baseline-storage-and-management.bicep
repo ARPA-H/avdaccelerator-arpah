@@ -655,7 +655,7 @@ var varStorageManagedIdentityName = 'id-storage-${varComputeStorageResourcesNami
 //   ? appAttachFileShareCustomName
 //   : 'appa-${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}-001'
 var varFslogixStorageName = avdUseCustomNaming
-  ? '${storageAccountPrefixCustomName}fsl${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varNamingUniqueStringThreeChar}'
+  ? '${storageAccountPrefixCustomName}fsl${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}biz'
   : 'stfsl${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}$apps'
 // var varFslogixStorageFqdn = createAvdFslogixDeployment
 //   ? '${varFslogixStorageName}.file.${environment().suffixes.storage}'

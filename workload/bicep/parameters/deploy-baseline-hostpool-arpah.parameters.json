@@ -1,0 +1,114 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "deploymentPrefix": {
+      "value": "avda"
+    },
+    "deploymentEnvironment":{
+        "value": "Test"
+    },
+    "avdSessionHostLocation": {
+      "value": "centralus"
+    },
+    "avdManagementPlaneLocation": {
+      "value": "centralus"
+    },
+    "avdWorkloadSubsId": {
+      "value": ""
+    },
+    "avdServicePrincipalObjectId": {
+      "value": ""
+    },
+    "avdScurityPrincipalId": {
+      "value": ""
+    },
+    "avdHostPoolType": {
+      "value": "Personal"
+    },
+    "hostPoolPreferredAppGroupType": {
+      "value": "Desktop"
+    },
+    "avdPersonalAssignType": {
+      "value": "Automatic"
+    },
+    "avdHostPoolLoadBalancerType": {
+      "value": "BreadthFirst"
+    },
+    "hostPoolMaxSessions": {
+      "value": 1
+    },
+    "avdStartVmOnConnect": {
+      "value": true
+    },
+    "useSharedImage": {
+      "value": true
+    },
+    "mpImageSku": {
+      "value": ""
+    },
+    "avdWorkSpaceCustomName": {
+      "value": ""
+    },
+    "avdWorkSpaceCustomFriendlyName": {
+      "value": ""
+    },
+    "avdHostPoolCustomName": {
+      "value": ""
+    },
+    "avdHostPoolCustomFriendlyName": {
+      "value": ""
+    },
+    "avdScalingPlanCustomName": {
+      "value": ""
+    },
+    "avdApplicationGroupCustomName": {
+      "value": ""
+    },
+    "avdApplicationGroupCustomFriendlyName": {
+      "value": ""
+    },
+    "avdWrklKvPrefixCustomName": {
+      "value": ""
+    },
+    "createResourceTags": {
+      "value": false
+    },
+    "workloadNameTag": {
+      "value": ""
+    },
+    "workloadTypeTag": {},
+    "dataClassificationTag": {},
+    "departmentTag": {
+      "value": ""
+    },
+    "workloadCriticalityTag": {},
+    "workloadCriticalityCustomValueTag": {
+      "value": ""
+    },
+    "applicationNameTag": {
+      "value": ""
+    },
+    "workloadSlaTag": {
+      "value": ""
+    },
+    "opsTeamTag": {
+      "value": ""
+    },
+    "ownerTag": {
+      "value": ""
+    },
+    "costCenterTag": {
+      "value": ""
+    },
+    "time": {
+      "value": ""
+    },
+    "enableTelemetry": {
+      "value": false
+    },
+    "regionAcronym": {
+      "value": ""
+    }
+  }
+}

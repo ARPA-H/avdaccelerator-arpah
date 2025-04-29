@@ -23,13 +23,8 @@
     "avdVmLocalUserPassword": {
       "value": ""
     },
-    "avdSecurityGroups": {
-      "value": [
-        {
-          "objectid": "",
-          "displayName": ""
-        }
-      ]
+    "avdScurityPrincipalId": {
+      "value": ""
     },
     "diskZeroTrust": {
       "value": true

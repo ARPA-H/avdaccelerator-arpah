@@ -61,10 +61,10 @@ param avdIdentityServiceProvider string = 'EntraID'
 // param createIntuneEnrollment bool = false
 
 // @sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
-param avdSecurityGroups array = []
+// param avdSecurityGroups array = []
 
-// @sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
-// param avdScurityPrincipalId string
+@sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
+param avdScurityPrincipalId string
 
 // @sys.description('FQDN of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "none")')
 // param identityDomainName string = 'none'
@@ -1032,7 +1032,7 @@ var varZtKeyvaultTag = {
 // ]
 
 // security Principals (you can add support for more than one because it is an array. Future)
-var varSecurityPrincipalId = !empty(avdSecurityGroups) ? avdSecurityGroups[0].objectId : ''
+// var varSecurityPrincipalId = !empty(avdSecurityGroups) ? avdSecurityGroups[0].objectId : ''
 // var varSecurityPrincipalName = !empty(avdSecurityGroups) ? avdSecurityGroups[0].displayName : ''
 
 // =========== //
@@ -1251,7 +1251,7 @@ module identity './modules/identity/deploy.bicep' = {
     enableStartVmOnConnect: avdStartVmOnConnect
     identityServiceProvider: avdIdentityServiceProvider
     createStorageDeployment: true
-    securityPrincipalId: varSecurityPrincipalId
+    securityPrincipalId: avdScurityPrincipalId
     tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
   }
   // dependsOn: [

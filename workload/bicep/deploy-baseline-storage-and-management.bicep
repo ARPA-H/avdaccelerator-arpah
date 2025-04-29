@@ -1446,7 +1446,7 @@ resource existingApplicationSecurityGroup 'Microsoft.Network/applicationSecurity
 //   ]
 // }
 
-resource existingPrivateDnsZoneAzureFiles 'Microsoft.Network/privateDnsZones@2020-06-01' existing = {
+resource existingPrivateDnsZoneBlob 'Microsoft.Network/privateDnsZones@2020-06-01' existing = {
   name: 'privatelink.blob.core.windows.net'
   scope: resourceGroup('${avdWorkloadSubsId}', '${varNetworkObjectsRgName}')
 }
@@ -1490,14 +1490,14 @@ module fslogixAzureFilesStorage './modules/storageAzureFiles/deploy-arpah.bicep'
     storageObjectsRgName: varStorageObjectsRgName
     privateEndpointSubnetId: '${existingVnet.id}/subnets/${varVnetPrivateEndpointSubnetName}'
     vmsSubnetId: '${existingVnet.id}/subnets/${varVnetAvdSubnetName}'
-    vnetPrivateDnsZoneFilesId: existingPrivateDnsZoneAzureFiles.id
+    vnetPrivateDnsZoneFilesId: existingPrivateDnsZoneBlob.id
     workloadSubsId: avdWorkloadSubsId
     tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
     alaWorkspaceResourceId: logAnalyticsWorkspaceExisting.id
   }
   dependsOn: [
     // baselineStorageResourceGroup
-    existingPrivateDnsZoneAzureFiles
+    existingPrivateDnsZoneBlob
     logAnalyticsWorkspaceExisting
     wrklKeyVault
     // managementVm

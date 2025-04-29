@@ -60,8 +60,11 @@ param avdIdentityServiceProvider string = 'EntraID'
 // @sys.description('Required, Enroll session hosts on Intune. (Default: false)')
 // param createIntuneEnrollment bool = false
 
-@sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
+// @sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
 param avdSecurityGroups array = []
+
+// @sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
+// param avdScurityPrincipalId string
 
 // @sys.description('FQDN of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "none")')
 // param identityDomainName string = 'none'

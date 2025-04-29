@@ -26,8 +26,8 @@
     "avdSecurityGroups": {
       "value": [
         {
-          "objectid": "39d73622-aedc-4432-ad47-b193bdd18d1a",
-          "displayName": "ARPA-H-AVD Test"
+          "objectid": "",
+          "displayName": ""
         }
       ]
     },

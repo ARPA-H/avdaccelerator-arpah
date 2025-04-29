@@ -1497,6 +1497,8 @@ module fslogixAzureFilesStorage './modules/storageAzureFiles/deploy-arpah.bicep'
   }
   dependsOn: [
     // baselineStorageResourceGroup
+    existingPrivateDnsZoneAzureFiles
+    logAnalyticsWorkspaceExisting
     wrklKeyVault
     // managementVm
   ]

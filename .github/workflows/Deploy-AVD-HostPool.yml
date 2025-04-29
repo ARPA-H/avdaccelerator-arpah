@@ -67,7 +67,7 @@ jobs:
       uses: azure/powershell@v2
       with:
         inlineScript: ./.github/workflows/scripts/DeploymentStack-HostPool.ps1 -DeploymentStackName ${{ inputs.deployment_stack_name }} -Location 'centralus' `
-          -TemplateFile './workload/bicep/deploy-baseline-hostpool-arpah.bicep' -ParametersFile './workload/bicep/parameters/deploy-baseline-hostpool-arpah.parameters.json' `
+          -TemplateFile './workload/bicep/deploy-baseline-hostpool-arpah.bicep' -ParametersFile './workload/bicep/parameters/arpah/deploy-baseline-hostpool-arpah.parameters.json' `
           -deploymentEnvironment ${{ inputs.environment }} -avdWorkloadSubsId ${{ secrets.SUBSCRIPTION_ID }} -update_existing_stack ${{ inputs.update_existing_stack }} `
           -avdServicePrincipalObjectId ${{ secrets.AZURE_AVD_OBJECT_ID }} -avdScurityPrincipalId ${{ secrets.AVD_SECURITY_GROUPS }} -avdHostPoolType '${{ inputs.hostpool_type }}' `
           -avdHostPoolPersona '${{ inputs.hostpool_persona }}'

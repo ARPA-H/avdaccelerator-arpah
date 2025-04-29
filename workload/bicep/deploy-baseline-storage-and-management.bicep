@@ -46,7 +46,7 @@ param avdVmLocalUserName string
 
 @sys.description('AVD session host local password.')
 @secure()
-param avdVmLocalUserPassword string
+param avdVmLocalUserPassword string = substring(newGuid(), 0, 16)
 
 @allowed([
   'ADDS' // Active Directory Domain Services, Users and Devices are ADDS.

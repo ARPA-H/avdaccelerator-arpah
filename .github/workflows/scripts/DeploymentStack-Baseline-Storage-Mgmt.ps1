@@ -7,7 +7,7 @@
     [string]$avdWorkloadSubsId,
     [string]$avdServicePrincipalObjectId,
     [string]$avdVmLocalUserName,
-    [string]$avdVmLocalUserPassword,
+    # [string]$avdVmLocalUserPassword,
     [string]$avdScurityPrincipalId,
     [string]$update_existing_stack
 )
@@ -25,7 +25,7 @@ $parameters = @{
     avdWorkloadSubsId                   = $avdWorkloadSubsId
     avdServicePrincipalObjectId         = $avdServicePrincipalObjectId
     avdVmLocalUserName                  = $avdVmLocalUserName
-    avdVmLocalUserPassword              = $avdVmLocalUserPassword
+    # avdVmLocalUserPassword              = $avdVmLocalUserPassword
     avdScurityPrincipalId               = $avdScurityPrincipalId
 }
 

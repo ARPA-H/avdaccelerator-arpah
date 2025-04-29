@@ -6,7 +6,7 @@
     [string]$ParametersFile,
     [string]$avdWorkloadSubsId,
     [string]$avdServicePrincipalObjectId,
-    [string]$vdVmLocalUserName,
+    [string]$avdVmLocalUserName,
     [string]$avdVmLocalUserPassword,
     [string]$avdScurityPrincipalId,
     [string]$update_existing_stack
@@ -24,7 +24,7 @@ $parameters = @{
     deploymentEnvironment               = $deploymentEnvironment
     avdWorkloadSubsId                   = $avdWorkloadSubsId
     avdServicePrincipalObjectId         = $avdServicePrincipalObjectId
-    vdVmLocalUserName                   = $vdVmLocalUserName
+    avdVmLocalUserName                  = $avdVmLocalUserName
     avdVmLocalUserPassword              = $securePassword
     avdScurityPrincipalId               = $avdScurityPrincipalId
 }

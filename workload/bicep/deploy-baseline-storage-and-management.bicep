@@ -205,7 +205,7 @@ param createAvdFslogixDeployment bool = true
 // param avdDeploySessionHosts bool = true
 
 @sys.description('Deploy VM GPU extension policies. (Default: false)')
-param deployGpuPolicies bool = true
+param deployGpuPolicies bool = false
 
 // @sys.description('Deploy AVD monitoring resources and setings. (Default: false)')
 // param avdDeployMonitoring bool = false
@@ -527,7 +527,7 @@ param enableKvPurgeProtection bool = true
 // Parameters for Microsoft Defender
 //
 @sys.description('Enable Microsoft Defender on the subscription. (Default: false)')
-param deployDefender bool = true
+param deployDefender bool = false
 
 @sys.description('Enable Microsoft Defender for servers. (Default: true)')
 param enableDefForServers bool = true

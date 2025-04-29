@@ -7,7 +7,7 @@
     [string]$avdWorkloadSubsId,
     [string]$avdServicePrincipalObjectId,
     [string]$vdVmLocalUserName,
-    [string]$avdVmLocalUserPassword,
+    [SecureString]$avdVmLocalUserPassword,
     [string]$avdScurityPrincipalId,
     [string]$update_existing_stack
 )

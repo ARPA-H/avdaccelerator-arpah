@@ -5,24 +5,31 @@ param (
     [string]$ParametersFile,
     [string]$deploymentEnvironment,
     [string]$avdWorkloadSubsId,
-    [string]$avdEnterpriseAppObjectId,
-    [string]$existingVnetPrivateEndpointSubnetResourceId,
-    [string]$securityPrincipalId,
+    [string]$avdServicePrincipalObjectId,
+    [string]$avdScurityPrincipalId,
     [string]$update_existing_stack,
     [string]$avdHostPoolType,
-    [string]$avdWrklKvPrefixCustomName
+    [string]$avdHostPoolPersona
 )
+
+$parameters = @{
+    DeploymentStackName = $DeploymentStackName
+    Location = $Location
+    TemplateFile = $TemplateFile
+    ParametersFile = $ParametersFile
+    deploymentEnvironment = $deploymentEnvironment
+    avdWorkloadSubsId = $avdWorkloadSubsId
+    avdServicePrincipalObjectId = $avdServicePrincipalObjectId
+    avdScurityPrincipalId = $avdScurityPrincipalId
+    update_existing_stack = $update_existing_stack
+    avdHostPoolType = $avdHostPoolType
+    avdHostPoolPersona = $avdHostPoolPersona
+}
 
 if ($update_existing_stack -eq 'true') {
     Write-Host "Updating existing stack"
-    Set-AzSubscriptionDeploymentStack -Name $DeploymentStackName -Location $Location -TemplateFile $TemplateFile -TemplateParameterFile $ParametersFile -ActionOnUnmanage "detachAll" -DenySettingsMode "none" `
-        -deploymentEnvironment $deploymentEnvironment -avdWorkloadSubsId $avdWorkloadSubsId -avdEnterpriseAppObjectId $avdEnterpriseAppObjectId -existingVnetPrivateEndpointSubnetResourceId $existingVnetPrivateEndpointSubnetResourceId `
-        -securityPrincipalId $securityPrincipalId -avdHostPoolType $avdHostPoolType -avdWrklKvPrefixCustomName $avdWrklKvPrefixCustomName
-    return
+    Set-AzSubscriptionDeploymentStack @parameters
 } else {
     Write-Host "Creating new stack"
-    New-AzSubscriptionDeploymentStack -Name $DeploymentStackName -Location $Location -TemplateFile $TemplateFile -TemplateParameterFile $ParametersFile -ActionOnUnmanage "detachAll" -DenySettingsMode "none" `
-        -deploymentEnvironment $deploymentEnvironment -avdWorkloadSubsId $avdWorkloadSubsId -avdEnterpriseAppObjectId $avdEnterpriseAppObjectId -existingVnetPrivateEndpointSubnetResourceId $existingVnetPrivateEndpointSubnetResourceId `
-        -securityPrincipalId $securityPrincipalId -avdHostPoolType $avdHostPoolType -avdWrklKvPrefixCustomName $avdWrklKvPrefixCustomName
-    return
+    New-AzSubscriptionDeploymentStack @parameters
 }

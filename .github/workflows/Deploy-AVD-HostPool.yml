@@ -21,6 +21,7 @@ on:
         type: choice
         description: Choose hostpool persona
         options: 
+        - General
         - Developer
         - Admin
         default: 'SessionDesktop'

@@ -46,69 +46,6 @@
     },
     "mpImageSku": {
       "value": ""
-    },
-    "avdWorkSpaceCustomName": {
-      "value": ""
-    },
-    "avdWorkSpaceCustomFriendlyName": {
-      "value": ""
-    },
-    "avdHostPoolCustomName": {
-      "value": ""
-    },
-    "avdHostPoolCustomFriendlyName": {
-      "value": ""
-    },
-    "avdScalingPlanCustomName": {
-      "value": ""
-    },
-    "avdApplicationGroupCustomName": {
-      "value": ""
-    },
-    "avdApplicationGroupCustomFriendlyName": {
-      "value": ""
-    },
-    "avdWrklKvPrefixCustomName": {
-      "value": ""
-    },
-    "createResourceTags": {
-      "value": false
-    },
-    "workloadNameTag": {
-      "value": ""
-    },
-    "workloadTypeTag": {},
-    "dataClassificationTag": {},
-    "departmentTag": {
-      "value": ""
-    },
-    "workloadCriticalityTag": {},
-    "workloadCriticalityCustomValueTag": {
-      "value": ""
-    },
-    "applicationNameTag": {
-      "value": ""
-    },
-    "workloadSlaTag": {
-      "value": ""
-    },
-    "opsTeamTag": {
-      "value": ""
-    },
-    "ownerTag": {
-      "value": ""
-    },
-    "costCenterTag": {
-      "value": ""
-    },
-    "time": {
-      "value": ""
-    },
-    "enableTelemetry": {
-      "value": false
-    },
-    "regionAcronym": {
-      "value": ""
     }
   }
 }

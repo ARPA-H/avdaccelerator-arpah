@@ -8,7 +8,7 @@
     [string]$avdServicePrincipalObjectId,
     [string]$vdVmLocalUserName,
     [string]$avdVmLocalUserPassword,
-    [string]$avdSecurityGroups,
+    [string]$avdScurityPrincipalId,
     [string]$update_existing_stack
 )
 
@@ -24,7 +24,7 @@ $parameters = @{
     avdServicePrincipalObjectId         = $avdServicePrincipalObjectId
     vdVmLocalUserName                   = $vdVmLocalUserName
     avdVmLocalUserPassword              = $avdVmLocalUserPassword
-    avdSecurityGroups                   = $avdSecurityGroups
+    avdScurityPrincipalId               = $avdScurityPrincipalId
 }
 
 if ($update_existing_stack -eq 'true') {

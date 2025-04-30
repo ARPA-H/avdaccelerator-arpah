@@ -1,0 +1,60 @@
+name: Generate Host Pool Token and save to Key Vault
+
+on:
+    workflow_dispatch:
+      inputs:
+        environment:
+          type: choice
+          description: Choose environment to deploy
+          options: 
+          - Test
+          - Prod
+
+    # for running as part of a workflow_call
+    workflow_call:
+      inputs:
+        environment:
+          required: true
+          type: string
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@main
+
+    - name: Log into Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }} 
+        enable-AzPSSession: true
+
+    - name: Get Public IP of GH Runner
+      id: ip
+      uses: haythem/public-ip@v1.3
+  
+    - name: Print Public IP of GH Runner
+      run: |
+        echo ${{ steps.ip.outputs.ipv4 }}
+        echo ${{ steps.ip.outputs.ipv6 }}
+
+    - name: Add temporary network rule in Key Vault for Public IP of GH Runner
+      run: |
+        az keyvault network-rule add --name ${{ secrets.KEY_VAULT }} --ip-address ${{ steps.ip.outputs.ipv4 }}
+
+    - name: Generate Host Pool Token ${{ inputs.environment }} environment
+      uses: azure/powershell@v2
+      env:
+        HostPoolResourceGroupName: 'avd-nih-arpah-${{ inputs.environment }}-use2-service-objects'
+        HostPoolName: 'vdpool-developer-personal-${{ inputs.environment }}-use2-001'
+      with:
+        inlineScript: ./.github/workflows/scripts/Generate-HostPoolToken.ps1 -HostPoolResourceGroupName ${{ env.HostPoolResourceGroupName }} -HostPoolName ${{ env.HostPoolName }} -KeyVaultName ${{ secrets.KEY_VAULT }}
+        azPSVersion: "latest"
+        errorActionPreference: stop
+
+    - name: Remove temporary network rule in Key Vault for Public IP of GH Runner
+      run: |
+        az keyvault network-rule remove --name ${{ secrets.KEY_VAULT }} --ip-address ${{ steps.ip.outputs.ipv4 }}

@@ -8,23 +8,8 @@ param (
     [string]$avdServicePrincipalObjectId,
     [string]$avdScurityPrincipalId,
     [string]$update_existing_stack,
-    # [string]$avdHostPoolType,
     [string]$hostPoolPersona
 )
-
-# $parameters = @{
-#     Name                                = $DeploymentStackName
-#     Location                            = $Location
-#     TemplateFile                        = $TemplateFile
-#     TemplateParameterFile               = $ParametersFile
-#     ActionOnUnmanage                    = "detachAll"
-#     DenySettingsMode                    = "none"
-#     deploymentEnvironment               = $deploymentEnvironment
-#     avdWorkloadSubsId                   = $avdWorkloadSubsId
-#     avdServicePrincipalObjectId         = $avdServicePrincipalObjectId
-#     avdVmLocalUserName                  = $avdVmLocalUserName
-#     avdScurityPrincipalId               = $avdScurityPrincipalId
-# }
 
 $parameters = @{
     Name = $DeploymentStackName
@@ -37,7 +22,6 @@ $parameters = @{
     avdWorkloadSubsId = $avdWorkloadSubsId
     avdServicePrincipalObjectId = $avdServicePrincipalObjectId
     avdScurityPrincipalId = $avdScurityPrincipalId
-    # avdHostPoolType = $avdHostPoolType
     hostPoolPersona = $hostPoolPersona
 }
 

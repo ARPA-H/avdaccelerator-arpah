@@ -7,12 +7,9 @@
     [string]$avdWorkloadSubsId,
     [string]$avdServicePrincipalObjectId,
     [string]$avdVmLocalUserName,
-    # [string]$avdVmLocalUserPassword,
     [string]$avdScurityPrincipalId,
     [string]$update_existing_stack
 )
-
-# $securePassword = ConvertTo-SecureString $avdVmLocalUserPassword -AsPlainText -Force
 
 $parameters = @{
     Name                                = $DeploymentStackName

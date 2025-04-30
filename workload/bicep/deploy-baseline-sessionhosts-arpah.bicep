@@ -699,8 +699,8 @@ var varZtKvName = avdUseCustomNaming
 //   ? '\\\\${varFslogixStorageName}.file.${environment().suffixes.storage}\\${varFslogixFileShareName}'
 //   : ''
 var varBaseScriptUri = 'https://raw.githubusercontent.com/azure/avdaccelerator/main/workload/'
-var varSessionHostConfigurationScriptUri = '${varBaseScriptUri}scripts/Set-SessionHostConfiguration.ps1'
-var varSessionHostConfigurationScript = 'Set-SessionHostConfiguration.ps1'
+var varSessionHostConfigurationScriptUri = '${varBaseScriptUri}scripts/${varSessionHostConfigurationScript}'
+var varSessionHostConfigurationScript = 'Set-SessionHostConfiguration-arpah.ps1'
 // var varCreateStorageDeployment = (createAvdFslogixDeployment || varCreateAppAttachDeployment == true) ? true : false
 // var varFslogixStorageSku = zoneRedundantStorage
 //   ? '${fslogixStoragePerformance}_ZRS'

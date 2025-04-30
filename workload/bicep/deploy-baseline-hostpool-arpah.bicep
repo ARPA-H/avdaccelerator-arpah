@@ -29,6 +29,7 @@ param deploymentEnvironment string = 'Dev'
 @allowed([
   'Developer'
   'Admin'
+  'General'
 ])
 @sys.description('The name of type of host pool to use for deploying session hosts to. (Default: developer)')
 param hostPoolPersona string = 'Developer'
@@ -1183,7 +1184,7 @@ resource telemetrydeployment 'Microsoft.Resources/deployments@2024-03-01' = if (
 // }
 
 // AVD management plane
-module managementPLane './modules/avdManagementPlane/deploy.bicep' = {
+module managementPLanePersonal './modules/avdManagementPlane/deploy.bicep' = if(avdHostPoolType == 'Personal' && hostPoolPersona == 'Dedicated') {
   name: 'AVD-MGMT-Plane-${time}'
   params: {
     applicationGroupName: varApplicationGroupName
@@ -1231,6 +1232,56 @@ module managementPLane './modules/avdManagementPlane/deploy.bicep' = {
   //   identity
   // ]
 }
+
+module managementPLanePooled './modules/avdManagementPlane/deploy-arpah.bicep' = if(avdHostPoolType == 'Pooled') {
+  name: 'AVD-MGMT-Plane-${time}'
+  params: {
+    applicationGroupName: varApplicationGroupName
+    applicationGroupFriendlyNameDesktop: varApplicationGroupFriendlyName
+    workSpaceName: varWorkSpaceName
+    mpImageSku: useSharedImage ? '' : mpImageSku
+    keyVaultResourceId: keyVaultExisting.id
+    workSpaceFriendlyName: varWorkSpaceFriendlyName
+    computeTimeZone: varTimeZoneSessionHosts
+    hostPoolName: varHostPoolName
+    hostPoolFriendlyName: varHostFriendlyName
+    hostPoolRdpProperties: avdHostPoolRdpProperties
+    hostPoolLoadBalancerType: avdHostPoolLoadBalancerType
+    hostPoolType: avdHostPoolType
+    preferredAppGroupType: (hostPoolPreferredAppGroupType == 'RemoteApp') ? 'RailApplications' : 'Desktop'
+    deployScalingPlan: !empty(avdServicePrincipalObjectId) ? varDeployScalingPlan : false
+    scalingPlanExclusionTag: varScalingPlanExclusionTag
+    scalingPlanSchedules: (avdHostPoolType == 'Pooled')
+      ? varPooledScalingPlanSchedules
+      : varPersonalScalingPlanSchedules
+    scalingPlanName: varScalingPlanName
+    hostPoolMaxSessions: hostPoolMaxSessions
+    personalAssignType: avdPersonalAssignType
+    managementPlaneLocation: avdManagementPlaneLocation
+    serviceObjectsRgName: varServiceObjectsRgName
+    startVmOnConnect: avdStartVmOnConnect
+    subscriptionId: avdWorkloadSubsId
+    identityServiceProvider: avdIdentityServiceProvider
+    securityPrincipalId: avdScurityPrincipalId
+    tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
+    alaWorkspaceResourceId: logAnalyticsWorkspaceExisting.id
+    hostPoolAgentUpdateSchedule: varHostPoolAgentUpdateSchedule
+    deployAvdPrivateLinkService: deployAvdPrivateLinkService
+    hostPoolPublicNetworkAccess: hostPoolPublicNetworkAccess
+    workspacePublicNetworkAccess: workspacePublicNetworkAccess
+    privateEndpointSubnetResourceId: subnet.id
+    avdVnetPrivateDnsZoneDiscoveryResourceId: ''
+    avdVnetPrivateDnsZoneConnectionResourceId: ''
+    privateEndpointConnectionName: varPrivateEndPointConnectionName
+    privateEndpointDiscoveryName: varPrivateEndPointDiscoveryName
+    privateEndpointWorkspaceName: varPrivateEndPointWorkspaceName
+  }
+  // dependsOn: [
+  //   baselineResourceGroups
+  //   identity
+  // ]
+}
+
 
 // retrieve existing resources
 

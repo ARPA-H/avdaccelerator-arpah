@@ -16,12 +16,11 @@ $parameters = @{
     Name = $DeploymentStackName
     Location = $Location
     TemplateFile = $TemplateFile
-    ParametersFile = $ParametersFile
+    TemplateParameterFile = $ParametersFile
     deploymentEnvironment = $deploymentEnvironment
     avdWorkloadSubsId = $avdWorkloadSubsId
     avdServicePrincipalObjectId = $avdServicePrincipalObjectId
     avdScurityPrincipalId = $avdScurityPrincipalId
-    update_existing_stack = $update_existing_stack
     avdHostPoolType = $avdHostPoolType
     hostPoolPersona = $hostPoolPersona
 }

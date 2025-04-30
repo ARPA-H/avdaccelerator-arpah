@@ -398,7 +398,9 @@ param avdWorkSpaceCustomFriendlyName string = 'ARPA-H on NIH Network - ${deploym
 
 @maxLength(64)
 @sys.description('AVD host pool custom name. (Default: vdpool-app1-dev-use2-001)')
-param avdHostPoolCustomName string = 'vdpool-${toLower(hostPoolPersona)}-${toLower(avdHostPoolType)}-${toLower(deploymentEnvironment)}-use2-001'
+// param avdHostPoolCustomName string = 'vdpool-${toLower(hostPoolPersona)}-${toLower(avdHostPoolType)}-${toLower(deploymentEnvironment)}-use2-001'
+// param avdHostPoolCustomName string = 'vdpool-${toLower(hostPoolPersona)}-${toLower(avdHostPoolType)}-${toLower(hostPoolPreferredAppGroupType)}-${toLower(deploymentEnvironment)}-use2-001'
+param avdHostPoolCustomName string = 'vdpool-${toLower(hostPoolPersona)}-pooled-desktop-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(64)
 @sys.description('AVD host pool custom friendly (Display) name. (Default: App1 - East US - Dev - 001)')
@@ -406,11 +408,11 @@ param avdHostPoolCustomFriendlyName string = 'ARPA-H on NIH Network - ${deployme
 
 @maxLength(64)
 @sys.description('AVD scaling plan custom name. (Default: vdscaling-app1-dev-use2-001)')
-param avdScalingPlanCustomName string = 'vdscaling-${toLower(hostPoolPersona)}-${toLower(avdHostPoolType)}-${toLower(deploymentEnvironment)}-use2-001'
+param avdScalingPlanCustomName string = 'vdscaling-${toLower(hostPoolPersona)}-pooled-desktop-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(64)
 @sys.description('AVD desktop application group custom name. (Default: vdag-desktop-app1-dev-use2-001)')
-param avdApplicationGroupCustomName string = 'vdag-desktop-${toLower(hostPoolPersona)}--${toLower(avdHostPoolType)}-${toLower(deploymentEnvironment)}-use2-001'
+param avdApplicationGroupCustomName string = 'vdag-${toLower(hostPoolPersona)}-pooled-desktop-${toLower(deploymentEnvironment)}-use2-001'
 
 @maxLength(64)
 @sys.description('AVD desktop application group custom friendly (Display) name. (Default: Desktops - App1 - East US - Dev - 001)')
@@ -627,22 +629,28 @@ var varWorkSpaceName = avdUseCustomNaming ? avdWorkSpaceCustomName : 'vdws-${var
 var varWorkSpaceFriendlyName = avdUseCustomNaming
   ? avdWorkSpaceCustomFriendlyName
   : 'Workspace ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
-var varHostPoolName = avdUseCustomNaming ? avdHostPoolCustomName : 'vdpool-${varManagementPlaneNamingStandard}-001'
+// var varHostPoolName = avdUseCustomNaming ? avdHostPoolCustomName : 'vdpool-${varManagementPlaneNamingStandard}-001'
+var varHostPoolName = hostPoolPersona == 'Developer' || hostPoolPersona == 'Admin' ? replace(avdHostPoolCustomName, 'pooled', 'personal') : avdHostPoolCustomName
+
 var varHostFriendlyName = avdUseCustomNaming
   ? avdHostPoolCustomFriendlyName
   : 'Hostpool ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
 var varHostPoolPreferredAppGroupType = toLower(hostPoolPreferredAppGroupType)
-var varApplicationGroupName = avdUseCustomNaming
-  ? avdApplicationGroupCustomName
-  : 'vdag-${varHostPoolPreferredAppGroupType}-${varManagementPlaneNamingStandard}-001'
+// var varApplicationGroupName = avdUseCustomNaming
+//   ? avdApplicationGroupCustomName
+//   : 'vdag-${varHostPoolPreferredAppGroupType}-${varManagementPlaneNamingStandard}-001'
+var varApplicationGroupName = hostPoolPersona == 'Developer' || hostPoolPersona == 'Admin' ? replace(avdApplicationGroupCustomName, 'pooled', 'personal')  : avdApplicationGroupCustomName
+
 var varApplicationGroupFriendlyName = avdUseCustomNaming
   ? avdApplicationGroupCustomFriendlyName
   : '${varHostPoolPreferredAppGroupType} ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
 var varDeployScalingPlan = (varAzureCloudName == 'AzureChinaCloud') ? false : avdDeployScalingPlan
 // var varCreateAppAttachDeployment = (varAzureCloudName == 'AzureChinaCloud') ? false : createAppAttachDeployment
-var varScalingPlanName = avdUseCustomNaming
-  ? avdScalingPlanCustomName
-  : 'vdscaling-${varManagementPlaneNamingStandard}-001'
+// var varScalingPlanName = avdUseCustomNaming
+//   ? avdScalingPlanCustomName
+//   : 'vdscaling-${varManagementPlaneNamingStandard}-001'
+var varScalingPlanName = hostPoolPersona == 'Developer' || hostPoolPersona == 'Admin' ? replace(avdScalingPlanCustomName, 'pooled', 'personal'): avdScalingPlanCustomName
+
 var varPrivateEndPointConnectionName = 'pe-${varHostPoolName}-connection'
 var varPrivateEndPointDiscoveryName = 'pe-${varWorkSpaceName}-discovery'
 var varPrivateEndPointWorkspaceName = 'pe-${varWorkSpaceName}-global'
@@ -1184,7 +1192,7 @@ resource telemetrydeployment 'Microsoft.Resources/deployments@2024-03-01' = if (
 // }
 
 // AVD management plane
-module managementPLanePersonal './modules/avdManagementPlane/deploy.bicep' = if(avdHostPoolType == 'Personal' && hostPoolPersona == 'Dedicated') {
+module managementPLanePersonal './modules/avdManagementPlane/deploy.bicep' = if(avdHostPoolType == 'Personal' && (hostPoolPersona == 'Admin' || hostPoolPersona == 'Developer')) {
   name: 'AVD-MGMT-Plane-${time}'
   params: {
     applicationGroupName: varApplicationGroupName
@@ -1199,7 +1207,8 @@ module managementPLanePersonal './modules/avdManagementPlane/deploy.bicep' = if(
     hostPoolRdpProperties: avdHostPoolRdpProperties
     hostPoolLoadBalancerType: avdHostPoolLoadBalancerType
     hostPoolType: avdHostPoolType
-    preferredAppGroupType: (hostPoolPreferredAppGroupType == 'RemoteApp') ? 'RailApplications' : 'Desktop'
+    // preferredAppGroupType: (hostPoolPreferredAppGroupType == 'RemoteApp') ? 'RailApplications' : 'Desktop'
+    preferredAppGroupType: 'Desktop'
     deployScalingPlan: !empty(avdServicePrincipalObjectId) ? varDeployScalingPlan : false
     scalingPlanExclusionTag: varScalingPlanExclusionTag
     scalingPlanSchedules: (avdHostPoolType == 'Pooled')
@@ -1233,7 +1242,7 @@ module managementPLanePersonal './modules/avdManagementPlane/deploy.bicep' = if(
   // ]
 }
 
-module managementPLanePooled './modules/avdManagementPlane/deploy-arpah.bicep' = if(avdHostPoolType == 'Pooled') {
+module managementPLanePooled './modules/avdManagementPlane/deploy-arpah.bicep' = if(avdHostPoolType == 'Pooled' && hostPoolPersona == 'General') {
   name: 'AVD-MGMT-Plane-${time}'
   params: {
     applicationGroupName: varApplicationGroupName

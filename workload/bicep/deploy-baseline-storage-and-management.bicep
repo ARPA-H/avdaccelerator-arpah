@@ -271,7 +271,7 @@ param fslogixStoragePerformance string = 'Premium'
 // param appAttachStoragePerformance string = 'Premium'
 
 @sys.description('Enables a zero trust configuration on the session host disks. (Default: false)')
-param diskZeroTrust bool = true
+param diskZeroTrust bool = false
 
 // @sys.description('Session host VM size. (Default: Standard_D4ads_v5)')
 // param avdSessionHostsSize string = 'Standard_D4ads_v5'

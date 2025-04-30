@@ -205,8 +205,6 @@ resource existingStorageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' e
   scope: resourceGroup('${workloadSubsId}', '${storageObjectsRgName}')
 }
 
-//DefaultEndpointsProtocol=https;AccountName=stfslavdatbiz;AccountKey=l6c49AMkO6AFiD4UxE7HfofXzq6PEfJ39QrrRepvNcXv6gbs4SOiWZbLdUbxn/4t7XRL+yjYp1T6+AStxra64A==;EndpointSuffix=core.windows.net
-// var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=core.windows.net;AccountKey=${listKeys(existingStorageAccount.id, existingStorageAccount.apiVersion).keys[0].value}'
 var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=core.windows.net;AccountKey=${existingStorageAccount.listKeys().keys[0].value}'
 
 // Custom Extension call in on the DSC script to join Azure storage account to domain. 

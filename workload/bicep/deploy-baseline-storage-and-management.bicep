@@ -1361,6 +1361,11 @@ module wrklKeyVault '../../avm/1.0.0/res/key-vault/vault/main.bicep' = {
             value: avdVmLocalUserName
             contentType: 'Session host local user credentials'
           }
+          {
+            name: 'storageAccountConnectionString'
+            value: fslogixAzureFilesStorage.outputs.storageAccountConnectionString
+            contentType: 'Storage connection string'
+          }
           // {
           //   name: 'domainJoinUserName'
           //   value: avdDomainJoinUserName
@@ -1400,13 +1405,14 @@ module wrklKeyVault '../../avm/1.0.0/res/key-vault/vault/main.bicep' = {
   }
   dependsOn: [
     zeroTrust
+    fslogixAzureFilesStorage
   ]
 }
 
-resource existingApplicationSecurityGroup 'Microsoft.Network/applicationSecurityGroups@2023-04-01' existing = {
-  name: varApplicationSecurityGroupName
-  scope: resourceGroup('${avdWorkloadSubsId}', '${varComputeObjectsRgName}')
-}
+// resource existingApplicationSecurityGroup 'Microsoft.Network/applicationSecurityGroups@2023-04-01' existing = {
+//   name: varApplicationSecurityGroupName
+//   scope: resourceGroup('${avdWorkloadSubsId}', '${varComputeObjectsRgName}')
+// }
 
 // Management VM deployment
 // module managementVm './modules/storageAzureFiles/.bicep/managementVm.bicep' = if (avdIdentityServiceProvider != 'EntraID' && (createAvdFslogixDeployment || varCreateAppAttachDeployment)) {
@@ -1499,7 +1505,7 @@ module fslogixAzureFilesStorage './modules/storageAzureFiles/deploy-arpah.bicep'
     // baselineStorageResourceGroup
     existingPrivateDnsZoneBlob
     logAnalyticsWorkspaceExisting
-    wrklKeyVault
+    //wrklKeyVault
     // managementVm
   ]
 }

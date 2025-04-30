@@ -12,11 +12,27 @@ param (
     [string]$hostPoolPersona
 )
 
+# $parameters = @{
+#     Name                                = $DeploymentStackName
+#     Location                            = $Location
+#     TemplateFile                        = $TemplateFile
+#     TemplateParameterFile               = $ParametersFile
+#     ActionOnUnmanage                    = "detachAll"
+#     DenySettingsMode                    = "none"
+#     deploymentEnvironment               = $deploymentEnvironment
+#     avdWorkloadSubsId                   = $avdWorkloadSubsId
+#     avdServicePrincipalObjectId         = $avdServicePrincipalObjectId
+#     avdVmLocalUserName                  = $avdVmLocalUserName
+#     avdScurityPrincipalId               = $avdScurityPrincipalId
+# }
+
 $parameters = @{
     Name = $DeploymentStackName
     Location = $Location
     TemplateFile = $TemplateFile
     TemplateParameterFile = $ParametersFile
+    ActionOnUnmanage = "detachAll"
+    DenySettingsMode = "none"
     deploymentEnvironment = $deploymentEnvironment
     avdWorkloadSubsId = $avdWorkloadSubsId
     avdServicePrincipalObjectId = $avdServicePrincipalObjectId

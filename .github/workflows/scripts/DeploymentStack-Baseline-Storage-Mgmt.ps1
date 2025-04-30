@@ -25,7 +25,6 @@ $parameters = @{
     avdWorkloadSubsId                   = $avdWorkloadSubsId
     avdServicePrincipalObjectId         = $avdServicePrincipalObjectId
     avdVmLocalUserName                  = $avdVmLocalUserName
-    # avdVmLocalUserPassword              = $avdVmLocalUserPassword
     avdScurityPrincipalId               = $avdScurityPrincipalId
 }
 

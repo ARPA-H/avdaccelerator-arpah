@@ -8,7 +8,7 @@ param (
     [string]$avdServicePrincipalObjectId,
     [string]$avdScurityPrincipalId,
     [string]$update_existing_stack,
-    [string]$avdHostPoolType,
+    # [string]$avdHostPoolType,
     [string]$hostPoolPersona
 )
 
@@ -37,7 +37,7 @@ $parameters = @{
     avdWorkloadSubsId = $avdWorkloadSubsId
     avdServicePrincipalObjectId = $avdServicePrincipalObjectId
     avdScurityPrincipalId = $avdScurityPrincipalId
-    avdHostPoolType = $avdHostPoolType
+    # avdHostPoolType = $avdHostPoolType
     hostPoolPersona = $hostPoolPersona
 }
 

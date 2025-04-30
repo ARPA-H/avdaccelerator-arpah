@@ -13,7 +13,7 @@ param (
 )
 
 $parameters = @{
-    DeploymentStackName = $DeploymentStackName
+    Name = $DeploymentStackName
     Location = $Location
     TemplateFile = $TemplateFile
     ParametersFile = $ParametersFile

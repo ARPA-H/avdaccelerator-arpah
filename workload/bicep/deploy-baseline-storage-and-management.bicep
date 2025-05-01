@@ -515,7 +515,7 @@ param time string = utcNow()
 // param enableTelemetry bool = true
 
 @sys.description('Enable purge protection for the keyvaults. (Default: true)')
-param enableKvPurgeProtection bool = true
+param enableKvPurgeProtection bool = false
 
 // @sys.description('Deploys anti malware extension on session hosts. (Default: true)')
 // param deployAntiMalwareExt bool = true

@@ -28,6 +28,12 @@
     },
     "enableKvPurgeProtection": {
       "value": false
+    },
+    "avdWrklKvPrefixCustomName": {
+      "value": "kv-secr"
+    },
+    "ztKvPrefixCustomName": {
+      "value": "kv-keys"
     }
   }
 }

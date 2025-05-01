@@ -30,10 +30,10 @@
       "value": false
     },
     "avdWrklKvPrefixCustomName": {
-      "value": "kv-secr"
+      "value": "kv-sr"
     },
     "ztKvPrefixCustomName": {
-      "value": "kv-keys"
+      "value": "kv-ky"
     }
   }
 }

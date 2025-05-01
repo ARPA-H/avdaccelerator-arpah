@@ -1361,11 +1361,11 @@ module wrklKeyVault '../../avm/1.0.0/res/key-vault/vault/main.bicep' = {
             value: avdVmLocalUserName
             contentType: 'Session host local user credentials'
           }
-          {
-            name: 'storageAccountConnectionString'
-            value: fslogixAzureFilesStorage.outputs.storageAccountConnectionString
-            contentType: 'Storage connection string'
-          }
+          // {
+          //   name: 'storageAccountConnectionString'
+          //   value: fslogixAzureFilesStorage.outputs.storageAccountConnectionString
+          //   contentType: 'Storage connection string'
+          // }
           // {
           //   name: 'domainJoinUserName'
           //   value: avdDomainJoinUserName

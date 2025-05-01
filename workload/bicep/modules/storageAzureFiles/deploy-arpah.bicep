@@ -200,12 +200,13 @@ module storageAndFile '../../../../avm/1.0.0/res/storage/storage-account/main.bi
   }
 }
 
-resource existingStorageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
-  name: storageAccountName
-  scope: resourceGroup('${workloadSubsId}', '${storageObjectsRgName}')
-}
+// resource existingStorageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
+//   name: storageAccountName
+//   scope: resourceGroup('${workloadSubsId}', '${storageObjectsRgName}')
+// }
 
-var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=core.windows.net;AccountKey=${existingStorageAccount.listKeys().keys[0].value}'
+// var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=core.windows.net};AccountKey=${listKeys(storageAndFile.outputs.resourceId, eventHubNamespaceName_storageAccount.apiVersion).keys[0].value}'
+// var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${existingStorageAccount.name};EndpointSuffix=core.windows.net;AccountKey=${existingStorageAccount.listKeys().keys[0].value}'
 
 // Custom Extension call in on the DSC script to join Azure storage account to domain. 
 // module addShareToDomainScript './.bicep/azureFilesDomainJoin.bicep' = if (identityServiceProvider != 'EntraID') {
@@ -230,4 +231,4 @@ var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${
 // Outputs //
 // =========== //
 output storageAccountResourceId string = storageAndFile.outputs.resourceId
-output storageAccountConnectionString string = blobStorageConnectionString
+// output storageAccountConnectionString string = blobStorageConnectionString

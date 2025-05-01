@@ -152,6 +152,17 @@ Function Set-RegistryValue {
 $ErrorActionPreference = 'Stop'
 $Script:Name = 'Set-SessionHostConfiguration'
 New-Log -Path (Join-Path -Path $env:SystemRoot -ChildPath 'Logs')
+
+######################################################################
+# Add storage account calls here
+######################################################################
+# $StorageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName
+
+$fslBlob1ConnectString = (Get-AzStorageAccount -ResourceGroupName AVD_RG -Name fslogix100storage).Context.ConnectionString
+# add secure key to credential manager
+Write-Log -Message "Adding Local Storage Account Key for '$FSLogixStorageFQDN' to Credential Manager" -Category 'Info'
+& "C:\Program Files\FSLogix\Apps\frx.exe" add-secure-key -key fslstgacct001-CS1 -value $fslBlob1ConnectString
+
 try {
 
         ##############################################################
@@ -204,6 +215,7 @@ try {
                                 Value        = 1
                         },
                         [PSCustomObject]@{
+
                                 Name         = 'KeepAliveInterval'
                                 Path         = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
                                 PropertyType = 'DWord'

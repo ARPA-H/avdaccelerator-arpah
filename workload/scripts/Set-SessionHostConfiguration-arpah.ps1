@@ -33,11 +33,19 @@ Param(
 
         [parameter(Mandatory = $false)]
         [string]
-        $ExtendOsDisk
+        $ExtendOsDisk,
 
         # [parameter(Mandatory)]
         # [string]
         # $ScreenCaptureProtection
+
+        [parameter(Mandatory = $false)]
+        [string]
+        $StorageAccountName,
+
+        [parameter(Mandatory = $false)]
+        [string]
+        $StorageAccountResourceGroupName
 )
 
 function New-Log {
@@ -153,16 +161,6 @@ $ErrorActionPreference = 'Stop'
 $Script:Name = 'Set-SessionHostConfiguration'
 New-Log -Path (Join-Path -Path $env:SystemRoot -ChildPath 'Logs')
 
-######################################################################
-# Add storage account calls here
-######################################################################
-# $StorageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName
-
-$fslBlob1ConnectString = (Get-AzStorageAccount -ResourceGroupName AVD_RG -Name fslogix100storage).Context.ConnectionString
-# add secure key to credential manager
-Write-Log -Message "Adding Local Storage Account Key for '$FSLogixStorageFQDN' to Credential Manager" -Category 'Info'
-& "C:\Program Files\FSLogix\Apps\frx.exe" add-secure-key -key fslstgacct001-CS1 -value $fslBlob1ConnectString
-
 try {
 
         ##############################################################
@@ -269,7 +267,22 @@ try {
         #  Add Fslogix Settings
         ##############################################################
         if ($Fslogix -eq 'true') {
-                $FSLogixStorageFQDN = $FSLogixFileShare.Split('\')[2]                
+                $FSLogixStorageFQDN = $FSLogixFileShare.Split('\')[2]
+                
+                ######################################################################
+                # Add storage account calls here
+                ######################################################################
+                # $StorageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName
+
+                $fslBlob1ConnectString = (Get-AzStorageAccount -ResourceGroupName $StorageAccountResourceGroupName -Name $StorageAccountName).Context.ConnectionString
+                # add secure key to credential manager
+                Write-Log -Message "Adding Local Storage Account Key for '$FSLogixStorageFQDN' to Credential Manager" -Category 'Info'
+                & "C:\Program Files\FSLogix\Apps\frx.exe" add-secure-key -key fslstgacct001-CS1 -value $fslBlob1ConnectString
+                
+                # $CMDKey = Start-Process -FilePath 'cmdkey.exe' -ArgumentList "/add:$FSLogixStorageFQDN /user:localhost\$StorageAccountName /pass:$fslBlob1ConnectString" -Wait -PassThru
+                $CCDLocations = 'type=azure,name="AZURE PROVIDER 1",connectionString="|fslogix/fslstgacct001-CS1|"'
+                
+
                 $Settings += @(
                         # Enables Fslogix profile containers: https://docs.microsoft.com/en-us/fslogix/profile-container-configuration-reference#enabled
                         [PSCustomObject]@{
@@ -308,10 +321,10 @@ try {
                         # },
                         # List of file system locations to search for the user's profile VHD(X) file: https://docs.microsoft.com/en-us/fslogix/profile-container-configuration-reference#vhdlocations
                         [PSCustomObject]@{
-                                Name         = 'VHDLocations'
+                                Name         = 'CCDLocations'
                                 Path         = 'HKLM:\SOFTWARE\FSLogix\Profiles'
                                 PropertyType = 'MultiString'
-                                Value        = $FSLogixFileShare
+                                Value        = $CCDLocations
                         },
                         [PSCustomObject]@{
                                 Name         = 'VolumeType'
@@ -338,11 +351,17 @@ try {
                                 Value        = 15
                         },
                         [PSCustomObject]@{
-                                Name         = 'ReAttachRetryCount'
+                                Name         = 'SizeInMBs'
                                 Path         = 'HKLM:\SOFTWARE\FSLogix\Profiles'
                                 PropertyType = 'DWord'
-                                Value        = 3
+                                Value        = 30000
                         }
+                        # [PSCustomObject]@{
+                        #         Name         = 'ReAttachRetryCount'
+                        #         Path         = 'HKLM:\SOFTWARE\FSLogix\Profiles'
+                        #         PropertyType = 'DWord'
+                        #         Value        = 3
+                        # }
                 )
                 if ($IdentityServiceProvider -eq "EntraIDKerberos" -and $Fslogix -eq 'true') {
                         $Settings += @(

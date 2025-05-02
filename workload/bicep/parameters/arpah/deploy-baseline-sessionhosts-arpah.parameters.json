@@ -32,9 +32,6 @@
     "ztKvPrefixCustomName": {
       "value": "kv-ky"
     },
-    "imageGallerySubscriptionId": {
-          "value": "<<subscriptionId>>"
-    },
     "goldenImageId": {
         "value": "avd-arpah-dev-win11/versions/latest"
     }

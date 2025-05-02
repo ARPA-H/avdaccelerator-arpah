@@ -28,7 +28,7 @@ on:
       deployment_stack_name: 
         type: string
         description: Name of deployment stack to delete
-        default: 'Test-HostPool-Stack'
+        default: 'AVDSessionHost-Stack'
       session_host_count: 
         type: number
         description: Number of session hosts

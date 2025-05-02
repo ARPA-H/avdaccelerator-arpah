@@ -64,7 +64,7 @@ param storageAccountRgName string
 var varBaseScriptArguments = '-StorageAccountName ${storageAccountName} -StorageAccountResourceGroupName ${storageAccountRgName} -ExtendOsDisk ${extendOsDisk} -IdentityServiceProvider ${identityServiceProvider} -Fslogix ${fslogix} -HostPoolRegistrationToken "${hostPool.listRegistrationTokens().value[0].token}" -AmdVmSize ${varAmdVmSize} -NvidiaVmSize ${varNvidiaVmSize}'
 var varBaseFSLogixScriptArguments = '-FslogixFileShare "test"'
 var varFSLogixScriptArguments = identityServiceProvider == 'EntraID'
-  ? '${varBaseFSLogixScriptArguments} -FslogixStorageAccountKey ""'
+  ? '${varBaseFSLogixScriptArguments} -FslogixStorageAccountKey "key"'
   : identityServiceProvider == 'EntraIDKerberos'
       ? '${varBaseFSLogixScriptArguments} -IdentityDomainName '
       : varBaseFSLogixScriptArguments

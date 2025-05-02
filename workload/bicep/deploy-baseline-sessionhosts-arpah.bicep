@@ -445,9 +445,9 @@ param storageAccountPrefixCustomName string = 'st'
 @sys.description('AVD keyvault prefix custom name (with Zero Trust to store credentials to domain join and local admin). (Default: kv-sec)')
 param avdWrklKvPrefixCustomName string = 'kv-sec'
 
-// @maxLength(6)
-// @sys.description('AVD disk encryption set custom name. (Default: des-zt)')
-// param ztDiskEncryptionSetCustomNamePrefix string = 'des-zt'
+@maxLength(6)
+@sys.description('AVD disk encryption set custom name. (Default: des-zt)')
+param ztDiskEncryptionSetCustomNamePrefix string = 'des-zt'
 
 @maxLength(6)
 @sys.description('AVD key vault custom name for zero trust and store store disk encryption key (Default: kv-key)')
@@ -604,9 +604,9 @@ var varLocations = loadJsonContent('../variables/locations.json')
 var varTimeZoneSessionHosts = varLocations[varSessionHostLocationLowercase].timeZone
 // var varManagementPlaneNamingStandard = '${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varManagementPlaneLocationAcronym}'
 var varComputeStorageResourcesNamingStandard = '${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}'
-// var varDiskEncryptionSetName = avdUseCustomNaming
-//   ? '${ztDiskEncryptionSetCustomNamePrefix}-${varComputeStorageResourcesNamingStandard}-001'
-//   : 'des-zt-${varComputeStorageResourcesNamingStandard}-001'
+var varDiskEncryptionSetName = avdUseCustomNaming
+  ? '${ztDiskEncryptionSetCustomNamePrefix}-${varComputeStorageResourcesNamingStandard}-001'
+  : 'des-zt-${varComputeStorageResourcesNamingStandard}-001'
 var varSessionHostLocationLowercase = toLower(replace(avdSessionHostLocation, ' ', ''))
 // var varManagementPlaneLocationLowercase = toLower(replace(avdManagementPlaneLocation, ' ', ''))
 var varServiceObjectsRgName = avdUseCustomNaming
@@ -1784,6 +1784,12 @@ resource existingHostPool 'Microsoft.DesktopVirtualization/hostPools@2023-09-05'
     scope: resourceGroup('${avdWorkloadSubsId}', '${avdServiceObjectsRgCustomName}')
 }
 
+resource diskEncryptionSet 'Microsoft.Compute/diskEncryptionSets@2023-10-02' existing = {
+  name: varDiskEncryptionSetName
+  scope: resourceGroup('${avdWorkloadSubsId}', '${varServiceObjectsRgName}')
+}
+
+
 module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
   for i in range(1, avdDeploySessionHostsCount): if (avdDeploySessionHosts) {
     name: 'SH-Batch-${i}-${time}'
@@ -1801,7 +1807,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       dataCollectionRuleId: dataCollectionRulesExisting.id
       deployAntiMalwareExt: deployAntiMalwareExt
       deployMonitoring: true
-      diskEncryptionSetResourceId: diskZeroTrust ? keyVaultZTExisting.id : ''
+      diskEncryptionSetResourceId: diskZeroTrust ? diskEncryptionSet.id : ''
       customOsDiskSizeGB: customOsDiskSizeGB
       diskType: avdSessionHostDiskType
       // domainJoinUserPrincipalName: keyVaultExisting.getSecret('domainJoinUserName')

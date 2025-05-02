@@ -267,7 +267,7 @@ try {
         #  Add Fslogix Settings
         ##############################################################
         if ($Fslogix -eq 'true') {
-                $FSLogixStorageFQDN = $FSLogixFileShare.Split('\')[2]
+                # $FSLogixStorageFQDN = $FSLogixFileShare.Split('\')[2]
                 
                 ######################################################################
                 # Add storage account calls here
@@ -276,7 +276,7 @@ try {
 
                 $fslBlob1ConnectString = (Get-AzStorageAccount -ResourceGroupName $StorageAccountResourceGroupName -Name $StorageAccountName).Context.ConnectionString
                 # add secure key to credential manager
-                Write-Log -Message "Adding Local Storage Account Key for '$FSLogixStorageFQDN' to Credential Manager" -Category 'Info'
+                Write-Log -Message "Adding Local Storage Account Key for '$StorageAccountName' to Credential Manager" -Category 'Info'
                 & "C:\Program Files\FSLogix\Apps\frx.exe" add-secure-key -key fslstgacct001-CS1 -value $fslBlob1ConnectString
                 
                 # $CMDKey = Start-Process -FilePath 'cmdkey.exe' -ArgumentList "/add:$FSLogixStorageFQDN /user:localhost\$StorageAccountName /pass:$fslBlob1ConnectString" -Wait -PassThru

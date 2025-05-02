@@ -46,6 +46,12 @@
     },
     "mpImageSku": {
       "value": ""
+    },
+    "avdWrklKvPrefixCustomName": {
+      "value": "kv-sr"
+    },
+    "ztKvPrefixCustomName": {
+      "value": "kv-ky"
     }
   }
 }

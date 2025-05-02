@@ -1780,7 +1780,7 @@ resource dataCollectionRulesExisting 'Microsoft.Insights/dataCollectionRules@202
 
 // which host pool to use for session hosts:  need to send in from gh action
 resource existingHostPool 'Microsoft.DesktopVirtualization/hostPools@2023-09-05' existing = {
-    name: avdHostPoolCustomName
+    name: varHostPoolName
     scope: resourceGroup('${avdWorkloadSubsId}', '${avdServiceObjectsRgCustomName}')
 }
 

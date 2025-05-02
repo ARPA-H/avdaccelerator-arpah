@@ -568,6 +568,26 @@ param imageGallerySubscriptionId string = ''
 
 // =========== //
 // Variable declaration //
+//avdSessionHostCustomNamePrefix, avddevp' || 'avddevt'
+
+// 'Developer'
+//   'Admin'
+//   'General'
+
+// var hostPoolPersonaAbbr = {
+//   General: 'General'
+//   Developer: 'Developer' 
+//   Admin: 'Admin'
+// }
+//avdzzzp
+//var res = isProd ? prodResource : isTest ? testResource : devResource
+
+var avdSessionHostCustomNamePrefixAbbr = hostPoolPersona == 'General' 
+? replace(avdSessionHostCustomNamePrefix, 'zzz', 'gen') : hostPoolPersona == 'Developer' 
+? replace(avdSessionHostCustomNamePrefix, 'zzz', 'dev') : hostPoolPersona == 'Admin' 
+? replace(avdSessionHostCustomNamePrefix, 'zzz', 'adm'): avdSessionHostCustomNamePrefix
+
+
 // =========== //
 // Resource naming
 var varDeploymentPrefixLowercase = toLower(deploymentPrefix)
@@ -672,7 +692,7 @@ var varWrklKvName = avdUseCustomNaming
 //   ? 'premium'
 //   : (varAzureCloudName == 'AzureChinaCloud' ? 'standard' : null)
 var varSessionHostNamePrefix = avdUseCustomNaming
-  ? avdSessionHostCustomNamePrefix
+  ? avdSessionHostCustomNamePrefixAbbr
   : 'vm${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varSessionHostLocationAcronym}'
 //var varVmssFlexNamePrefix = avdUseCustomNaming ? '${vmssFlexCustomNamePrefix}-${varComputeStorageResourcesNamingStandard}' : 'vmss-${varComputeStorageResourcesNamingStandard}'
 // var varStorageManagedIdentityName = 'id-storage-${varComputeStorageResourcesNamingStandard}-001'
@@ -1030,6 +1050,7 @@ var varAvdDefaultTags = {
   ServiceWorkload: 'AVD'
   CreationTimeUTC: time
 }
+
 // var varWorkloadKeyvaultTag = {
 //   Purpose: 'Secrets for local admin and domain join credentials'
 // }

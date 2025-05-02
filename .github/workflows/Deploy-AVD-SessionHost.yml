@@ -1,0 +1,69 @@
+name: Deploy AVD Session Hosts to ARPA-H Environment
+
+on:
+  # for running manually  
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Choose environment to deploy
+        options: 
+        - Test
+        - Prod
+      # hostpool_type:
+      #   type: choice
+      #   description: Choose hostpool type
+      #   options: 
+      #   - Pooled
+      #   - Personal
+      #   default: 'Personal'
+      hostpool_persona:
+        type: choice
+        description: Choose hostpool persona. General is for Pooled and Developer/Admin is for Personal
+        options: 
+        - General
+        - Developer
+        - Admin
+        default: 'General'
+      deployment_stack_name: 
+        type: string
+        description: Name of deployment stack to delete
+        default: 'Test-HostPool-Stack'
+      session_host_count: 
+        type: number
+        description: Number of session hosts
+        default: '1'
+      update_existing_stack: 
+        type: boolean
+        description: Update existing stack if it exists
+        default: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    env:
+      SESSION_HOST_PREFIX: ${{ inputs.environment == 'Prod' && 'avdzzzp' || 'avdzzzt' }}
+    
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@main
+
+    - name: Log into Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }} 
+        enable-AzPSSession: true
+
+    - name: Deploy deployment stack to the ${{ inputs.environment }} environment
+      uses: azure/powershell@v2
+      with:
+        inlineScript: ./.github/workflows/scripts/DeploymentStack-SessionHost.ps1 -DeploymentStackName ${{ inputs.deployment_stack_name }} -Location 'centralus' `
+          -TemplateFile './workload/bicep/deploy-baseline-sessionhosts-arpah.bicep' -ParametersFile './workload/bicep/parameters/arpah/deploy-baseline-sessionhosts-arpah.parameters.json' `
+          -deploymentEnvironment ${{ inputs.environment }} -avdWorkloadSubsId ${{ secrets.SUBSCRIPTION_ID }} -update_existing_stack ${{ inputs.update_existing_stack }} `
+          -avdDeploySessionHostsCount ${{ inputs.session_host_count }} -hostPoolPersona '${{ inputs.hostpool_persona }}' -imageGallerySubscriptionId ${{ secrets.IMAGE_GALLERY_SUBSCRIPTION_ID }} `
+          -avdSessionHostCustomNamePrefix ${{ env.SESSION_HOST_PREFIX }}
+        azPSVersion: "latest"
+        errorActionPreference: stop

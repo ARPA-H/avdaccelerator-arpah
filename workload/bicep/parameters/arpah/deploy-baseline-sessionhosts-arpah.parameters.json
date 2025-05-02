@@ -11,12 +11,6 @@
     "avdSessionHostLocation": {
       "value": "centralus"
     },
-    "avdWorkloadSubsId": {
-      "value": ""
-    },
-    "avdDeploySessionHostsCount": {
-      "value": 0
-    },
     "diskZeroTrust": {
       "value": true
     },
@@ -31,9 +25,6 @@
     },
     "avdSessionHostCustomNamePrefix": {
       "value": "avddhp"
-    },
-    "storageAccountPrefixCustomName": {
-      "value": ""
     },
     "avdWrklKvPrefixCustomName": {
       "value": "kv-sr"

@@ -1774,7 +1774,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       enableAcceleratedNetworking: enableAcceleratedNetworking
       encryptionAtHost: diskZeroTrust
       //fslogixSharePath: varFslogixSharePath
-      //fslogixStorageAccountResourceId: ''
+      fslogixStorageAccountResourceId: ''
       hostPoolResourceId: existingHostPool.id
       //identityDomainName: identityDomainName
       identityServiceProvider: avdIdentityServiceProvider

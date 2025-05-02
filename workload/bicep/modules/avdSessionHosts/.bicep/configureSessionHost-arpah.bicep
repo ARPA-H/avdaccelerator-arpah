@@ -62,7 +62,7 @@ param storageAccountRgName string
 // var fslogixStorageAccountName = fslogix ? last(split(fslogixStorageAccountResourceId, '/')) : ''
 // var fslogixStorageAccountName = fslogix ? storageAccountName : ''
 var varBaseScriptArguments = '-StorageAccountName ${storageAccountName} -StorageAccountResourceGroupName ${storageAccountRgName} -ExtendOsDisk ${extendOsDisk} -IdentityServiceProvider ${identityServiceProvider} -Fslogix ${fslogix} -HostPoolRegistrationToken "${hostPool.listRegistrationTokens().value[0].token}" -AmdVmSize ${varAmdVmSize} -NvidiaVmSize ${varNvidiaVmSize}'
-var varBaseFSLogixScriptArguments = '-FslogixFileShare ""'
+var varBaseFSLogixScriptArguments = '-FslogixFileShare "test"'
 var varFSLogixScriptArguments = identityServiceProvider == 'EntraID'
   ? '${varBaseFSLogixScriptArguments} -FslogixStorageAccountKey ""'
   : identityServiceProvider == 'EntraIDKerberos'

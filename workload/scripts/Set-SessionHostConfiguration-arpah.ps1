@@ -490,8 +490,8 @@ try {
                         "%TEMP%\*.VHDX",
                         "%Windir%\TEMP\*.VHD",
                         "%Windir%\TEMP\*.VHDX"
-                        "$FslogixFileShareName\*.VHD"
-                        "$FslogixFileShareName\*.VHDX"
+                        # "$FslogixFileShareName\*.VHD"
+                        # "$FslogixFileShareName\*.VHDX"
                 )
 
                 foreach ($File in $Files) {

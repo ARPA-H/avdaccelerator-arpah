@@ -115,8 +115,8 @@ param configureFslogix bool
 // @sys.description('Path for the FSlogix share.')
 // param fslogixSharePath string
 
-@sys.description('FSLogix storage account resource ID.')
-param fslogixStorageAccountResourceId string
+// @sys.description('FSLogix storage account resource ID.')
+// param fslogixStorageAccountResourceId string
 
 @sys.description('Host pool resource ID.')
 param hostPoolResourceId string
@@ -144,6 +144,13 @@ param deployAntiMalwareExt bool
 
 @sys.description('Log analytics workspace for diagnostic logs.')
 param alaWorkspaceResourceId string
+
+@sys.description('FSLogix storage account name.')
+param storageAccountName string
+
+@sys.description('FSLogix storage account resource group.')
+param storageAccountRgName string
+
 
 // =========== //
 // Variable declaration //
@@ -394,7 +401,7 @@ module sessionHostConfiguration '.bicep/configureSessionHost-arpah.bicep' = {
     baseScriptUri: sessionHostConfigurationScriptUri
     fslogix: configureFslogix
     // fslogixSharePath: fslogixSharePath
-    fslogixStorageAccountResourceId: fslogixStorageAccountResourceId
+    // fslogixStorageAccountResourceId: fslogixStorageAccountResourceId
     hostPoolResourceId: hostPoolResourceId
     // identityDomainName: identityDomainName
     extendOsDisk: customOsDiskSizeGB != 0 ? true : false
@@ -403,6 +410,8 @@ module sessionHostConfiguration '.bicep/configureSessionHost-arpah.bicep' = {
     name: '${namePrefix}${padLeft(count, 4, '0')}'
     scriptName: sessionHostConfigurationScript
     vmSize: vmSize
+    storageAccountName: storageAccountName
+    storageAccountRgName: storageAccountRgName
   }
   dependsOn: [
     sessionHosts

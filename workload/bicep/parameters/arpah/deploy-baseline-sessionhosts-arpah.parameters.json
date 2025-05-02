@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "deploymentPrefix": {
+      "value": "avda"
+    },
+    "deploymentEnvironment":{
+        "value": "Test"
+    },
+    "avdSessionHostLocation": {
+      "value": "centralus"
+    },
+    "avdWorkloadSubsId": {
+      "value": ""
+    },
+    "avdDeploySessionHostsCount": {
+      "value": 0
+    },
+    "diskZeroTrust": {
+      "value": true
+    },
+    "avdSessionHostsSize": {
+      "value": "Standard_D4ads_v5"
+    },
+    "mpImageOffer": {
+      "value": "Office-365"
+    },
+    "mpImageSku": {
+      "value": "win11-24h2-avd-m365"
+    },
+    "avdCustomImageDefinitionId": {
+      "value": ""
+    },
+    "avdSessionHostCustomNamePrefix": {
+      "value": "avddhp"
+    },
+    "storageAccountPrefixCustomName": {
+      "value": ""
+    },
+    "avdWrklKvPrefixCustomName": {
+      "value": "kv-sr"
+    },
+    "ztKvPrefixCustomName": {
+      "value": "kv-ky"
+    }
+  }
+}

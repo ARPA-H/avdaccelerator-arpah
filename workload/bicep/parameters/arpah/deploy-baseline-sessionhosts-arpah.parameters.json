@@ -29,9 +29,6 @@
     "mpImageSku": {
       "value": "win11-24h2-avd-m365"
     },
-    "avdCustomImageDefinitionId": {
-      "value": ""
-    },
     "avdSessionHostCustomNamePrefix": {
       "value": "avddhp"
     },
@@ -43,6 +40,12 @@
     },
     "ztKvPrefixCustomName": {
       "value": "kv-ky"
+    },
+    "imageGallerySubscriptionId": {
+          "value": "<<subscriptionId>>"
+    },
+    "goldenImageId": {
+        "value": "avd-arpah-dev-win11/versions/latest"
     }
   }
 }

@@ -319,7 +319,8 @@ param mpImageOffer string = 'Office-365'
 param mpImageSku string = 'win11-24h2-avd-m365'
 
 @sys.description('Source custom image ID. (Default: "")')
-param avdCustomImageDefinitionId string = ''
+// param avdCustomImageDefinitionId string = ''
+param avdCustomImageDefinitionId string = '/subscriptions${imageGallerySubscriptionId}/resourceGroups/rg-avd-arpah-test-usc-gal/providers/Microsoft.Compute/galleries/acg_avd_arpah_test_usc/images/${goldenImageId}'
 
 // @sys.description('Management VM image SKU (Default: winServer_2022_Datacenter_smalldisk_g2)')
 // param managementVmOsImage string = 'winServer_2022_Datacenter_smalldisk_g2'
@@ -553,6 +554,12 @@ param deployAntiMalwareExt bool = true
 
 @sys.description('Enable Microsoft Defender for Azure Kubernetes Service. (Default: true)') 
 param regionAcronym string = 'usc'
+
+@sys.description('Image from Azure Compute Gallery.')
+param goldenImageId string  = ''
+
+@sys.description('Image from Azure Compute Gallery Subscription ID.')
+param imageGallerySubscriptionId string = ''
 
 // @maxLength(80)
 // @sys.description('private endpoints virtual network subnet custom name. (Default: snet-pe-arpah-dev-use2-001)')

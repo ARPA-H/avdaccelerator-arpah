@@ -725,7 +725,7 @@ var varZtKvName = avdUseCustomNaming
 // var varFslogixSharePath = createAvdFslogixDeployment
 //   ? '\\\\${varFslogixStorageName}.file.${environment().suffixes.storage}\\${varFslogixFileShareName}'
 //   : ''
-var varBaseScriptUri = 'https://raw.githubusercontent.com/azure/avdaccelerator/main/workload/'
+var varBaseScriptUri = 'https://raw.githubusercontent.com/ARPA-H/avdaccelerator-arpah/main/workload/'
 var varSessionHostConfigurationScriptUri = '${varBaseScriptUri}scripts/${varSessionHostConfigurationScript}'
 var varSessionHostConfigurationScript = 'Set-SessionHostConfiguration-arpah.ps1'
 // var varCreateStorageDeployment = (createAvdFslogixDeployment || varCreateAppAttachDeployment == true) ? true : false

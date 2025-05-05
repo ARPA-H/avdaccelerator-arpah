@@ -39,6 +39,13 @@ on:
         default: false
 
 jobs:
+  # generate-hostpool-token:
+  #   name: generate hostpool token
+  #   uses: ./.github/workflows/Generate-HostPoolToken.yml
+  #   with:
+  #     environment: ${{ inputs.environment }}
+  #   secrets: inherit
+
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}

@@ -45,7 +45,7 @@ Param(
 
         [parameter(Mandatory = $false)]
         [string]
-        $StorageAccountResourceGroupName
+        $StorageConnectionString
 )
 
 function New-Log {
@@ -274,12 +274,12 @@ try {
                 ######################################################################
                 # $StorageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName
 
-                $fslBlob1ConnectString = (Get-AzStorageAccount -ResourceGroupName $StorageAccountResourceGroupName -Name $StorageAccountName).Context.ConnectionString
+                # $storageConnectionString = (Get-AzStorageAccount -ResourceGroupName $StorageAccountResourceGroupName -Name $StorageAccountName).Context.ConnectionString
                 # add secure key to credential manager
                 Write-Log -Message "Adding Local Storage Account Key for '$StorageAccountName' to Credential Manager" -Category 'Info'
-                & "C:\Program Files\FSLogix\Apps\frx.exe" add-secure-key -key fslstgacct001-CS1 -value $fslBlob1ConnectString
+                & "C:\Program Files\FSLogix\Apps\frx.exe" add-secure-key -key fslstgacct001-CS1 -value $StorageConnectionString
                 
-                # $CMDKey = Start-Process -FilePath 'cmdkey.exe' -ArgumentList "/add:$FSLogixStorageFQDN /user:localhost\$StorageAccountName /pass:$fslBlob1ConnectString" -Wait -PassThru
+                # $CMDKey = Start-Process -FilePath 'cmdkey.exe' -ArgumentList "/add:$FSLogixStorageFQDN /user:localhost\$StorageAccountName /pass:$storageConnectionString" -Wait -PassThru
                 $CCDLocations = 'type=azure,name="AZURE PROVIDER 1",connectionString="|fslogix/fslstgacct001-CS1|"'
                 
 

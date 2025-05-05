@@ -411,7 +411,7 @@ module sessionHostConfiguration '.bicep/configureSessionHost-arpah.bicep' = {
     scriptName: sessionHostConfigurationScript
     vmSize: vmSize
     storageAccountName: storageAccountName
-    storageAccountRgName: storageAccountRgName
+    storageConnectionString: keyVault.getSecret('storageAccountConnectionString')
   }
   dependsOn: [
     sessionHosts

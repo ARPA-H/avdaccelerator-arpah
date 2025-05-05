@@ -400,7 +400,7 @@ param avdWorkSpaceCustomFriendlyName string = 'ARPA-H on NIH Network - ${deploym
 @sys.description('AVD host pool custom name. (Default: vdpool-app1-dev-use2-001)')
 // param avdHostPoolCustomName string = 'vdpool-${toLower(hostPoolPersona)}-${toLower(avdHostPoolType)}-${toLower(deploymentEnvironment)}-use2-001'
 // param avdHostPoolCustomName string = 'vdpool-${toLower(hostPoolPersona)}-${toLower(avdHostPoolType)}-${toLower(hostPoolPreferredAppGroupType)}-${toLower(deploymentEnvironment)}-use2-001'
-param avdHostPoolCustomName string = 'vdpool-${toLower(hostPoolPersona)}-pooled-desktop-${toLower(deploymentEnvironment)}-use2-001'
+param avdHostPoolCustomName string = 'vdpool-${toLower(hostPoolPersona)}-pooled-desktop-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD host pool custom friendly (Display) name. (Default: App1 - East US - Dev - 001)')
@@ -408,11 +408,11 @@ param avdHostPoolCustomFriendlyName string = 'ARPA-H on NIH Network - ${deployme
 
 @maxLength(64)
 @sys.description('AVD scaling plan custom name. (Default: vdscaling-app1-dev-use2-001)')
-param avdScalingPlanCustomName string = 'vdscaling-${toLower(hostPoolPersona)}-pooled-desktop-${toLower(deploymentEnvironment)}-use2-001'
+param avdScalingPlanCustomName string = 'vdscaling-${toLower(hostPoolPersona)}-pooled-desktop-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD desktop application group custom name. (Default: vdag-desktop-app1-dev-use2-001)')
-param avdApplicationGroupCustomName string = 'vdag-${toLower(hostPoolPersona)}-pooled-desktop-${toLower(deploymentEnvironment)}-use2-001'
+param avdApplicationGroupCustomName string = 'vdag-${toLower(hostPoolPersona)}-pooled-desktop-${toLower(deploymentEnvironment)}-${regionAcronym}-001'
 
 @maxLength(64)
 @sys.description('AVD desktop application group custom friendly (Display) name. (Default: Desktops - App1 - East US - Dev - 001)')
@@ -629,7 +629,7 @@ var varWorkSpaceName = avdUseCustomNaming ? avdWorkSpaceCustomName : 'vdws-${var
 var varWorkSpaceFriendlyName = avdUseCustomNaming
   ? avdWorkSpaceCustomFriendlyName
   : 'Workspace ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
-// var varHostPoolName = avdUseCustomNaming ? avdHostPoolCustomName : 'vdpool-${varManagementPlaneNamingStandard}-001'
+// var varHostPoolName = avdUseCustomNaming ? avdHostPoolCustomName : 'vdpool-${varManagementPlaneNamingStandard}-001' 
 var varHostPoolName = hostPoolPersona == 'Developer' || hostPoolPersona == 'Admin' ? replace(avdHostPoolCustomName, 'pooled', 'personal') : avdHostPoolCustomName
 
 var varHostFriendlyName = avdUseCustomNaming

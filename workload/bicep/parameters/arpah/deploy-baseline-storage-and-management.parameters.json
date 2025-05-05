@@ -24,7 +24,7 @@
       "value": ""
     },
     "diskZeroTrust": {
-      "value": true
+      "value": false
     },
     "enableKvPurgeProtection": {
       "value": false

@@ -282,10 +282,10 @@ try {
                 #$CMDKey = Start-Process -FilePath 'cmdkey.exe' -ArgumentList "/add:$FSLogixStorageFQDN /user:localhost\$SAName /pass:$FSLogixStorageAccountKey" -Wait -PassThru
                 $CMDKey = Start-Process -FilePath 'C:\Program Files\FSLogix\Apps\frx.exe' -ArgumentList "add-secure-key -key fslstgacct001-CS1 -value '$StorageConnectionString'" -Wait -PassThru
                 If ($CMDKey.ExitCode -ne 0) {
-                        Write-Log -Message "CMDKey Failed with '$($CMDKey.ExitCode)'. Failed to add Local Storage Account Key for '$FSLogixStorageFQDN' to Credential Manager" -Category 'Error'
+                        Write-Log -Message "CMDKey Failed with '$($CMDKey.ExitCode)'. Failed to add Local Storage Account Key for '$StorageAccountName' to Credential Manager" -Category 'Error'
                 }
                 Else {
-                        Write-Log -Message "Successfully added Local Storage Account Key for '$FSLogixStorageFQDN' to Credential Manager" -Category 'Info'
+                        Write-Log -Message "Successfully added Local Storage Account Key for '$StorageAccountName' to Credential Manager" -Category 'Info'
                 }
 
                 $CCDLocations = 'type=azure,name="AZURE PROVIDER 1",connectionString="|fslogix/fslstgacct001-CS1|"'

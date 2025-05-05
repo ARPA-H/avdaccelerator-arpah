@@ -277,11 +277,18 @@ try {
                 # $storageConnectionString = (Get-AzStorageAccount -ResourceGroupName $StorageAccountResourceGroupName -Name $StorageAccountName).Context.ConnectionString
                 # add secure key to credential manager
                 Write-Log -Message "Adding Local Storage Account Key for '$StorageAccountName' to Credential Manager" -Category 'Info'
-                & "C:\Program Files\FSLogix\Apps\frx.exe" add-secure-key -key fslstgacct001-CS1 -value $StorageConnectionString
+                # & "C:\Program Files\FSLogix\Apps\frx.exe" add-secure-key -key fslstgacct001-CS1 -value $StorageConnectionString
                 
-                # $CMDKey = Start-Process -FilePath 'cmdkey.exe' -ArgumentList "/add:$FSLogixStorageFQDN /user:localhost\$StorageAccountName /pass:$storageConnectionString" -Wait -PassThru
+                #$CMDKey = Start-Process -FilePath 'cmdkey.exe' -ArgumentList "/add:$FSLogixStorageFQDN /user:localhost\$SAName /pass:$FSLogixStorageAccountKey" -Wait -PassThru
+                $CMDKey = Start-Process -FilePath 'C:\Program Files\FSLogix\Apps\frx.exe' -ArgumentList "add-secure-key -key fslstgacct001-CS1 -value '$StorageConnectionString'" -Wait -PassThru
+                If ($CMDKey.ExitCode -ne 0) {
+                        Write-Log -Message "CMDKey Failed with '$($CMDKey.ExitCode)'. Failed to add Local Storage Account Key for '$FSLogixStorageFQDN' to Credential Manager" -Category 'Error'
+                }
+                Else {
+                        Write-Log -Message "Successfully added Local Storage Account Key for '$FSLogixStorageFQDN' to Credential Manager" -Category 'Info'
+                }
+
                 $CCDLocations = 'type=azure,name="AZURE PROVIDER 1",connectionString="|fslogix/fslstgacct001-CS1|"'
-                
 
                 $Settings += @(
                         # Enables Fslogix profile containers: https://docs.microsoft.com/en-us/fslogix/profile-container-configuration-reference#enabled
@@ -323,7 +330,7 @@ try {
                         [PSCustomObject]@{
                                 Name         = 'CCDLocations'
                                 Path         = 'HKLM:\SOFTWARE\FSLogix\Profiles'
-                                PropertyType = 'MultiString'
+                                PropertyType = 'multistring'
                                 Value        = $CCDLocations
                         },
                         [PSCustomObject]@{

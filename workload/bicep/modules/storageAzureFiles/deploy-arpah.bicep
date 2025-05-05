@@ -17,8 +17,8 @@ param storageObjectsRgName string
 // @sys.description('Required, The service providing domain services for Azure Virtual Desktop.')
 // param identityServiceProvider string
 
-// @sys.description('Resource Group Name for management VM.')
-// param serviceObjectsRgName string
+@sys.description('Resource Group Name for management VM.')
+param serviceObjectsRgName string
 
 @sys.description('Storage account name.')
 param storageAccountName string
@@ -44,8 +44,8 @@ param location string
 // @sys.description('AD domain GUID.')
 // param identityDomainGuid string
 
-// @sys.description('Keyvault name to get credentials from.')
-// param wrklKvName string
+@sys.description('Keyvault name to get credentials from.')
+param wrklKvName string
 
 // @sys.description('AVD session host domain join credentials.')
 // param domainJoinUserName string
@@ -127,10 +127,10 @@ var varDiagnosticSettings = !empty(alaWorkspaceResourceId)
 // =========== //
 
 // Call on the KV.
-// resource avdWrklKeyVaultget 'Microsoft.KeyVault/vaults@2021-06-01-preview' existing = {
-//   name: wrklKvName
-//   scope: resourceGroup('${workloadSubsId}', '${serviceObjectsRgName}')
-// }
+resource avdWrklKeyVaultget 'Microsoft.KeyVault/vaults@2021-06-01-preview' existing = {
+  name: wrklKvName
+  scope: resourceGroup('${workloadSubsId}', '${serviceObjectsRgName}')
+}
 
 // Provision the storage account and Azure Files.
 module storageAndFile '../../../../avm/1.0.0/res/storage/storage-account/main.bicep' = {
@@ -200,6 +200,25 @@ module storageAndFile '../../../../avm/1.0.0/res/storage/storage-account/main.bi
   }
 }
 
+resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
+  name: storageAccountName
+  scope: resourceGroup('${workloadSubsId}', '${storageObjectsRgName}')
+}
+
+var storageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=core.windows.net;AccountKey=${listKeys(storageAccount.id, '2022-09-01').keys[0].value}'
+
+// resource keyVaultSecret 'Microsoft.KeyVault/vaults/secrets@2021-06-01-preview' = {
+//   //scope: resourceGroup('${workloadSubsId}', '${serviceObjectsRgName}')
+//   name: 'StorageAccountConnectionString'
+//   parent: avdWrklKeyVaultget
+//   properties: {
+//     value: storageConnectionString
+//   }
+//   dependsOn: [
+//     storageAndFile
+//   ]
+// }
+
 // resource existingStorageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
 //   name: storageAccountName
 //   scope: resourceGroup('${workloadSubsId}', '${storageObjectsRgName}')
@@ -231,4 +250,4 @@ module storageAndFile '../../../../avm/1.0.0/res/storage/storage-account/main.bi
 // Outputs //
 // =========== //
 output storageAccountResourceId string = storageAndFile.outputs.resourceId
-// output storageAccountConnectionString string = blobStorageConnectionString
+output storageAccountConnectionString string = storageConnectionString

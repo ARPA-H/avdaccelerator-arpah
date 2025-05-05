@@ -1388,6 +1388,11 @@ module wrklKeyVault '../../avm/1.0.0/res/key-vault/vault/main.bicep' = {
             value: avdVmLocalUserName
             contentType: 'Session host local user credentials'
           }
+          {
+            name: 'storageAccountConnectionString'
+            value: fslogixAzureFilesStorage.outputs.storageAccountConnectionString
+            contentType: 'Storage connection string'
+          }
           // {
           //   name: 'domainJoinUserName'
           //   value: 'NoUsername'
@@ -1405,7 +1410,7 @@ module wrklKeyVault '../../avm/1.0.0/res/key-vault/vault/main.bicep' = {
   }
   dependsOn: [
     zeroTrust
-    fslogixAzureFilesStorage
+    // fslogixAzureFilesStorage
   ]
 }
 
@@ -1488,8 +1493,8 @@ module fslogixAzureFilesStorage './modules/storageAzureFiles/deploy-arpah.bicep'
     // managedIdentityClientId: ''
     // securityPrincipalName: varSecurityPrincipalName
     // domainJoinUserName: avdDomainJoinUserName
-    // wrklKvName: varWrklKvName
-    // serviceObjectsRgName: varServiceObjectsRgName
+    wrklKvName: varWrklKvName
+    serviceObjectsRgName: varServiceObjectsRgName
     // identityDomainName: identityDomainName
     // identityDomainGuid: identityDomainGuid
     location: avdSessionHostLocation
@@ -1509,6 +1514,20 @@ module fslogixAzureFilesStorage './modules/storageAzureFiles/deploy-arpah.bicep'
     // managementVm
   ]
 }
+
+// Add FSLogix Azure Files Storage connection string to Key Vault as a secret
+// resource fslogixStorageConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
+//   scope: resourceGroup('${avdWorkloadSubsId}', '${varServiceObjectsRgName}')
+//   name: 'StorageConnectionString'
+//   properties: {
+//     value: fslogixAzureFilesStorage.outputs.storageAccountConnectionString
+//     contentType: 'FSLogix Storage Connection String'
+//   }
+//   dependsOn: [
+//     wrklKeyVault
+//     fslogixAzureFilesStorage
+//   ]
+// }
 
 // // App Attach storage
 // module appAttachAzureFilesStorage './modules/storageAzureFiles/deploy.bicep' = if (varCreateAppAttachDeployment) {

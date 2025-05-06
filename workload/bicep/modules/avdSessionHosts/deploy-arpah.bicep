@@ -148,8 +148,8 @@ param alaWorkspaceResourceId string
 @sys.description('FSLogix storage account name.')
 param storageAccountName string
 
-@sys.description('FSLogix storage account resource group.')
-param storageAccountRgName string
+// @sys.description('FSLogix storage account resource group.')
+// param storageAccountRgName string
 
 
 // =========== //

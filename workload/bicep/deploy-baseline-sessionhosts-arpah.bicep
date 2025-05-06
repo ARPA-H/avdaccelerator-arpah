@@ -1839,7 +1839,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       vTpmEnabled: vTpmEnabled
       alaWorkspaceResourceId: logAnalyticsWorkspaceExisting.id
       storageAccountName: varFslogixStorageName
-      storageAccountRgName: avdStorageObjectsRgCustomName
+      // storageAccountRgName: avdStorageObjectsRgCustomName
       // securityPrincipalId: avdScurityPrincipalId
     }
   }

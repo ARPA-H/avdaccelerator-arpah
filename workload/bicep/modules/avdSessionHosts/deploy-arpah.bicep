@@ -326,39 +326,39 @@ module sessionHostsAntimalwareExtension '../../../../avm/1.0.0/res/compute/virtu
   ]
 }
 
-module deployIntegrityMonitoring '../../../../avm/1.0.0/res/compute/virtual-machine/extension/main.bicep' = if (deployMonitoring) {
-  scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
-  name: 'SH-GA-${batchId}-${count - 1}-${time}'
-  params: {
-      location: location
-      virtualMachineName: '${namePrefix}${padLeft(count, 4, '0')}'
-      name: 'GuestAttestation'
-      publisher: 'Microsoft.Azure.Security.WindowsAttestation'
-      type: 'GuestAttestation'
-      typeHandlerVersion: '1.0'
-      autoUpgradeMinorVersion: true
-      enableAutomaticUpgrade: true
-      settings: {
-          AttestationConfig: {
-              MaaSettings: {
-                  maaEndpoint: ''
-                  maaTenantName: 'Guest Attestation'
-              }
-              AscSettings: {
-                  ascReportingEndpoint: ''
-                  ascReportingFrequency: ''
-              }
-              useCustomToken: 'false'
-              disableAlerts: 'false'
-          }
-      }
-  }
+// module deployIntegrityMonitoring '../../../../avm/1.0.0/res/compute/virtual-machine/extension/main.bicep' = if (deployMonitoring) {
+//   scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
+//   name: 'SH-GA-${batchId}-${count - 1}-${time}'
+//   params: {
+//       location: location
+//       virtualMachineName: '${namePrefix}${padLeft(count, 4, '0')}'
+//       name: 'GuestAttestation'
+//       publisher: 'Microsoft.Azure.Security.WindowsAttestation'
+//       type: 'GuestAttestation'
+//       typeHandlerVersion: '1.0'
+//       autoUpgradeMinorVersion: true
+//       enableAutomaticUpgrade: true
+//       settings: {
+//           AttestationConfig: {
+//               MaaSettings: {
+//                   maaEndpoint: ''
+//                   maaTenantName: 'Guest Attestation'
+//               }
+//               AscSettings: {
+//                   ascReportingEndpoint: ''
+//                   ascReportingFrequency: ''
+//               }
+//               useCustomToken: 'false'
+//               disableAlerts: 'false'
+//           }
+//       }
+//   }
 
-  dependsOn: [
-      alaWorkspace
-      sessionHosts
-  ]
-}
+//   dependsOn: [
+//       alaWorkspace
+//       sessionHosts
+//   ]
+// }
 
 // Add monitoring extension to session host
 module ama '../../../../avm/1.0.0/res/compute/virtual-machine/extension/main.bicep' = {

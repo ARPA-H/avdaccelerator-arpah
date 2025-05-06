@@ -62,12 +62,12 @@ param storageConnectionString string
 
 // var fslogixStorageAccountName = fslogix ? last(split(fslogixStorageAccountResourceId, '/')) : ''
 // var fslogixStorageAccountName = fslogix ? storageAccountName : ''
-var varBaseScriptArguments = '-StorageAccountName ${storageAccountName} -StorageConnectionString ${storageConnectionString} -ExtendOsDisk ${extendOsDisk} -IdentityServiceProvider ${identityServiceProvider} -Fslogix ${fslogix} -HostPoolRegistrationToken "${hostPool.listRegistrationTokens().value[0].token}" -AmdVmSize ${varAmdVmSize} -NvidiaVmSize ${varNvidiaVmSize}'
+var varBaseScriptArguments = '-StorageAccountName ${storageAccountName} -StorageConnectionString "${storageConnectionString}" -ExtendOsDisk ${extendOsDisk} -IdentityServiceProvider ${identityServiceProvider} -Fslogix ${fslogix} -HostPoolRegistrationToken "${hostPool.listRegistrationTokens().value[0].token}" -AmdVmSize ${varAmdVmSize} -NvidiaVmSize ${varNvidiaVmSize}'
 var varBaseFSLogixScriptArguments = '-FslogixFileShare "test"'
 var varFSLogixScriptArguments = identityServiceProvider == 'EntraID'
   ? '${varBaseFSLogixScriptArguments} -FslogixStorageAccountKey "key"'
   : identityServiceProvider == 'EntraIDKerberos'
-      ? '${varBaseFSLogixScriptArguments} -IdentityDomainName '
+      ? '${varBaseFSLogixScriptArguments} -IdentityDomainName test'
       : varBaseFSLogixScriptArguments
 
 var varScriptArguments = fslogix ? '${varBaseScriptArguments} ${varFSLogixScriptArguments}' : varBaseScriptArguments

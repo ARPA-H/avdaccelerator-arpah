@@ -394,27 +394,27 @@ module dataCollectionRuleAssociation '.bicep/dataCollectionRulesAssociation.bice
 }
 
 // Apply AVD session host configurations
-module sessionHostConfiguration '.bicep/configureSessionHost-arpah.bicep' = {
-  scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
-  name: 'SH-Config-${batchId}-${count - 1}-${time}'
-  params: {
-    baseScriptUri: sessionHostConfigurationScriptUri
-    fslogix: configureFslogix
-    // fslogixSharePath: fslogixSharePath
-    // fslogixStorageAccountResourceId: fslogixStorageAccountResourceId
-    hostPoolResourceId: hostPoolResourceId
-    // identityDomainName: identityDomainName
-    extendOsDisk: customOsDiskSizeGB != 0 ? true : false
-    identityServiceProvider: identityServiceProvider
-    location: location
-    name: '${namePrefix}${padLeft(count, 4, '0')}'
-    scriptName: sessionHostConfigurationScript
-    vmSize: vmSize
-    storageAccountName: storageAccountName
-    storageConnectionString: keyVault.getSecret('storageAccountConnectionString')
-  }
-  dependsOn: [
-    sessionHosts
-    ama
-  ]
-}
+// module sessionHostConfiguration '.bicep/configureSessionHost-arpah.bicep' = {
+//   scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
+//   name: 'SH-Config-${batchId}-${count - 1}-${time}'
+//   params: {
+//     baseScriptUri: sessionHostConfigurationScriptUri
+//     fslogix: configureFslogix
+//     // fslogixSharePath: fslogixSharePath
+//     // fslogixStorageAccountResourceId: fslogixStorageAccountResourceId
+//     hostPoolResourceId: hostPoolResourceId
+//     // identityDomainName: identityDomainName
+//     extendOsDisk: customOsDiskSizeGB != 0 ? true : false
+//     identityServiceProvider: identityServiceProvider
+//     location: location
+//     name: '${namePrefix}${padLeft(count, 4, '0')}'
+//     scriptName: sessionHostConfigurationScript
+//     vmSize: vmSize
+//     storageAccountName: storageAccountName
+//     storageConnectionString: keyVault.getSecret('storageAccountConnectionString')
+//   }
+//   dependsOn: [
+//     sessionHosts
+//     ama
+//   ]
+// }

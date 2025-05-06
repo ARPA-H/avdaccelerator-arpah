@@ -42,6 +42,10 @@ param hostPoolResourceId string
 @secure()
 param storageConnectionString string
 
+@sys.description('FSLogix storage account name.')
+param storageAccountName string
+
+
 // =========== //
 // Variable declaration //
 // =========== //
@@ -49,7 +53,7 @@ param storageConnectionString string
 // Additional parameter for screen capture functionallity -ScreenCaptureProtection ${ScreenCaptureProtection} -verbose' powershell script will need to be updated too
 
 var fslogixStorageAccountName = fslogix ? last(split(fslogixStorageAccountResourceId, '/')) : ''
-var varBaseScriptArguments = '-StorageConnectionString "${storageConnectionString}" -ExtendOsDisk ${extendOsDisk} -IdentityServiceProvider ${identityServiceProvider} -Fslogix ${fslogix} -HostPoolRegistrationToken "${hostPool.listRegistrationTokens().value[0].token}" -AmdVmSize ${varAmdVmSize} -NvidiaVmSize ${varNvidiaVmSize}'
+var varBaseScriptArguments = '-StorageAccountName ${storageAccountName} -StorageConnectionString "${storageConnectionString}" -ExtendOsDisk ${extendOsDisk} -IdentityServiceProvider ${identityServiceProvider} -Fslogix ${fslogix} -HostPoolRegistrationToken "${hostPool.listRegistrationTokens().value[0].token}" -AmdVmSize ${varAmdVmSize} -NvidiaVmSize ${varNvidiaVmSize}'
 var varBaseFSLogixScriptArguments = '-FslogixFileShare "${fslogixSharePath}"'
 var varFSLogixScriptArguments = identityServiceProvider == 'EntraID'
   ? '${varBaseFSLogixScriptArguments} -FslogixStorageAccountKey "${storageAccount.listkeys().keys[0].value}"'

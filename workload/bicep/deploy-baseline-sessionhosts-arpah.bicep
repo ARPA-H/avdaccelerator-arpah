@@ -74,8 +74,8 @@ param createIntuneEnrollment bool = true
 // @sys.description('Optional. Identity ID(s) to grant RBAC role to access AVD application group and NTFS permissions. (Default: [])')
 // param avdScurityPrincipalId string
 
-// @sys.description('FQDN of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "none")')
-// param identityDomainName string = 'none'
+@sys.description('FQDN of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "none")')
+param identityDomainName string = 'none'
 
 // @sys.description('GUID of on-premises AD domain, used for FSLogix storage configuration and NTFS setup. (Default: "")')
 // param identityDomainGuid string = ''
@@ -431,8 +431,8 @@ param avdSessionHostCustomNamePrefix string = 'avddhp'
 @sys.description('AVD FSLogix and App Attach storage account prefix custom name. (Default: st)')
 param storageAccountPrefixCustomName string = 'st'
 
-// @sys.description('FSLogix file share name. (Default: fslogix-pc-app1-dev-001)')
-// param fslogixFileShareCustomName string = 'fslogix-pc-app1-dev-use2-001'
+@sys.description('FSLogix file share name. (Default: fslogix-pc-app1-dev-001)')
+param fslogixFileShareCustomName string = 'fslogix-pc-app1-dev-use2-001'
 
 // @sys.description('App Attach file share name. (Default: appa-app1-dev-001)')
 // param appAttachFileShareCustomName string = 'appa-app1-dev-use2-001'
@@ -696,9 +696,9 @@ var varSessionHostNamePrefix = avdUseCustomNaming
   : 'vm${varDeploymentPrefixLowercase}${varDeploymentEnvironmentComputeStorage}${varSessionHostLocationAcronym}'
 //var varVmssFlexNamePrefix = avdUseCustomNaming ? '${vmssFlexCustomNamePrefix}-${varComputeStorageResourcesNamingStandard}' : 'vmss-${varComputeStorageResourcesNamingStandard}'
 // var varStorageManagedIdentityName = 'id-storage-${varComputeStorageResourcesNamingStandard}-001'
-// var varFslogixFileShareName = avdUseCustomNaming
-//   ? fslogixFileShareCustomName
-//   : 'fslogix-pc-${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}-001'
+var varFslogixFileShareName = avdUseCustomNaming
+  ? fslogixFileShareCustomName
+  : 'fslogix-pc-${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}-001'
 // var varAppAttachFileShareName = avdUseCustomNaming
 //   ? appAttachFileShareCustomName
 //   : 'appa-${varDeploymentPrefixLowercase}-${varDeploymentEnvironmentLowercase}-${varSessionHostLocationAcronym}-001'
@@ -722,9 +722,9 @@ var varZtKvName = avdUseCustomNaming
   : 'kv-key-${varComputeStorageResourcesNamingStandard}-${varNamingUniqueStringTwoChar}' // max length limit 24 characters
 // var varZtKvPrivateEndpointName = 'pe-${varZtKvName}-vault'
 //
-// var varFslogixSharePath = createAvdFslogixDeployment
-//   ? '\\\\${varFslogixStorageName}.file.${environment().suffixes.storage}\\${varFslogixFileShareName}'
-//   : ''
+var varFslogixSharePath = createAvdFslogixDeployment
+  ? '\\\\${varFslogixStorageName}.file.${environment().suffixes.storage}\\${varFslogixFileShareName}'
+  : ''
 var varBaseScriptUri = 'https://raw.githubusercontent.com/ARPA-H/avdaccelerator-arpah/main/workload/'
 var varSessionHostConfigurationScriptUri = '${varBaseScriptUri}scripts/${varSessionHostConfigurationScript}'
 var varSessionHostConfigurationScript = 'Set-SessionHostConfiguration-arpah.ps1'
@@ -1757,10 +1757,10 @@ resource logAnalyticsWorkspaceExisting 'Microsoft.OperationalInsights/workspaces
   scope: resourceGroup('${avdWorkloadSubsId}', '${varMonitoringRgName}')
 }
 
-// resource fsLogixStorageAccountExisting 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
-//   name: varFslogixStorageName
-//   scope: resourceGroup('${avdWorkloadSubsId}', '${avdStorageObjectsRgCustomName}')
-// }
+resource fsLogixStorageAccountExisting 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
+  name: varFslogixStorageName
+  scope: resourceGroup('${avdWorkloadSubsId}', '${avdStorageObjectsRgCustomName}')
+}
 
 
 // resource privateDnsZoneKeyVault 'Microsoft.Network/privateDnsZones@2020-06-01' existing = {
@@ -1790,6 +1790,61 @@ resource diskEncryptionSet 'Microsoft.Compute/diskEncryptionSets@2023-10-02' exi
 }
 
 
+// module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
+//   for i in range(1, avdDeploySessionHostsCount): if (avdDeploySessionHosts) {
+//     name: 'SH-Batch-${i}-${time}'
+//     params: {
+//       asgResourceId: '${applicationSecurityGroupExisting.id}'
+//       availability: availability
+//       availabilityZones: availabilityZones
+//       batchId: i - 1
+//       computeObjectsRgName: varComputeObjectsRgName
+//       configureFslogix: createAvdFslogixDeployment
+//       count: i
+//       //countIndex: i - 1
+//       createIntuneEnrollment: createIntuneEnrollment
+//       customImageDefinitionId: avdCustomImageDefinitionId
+//       dataCollectionRuleId: dataCollectionRulesExisting.id
+//       deployAntiMalwareExt: deployAntiMalwareExt
+//       deployMonitoring: true
+//       diskEncryptionSetResourceId: diskZeroTrust ? diskEncryptionSet.id : ''
+//       customOsDiskSizeGB: customOsDiskSizeGB
+//       diskType: avdSessionHostDiskType
+//       // domainJoinUserPrincipalName: keyVaultExisting.getSecret('domainJoinUserName')
+//       // domainJoinPassword: keyVaultExisting.getSecret('domainJoinUserPassword')
+//       enableAcceleratedNetworking: enableAcceleratedNetworking
+//       // encryptionAtHost: diskZeroTrust
+//       encryptionAtHost: false
+//       //fslogixSharePath: varFslogixSharePath
+//       // fslogixStorageAccountResourceId: ''
+//       hostPoolResourceId: existingHostPool.id
+//       //identityDomainName: identityDomainName
+//       identityServiceProvider: avdIdentityServiceProvider
+//       keyVaultResourceId: keyVaultExisting.id
+//       location: avdSessionHostLocation
+//       mpImageOffer: mpImageOffer
+//       mpImageSku: mpImageSku
+//       namePrefix: varSessionHostNamePrefix
+//       secureBootEnabled: secureBootEnabled
+//       securityType: securityType == 'Standard' ? '' : securityType
+//       sessionHostConfigurationScriptUri: varSessionHostConfigurationScriptUri
+//       sessionHostConfigurationScript: varSessionHostConfigurationScript
+//       // sessionHostOuPath: avdOuPath
+//       subscriptionId: avdWorkloadSubsId
+//       subnetId: subnet.id
+//       tags: createResourceTags ? union(varCustomResourceTags, varAvdDefaultTags) : varAvdDefaultTags
+//       timeZone: varTimeZoneSessionHosts
+//       useSharedImage: useSharedImage
+//       vmSize: avdSessionHostsSize
+//       vTpmEnabled: vTpmEnabled
+//       alaWorkspaceResourceId: logAnalyticsWorkspaceExisting.id
+//       storageAccountName: varFslogixStorageName
+//       // storageAccountRgName: avdStorageObjectsRgCustomName
+//       // securityPrincipalId: avdScurityPrincipalId
+//     }
+//   }
+// ]
+
 module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
   for i in range(1, avdDeploySessionHostsCount): if (avdDeploySessionHosts) {
     name: 'SH-Batch-${i}-${time}'
@@ -1815,10 +1870,10 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       enableAcceleratedNetworking: enableAcceleratedNetworking
       // encryptionAtHost: diskZeroTrust
       encryptionAtHost: false
-      //fslogixSharePath: varFslogixSharePath
-      // fslogixStorageAccountResourceId: ''
+      fslogixSharePath: varFslogixSharePath
+      fslogixStorageAccountResourceId: fsLogixStorageAccountExisting.id
       hostPoolResourceId: existingHostPool.id
-      //identityDomainName: identityDomainName
+      identityDomainName: identityDomainName
       identityServiceProvider: avdIdentityServiceProvider
       keyVaultResourceId: keyVaultExisting.id
       location: avdSessionHostLocation

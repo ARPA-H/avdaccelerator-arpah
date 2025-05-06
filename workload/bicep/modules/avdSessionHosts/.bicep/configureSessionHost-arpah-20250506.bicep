@@ -8,8 +8,8 @@ param name string
 @sys.description('The service providing domain services for Azure Virtual Desktop.')
 param identityServiceProvider string
 
-@sys.description('Identity domain name.')
-param identityDomainName string
+// @sys.description('Identity domain name.')
+// param identityDomainName string
 
 @sys.description('Location where to deploy compute services.')
 param location string
@@ -26,11 +26,11 @@ param scriptName string
 @sys.description('Deploy FSlogix configuration.')
 param fslogix bool
 
-@sys.description('FSLogix storage account resource ID.')
-param fslogixStorageAccountResourceId string
+// @sys.description('FSLogix storage account resource ID.')
+// param fslogixStorageAccountResourceId string
 
-@sys.description('File share name for FSlogix storage.')
-param fslogixSharePath string
+// @sys.description('File share name for FSlogix storage.')
+// param fslogixSharePath string
 
 @sys.description('Session host VM size.')
 param vmSize string
@@ -38,9 +38,21 @@ param vmSize string
 @sys.description('AVD Host Pool Resource Id')
 param hostPoolResourceId string
 
+@sys.description('FSLogix storage account name.')
+param storageAccountName string
+
 @sys.description('FSLogix storage account resource group.')
 @secure()
 param storageConnectionString string
+
+
+// [parameter(Mandatory = $false)]
+// [string]
+// $StorageAccountName,
+
+// [parameter(Mandatory = $false)]
+// [string]
+// $StorageAccountResourceGroupName
 
 // =========== //
 // Variable declaration //
@@ -48,14 +60,16 @@ param storageConnectionString string
 // var ScreenCaptureProtection = true
 // Additional parameter for screen capture functionallity -ScreenCaptureProtection ${ScreenCaptureProtection} -verbose' powershell script will need to be updated too
 
-var fslogixStorageAccountName = fslogix ? last(split(fslogixStorageAccountResourceId, '/')) : ''
-var varBaseScriptArguments = '-StorageConnectionString "${storageConnectionString}" -ExtendOsDisk ${extendOsDisk} -IdentityServiceProvider ${identityServiceProvider} -Fslogix ${fslogix} -HostPoolRegistrationToken "${hostPool.listRegistrationTokens().value[0].token}" -AmdVmSize ${varAmdVmSize} -NvidiaVmSize ${varNvidiaVmSize}'
-var varBaseFSLogixScriptArguments = '-FslogixFileShare "${fslogixSharePath}"'
+// var fslogixStorageAccountName = fslogix ? last(split(fslogixStorageAccountResourceId, '/')) : ''
+// var fslogixStorageAccountName = fslogix ? storageAccountName : ''
+var varBaseScriptArguments = '-StorageAccountName ${storageAccountName} -StorageConnectionString "${storageConnectionString}" -ExtendOsDisk ${extendOsDisk} -IdentityServiceProvider ${identityServiceProvider} -Fslogix ${fslogix} -HostPoolRegistrationToken "${hostPool.listRegistrationTokens().value[0].token}" -AmdVmSize ${varAmdVmSize} -NvidiaVmSize ${varNvidiaVmSize}'
+var varBaseFSLogixScriptArguments = '-FslogixFileShare "test"'
 var varFSLogixScriptArguments = identityServiceProvider == 'EntraID'
-  ? '${varBaseFSLogixScriptArguments} -FslogixStorageAccountKey "${storageAccount.listkeys().keys[0].value}"'
+  ? '${varBaseFSLogixScriptArguments} -FslogixStorageAccountKey "key"'
   : identityServiceProvider == 'EntraIDKerberos'
-      ? '${varBaseFSLogixScriptArguments} -IdentityDomainName ${identityDomainName}'
+      ? '${varBaseFSLogixScriptArguments} -IdentityDomainName test'
       : varBaseFSLogixScriptArguments
+
 var varScriptArguments = fslogix ? '${varBaseScriptArguments} ${varFSLogixScriptArguments}' : varBaseScriptArguments
 var varAmdVmSizes = [
   'Standard_NV4as_v4'
@@ -92,10 +106,10 @@ resource hostPool 'Microsoft.DesktopVirtualization/hostPools@2023-09-05' existin
   scope: resourceGroup(split(hostPoolResourceId, '/')[4])
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' existing = if (!empty(fslogixStorageAccountResourceId)) {
-  name: fslogixStorageAccountName
-  scope: resourceGroup(split(fslogixStorageAccountResourceId, '/')[4])
-}
+// resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' existing = if (!empty(fslogixStorageAccountResourceId)) {
+//   name: fslogixStorageAccountName
+//   scope: resourceGroup(split(fslogixStorageAccountResourceId, '/')[4])
+// }
 
 resource sessionHostConfig 'Microsoft.Compute/virtualMachines/extensions@2023-09-01' = {
   name: '${name}/SessionHostConfig'

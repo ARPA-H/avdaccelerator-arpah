@@ -97,8 +97,8 @@ param customImageDefinitionId string
 @sys.description('The Resource ID of keyvault that contains credentials.')
 param keyVaultResourceId string
 
-@sys.description('Identity domain name.')
-param identityDomainName string
+// @sys.description('Identity domain name.')
+// param identityDomainName string
 
 // @sys.description('AVD session host domain join credentials.')
 // param domainJoinUserPrincipalName string
@@ -112,11 +112,11 @@ param asgResourceId string
 @sys.description('Configure Fslogix on session hosts.')
 param configureFslogix bool
 
-@sys.description('Path for the FSlogix share.')
-param fslogixSharePath string
+// @sys.description('Path for the FSlogix share.')
+// param fslogixSharePath string
 
-@sys.description('FSLogix storage account resource ID.')
-param fslogixStorageAccountResourceId string
+// @sys.description('FSLogix storage account resource ID.')
+// param fslogixStorageAccountResourceId string
 
 @sys.description('Host pool resource ID.')
 param hostPoolResourceId string
@@ -400,17 +400,17 @@ module sessionHostConfiguration '.bicep/configureSessionHost-arpah.bicep' = {
   params: {
     baseScriptUri: sessionHostConfigurationScriptUri
     fslogix: configureFslogix
-    fslogixSharePath: fslogixSharePath
-    fslogixStorageAccountResourceId: fslogixStorageAccountResourceId
+    // fslogixSharePath: fslogixSharePath
+    // fslogixStorageAccountResourceId: fslogixStorageAccountResourceId
     hostPoolResourceId: hostPoolResourceId
-    identityDomainName: identityDomainName
+    // identityDomainName: identityDomainName
     extendOsDisk: customOsDiskSizeGB != 0 ? true : false
     identityServiceProvider: identityServiceProvider
     location: location
     name: '${namePrefix}${padLeft(count, 4, '0')}'
     scriptName: sessionHostConfigurationScript
     vmSize: vmSize
-    // storageAccountName: storageAccountName
+    storageAccountName: storageAccountName
     storageConnectionString: keyVault.getSecret('storageAccountConnectionString')
   }
   dependsOn: [

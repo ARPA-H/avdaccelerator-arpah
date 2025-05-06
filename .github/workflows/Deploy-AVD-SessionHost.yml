@@ -53,7 +53,7 @@ jobs:
     env:
       # SESSION_HOST_PREFIX: ${{ inputs.environment == 'Prod' && 'avdzzzp' || 'avdzzzt' }}
       # temp change because can't delete entra device
-      SESSION_HOST_PREFIX: ${{ inputs.environment == 'Prod' && 'dvazzzp' || 'dvazzt' }}
+      SESSION_HOST_PREFIX: ${{ inputs.environment == 'Prod' && 'vdizzzp' || 'vdizzzt' }}
     
     steps:
 

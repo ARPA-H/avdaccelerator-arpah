@@ -22,6 +22,7 @@ $parameters = @{
     DenySettingsMode               = "none"
     deploymentEnvironment          = $deploymentEnvironment
     avdWorkloadSubsId              = $avdWorkloadSubsId
+    avdDeploySessionHostsCount     = $avdDeploySessionHostsCount
     avdSessionHostCustomNamePrefix = $avdSessionHostCustomNamePrefix
     imageGallerySubscriptionId     = $imageGallerySubscriptionId
     hostPoolPersona                = $hostPoolPersona

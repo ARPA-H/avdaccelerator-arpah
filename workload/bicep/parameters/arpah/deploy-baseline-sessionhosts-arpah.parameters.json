@@ -36,7 +36,7 @@
         "value": "avd-arpah-dev-win11/versions/latest"
     },
     "createIntuneEnrollment": {
-      "value": false
+      "value": true
     },
     "avdSessionHostCountIndex": {
       "value": 0

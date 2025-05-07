@@ -9,7 +9,8 @@
     [string]$avdSessionHostCustomNamePrefix,
     [string]$imageGallerySubscriptionId,
     [string]$hostPoolPersona,
-    [string]$update_existing_stack
+    [string]$update_existing_stack,
+    [int]$avdSessionHostCountIndex
 )
 
 $parameters = @{
@@ -24,6 +25,7 @@ $parameters = @{
     avdSessionHostCustomNamePrefix = $avdSessionHostCustomNamePrefix
     imageGallerySubscriptionId     = $imageGallerySubscriptionId
     hostPoolPersona                = $hostPoolPersona
+    avdSessionHostCountIndex       = $avdSessionHostCountIndex
 }
 
 if ($update_existing_stack -eq 'true') {

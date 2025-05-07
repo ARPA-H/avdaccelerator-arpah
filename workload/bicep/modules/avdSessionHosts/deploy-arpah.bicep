@@ -37,8 +37,8 @@ param count int
 // @sys.description('Max VMs per availability set.')
 // param maxVmssFlexMembersCount int
 
-// @sys.description('The session host number to begin with for the deployment.')
-// param countIndex int
+@sys.description('The session host number to begin with for the deployment.')
+param countIndex int
 
 @sys.description('When true VMs are distributed across availability zones, when set to false, VMs will be deployed at regional level. (Default: true).')
 param availability string
@@ -199,7 +199,7 @@ module sessionHosts '../../../../avm/1.0.0/res/compute/virtual-machine/main.bice
   scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
   name: 'SH-${batchId}-${count - 1}-${time}'
   params: {
-    name: '${namePrefix}${padLeft(count, 4, '0')}'
+    name: '${namePrefix}${padLeft(count + countIndex, 4, '0')}'
     location: location
     timeZone: timeZone
     zone: availability == 'AvailabilityZones' ? varZones[count % length(varZones)] : 0
@@ -231,7 +231,7 @@ module sessionHosts '../../../../avm/1.0.0/res/compute/virtual-machine/main.bice
     adminPassword: keyVault.getSecret('vmLocalUserPassword')
     nicConfigurations: [
       {
-        name: 'nic-01-${namePrefix}${padLeft(count, 4, '0')}'
+        name: 'nic-01-${namePrefix}${padLeft(count + countIndex, 4, '0')}'
         deleteOption: 'Delete'
         enableAcceleratedNetworking: enableAcceleratedNetworking
         ipConfigurations: !empty(asgResourceId)
@@ -295,7 +295,7 @@ module sessionHostsAntimalwareExtension '../../../../avm/1.0.0/res/compute/virtu
   name: 'SH-Antimal-${batchId}-${count - 1}-${time}'
   params: {
     location: location
-    virtualMachineName: '${namePrefix}${padLeft(count, 4, '0')}'
+    virtualMachineName: '${namePrefix}${padLeft(count + countIndex, 4, '0')}'
     name: 'MicrosoftAntiMalware'
     publisher: 'Microsoft.Azure.Security'
     type: 'IaaSAntimalware'
@@ -366,7 +366,7 @@ module ama '../../../../avm/1.0.0/res/compute/virtual-machine/extension/main.bic
   name: 'SH-Mon-${batchId}-${count - 1}-${time}'
   params: {
     location: location
-    virtualMachineName: '${namePrefix}${padLeft(count, 4, '0')}'
+    virtualMachineName: '${namePrefix}${padLeft(count + countIndex, 4, '0')}'
     name: 'AzureMonitorWindowsAgent'
     publisher: 'Microsoft.Azure.Monitor'
     type: 'AzureMonitorWindowsAgent'
@@ -384,7 +384,7 @@ module dataCollectionRuleAssociation '.bicep/dataCollectionRulesAssociation.bice
   scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
   name: 'DCR-Asso-${batchId}-${count - 1}-${time}'
   params: {
-    virtualMachineName: '${namePrefix}${padLeft(count, 4, '0')}'
+    virtualMachineName: '${namePrefix}${padLeft(count + countIndex, 4, '0')}'
     dataCollectionRuleId: dataCollectionRuleId
   }
   dependsOn: [
@@ -407,7 +407,7 @@ module sessionHostConfiguration '.bicep/configureSessionHost-arpah.bicep' = {
     extendOsDisk: customOsDiskSizeGB != 0 ? true : false
     identityServiceProvider: identityServiceProvider
     location: location
-    name: '${namePrefix}${padLeft(count, 4, '0')}'
+    name: '${namePrefix}${padLeft(count + countIndex, 4, '0')}'
     scriptName: sessionHostConfigurationScript
     vmSize: vmSize
     storageAccountName: storageAccountName

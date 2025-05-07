@@ -37,6 +37,9 @@
     },
     "createIntuneEnrollment": {
       "value": false
+    },
+    "avdSessionHostCountIndex": {
+      "value": 0
     }
   }
 }

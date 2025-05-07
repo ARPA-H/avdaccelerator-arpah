@@ -25,14 +25,18 @@ on:
         - Developer
         - Admin
         default: 'General'
-      deployment_stack_name: 
-        type: string
-        description: Name of deployment stack to delete
-        default: 'AVDSessionHost-Stack'
+      host_count_index: 
+        type: number
+        description: Index to start for the name of the session host, ex) avddevt01, avddevt02, etc.
+        default: '1'
       session_host_count: 
         type: number
         description: Number of session hosts
         default: '1'
+      deployment_stack_name: 
+        type: string
+        description: Name of deployment stack to delete
+        default: 'AVDSessionHost-Stack'
       update_existing_stack: 
         type: boolean
         description: Update existing stack if it exists
@@ -73,6 +77,6 @@ jobs:
           -TemplateFile './workload/bicep/deploy-baseline-sessionhosts-arpah.bicep' -ParametersFile './workload/bicep/parameters/arpah/deploy-baseline-sessionhosts-arpah.parameters.json' `
           -deploymentEnvironment ${{ inputs.environment }} -avdWorkloadSubsId ${{ secrets.SUBSCRIPTION_ID }} -update_existing_stack ${{ inputs.update_existing_stack }} `
           -avdDeploySessionHostsCount ${{ inputs.session_host_count }} -hostPoolPersona '${{ inputs.hostpool_persona }}' -imageGallerySubscriptionId ${{ secrets.IMAGE_GALLERY_SUBSCRIPTION_ID }} `
-          -avdSessionHostCustomNamePrefix ${{ env.SESSION_HOST_PREFIX }}
+          -avdSessionHostCustomNamePrefix ${{ env.SESSION_HOST_PREFIX }} -avdSessionHostCountIndex  ${{ inputs.host_count_index }}
         azPSVersion: "latest"
         errorActionPreference: stop

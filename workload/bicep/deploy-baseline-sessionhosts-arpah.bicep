@@ -235,10 +235,10 @@ param avdDeploySessionHosts bool = true
 @sys.description('Quantity of session hosts to deploy. (Default: 1)')
 param avdDeploySessionHostsCount int = 1
 
-// @minValue(1)
-// @maxValue(9998)
-// @sys.description('The session host number to begin with for the deployment. This is important when adding virtual machines to host pool ensure the names do not conflict. (Default: 1)')
-// param avdSessionHostCountIndex int = 1
+@minValue(1)
+@maxValue(9998)
+@sys.description('The session host number to begin with for the deployment. This is important when adding virtual machines to host pool ensure the names do not conflict. (Default: 1)')
+param avdSessionHostCountIndex int = 1
 
 @sys.description('When true VMs are distributed across availability zones, when set to false, VMs will be deployed at regional level.')
 @allowed([
@@ -1856,7 +1856,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       computeObjectsRgName: varComputeObjectsRgName
       configureFslogix: createAvdFslogixDeployment
       count: i
-      //countIndex: i - 1
+      countIndex: i + avdSessionHostCountIndex
       createIntuneEnrollment: createIntuneEnrollment
       customImageDefinitionId: avdCustomImageDefinitionId
       dataCollectionRuleId: dataCollectionRulesExisting.id

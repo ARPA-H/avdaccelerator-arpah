@@ -1845,8 +1845,10 @@ resource diskEncryptionSet 'Microsoft.Compute/diskEncryptionSets@2023-10-02' exi
 //   }
 // ]
 
+@batchSize(3)
 module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
-  for i in range(1, avdDeploySessionHostsCount): if (avdDeploySessionHosts) {
+  // for i in range(1, avdDeploySessionHostsCount): if (avdDeploySessionHosts) {
+    for i in range(0, avdDeploySessionHostsCount): if (avdDeploySessionHosts) {
     name: 'SH-Batch-${i}-${time}'
     params: {
       asgResourceId: '${applicationSecurityGroupExisting.id}'
@@ -1856,7 +1858,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       computeObjectsRgName: varComputeObjectsRgName
       configureFslogix: createAvdFslogixDeployment
       count: i
-      countIndex: i + avdSessionHostCountIndex
+      countIndex: avdSessionHostCountIndex
       createIntuneEnrollment: createIntuneEnrollment
       customImageDefinitionId: avdCustomImageDefinitionId
       dataCollectionRuleId: dataCollectionRulesExisting.id

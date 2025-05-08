@@ -289,6 +289,30 @@ module sessionHosts '../../../../avm/1.0.0/res/compute/virtual-machine/main.bice
   ]
 }
 
+// var keyVaultResourceID = resourceId(keyVaultResourceGroup, 'Microsoft.KeyVault/vaults/', keyVaultName)
+// resource DiskEncryption 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = {
+//   scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
+//   name: '${namePrefix}${padLeft(count + countIndex, 4, '0')}/ADE'
+//   location: location
+//   properties: {
+//     publisher: 'Microsoft.Azure.Security'
+//     type: 'AzureDiskEncryption'
+//     typeHandlerVersion: '2.2'
+//     autoUpgradeMinorVersion: true
+//     forceUpdateTag: '1.0'
+//     settings: {
+//       EncryptionOperation: 'EnableEncryption'
+//       KeyVaultURL: reference(keyVault.id, '2019-09-01').vaultUri
+//       KeyVaultResourceId: keyVault.id
+//       KeyEncryptionKeyURL: keyEncryptionKeyURL
+//       KekVaultResourceId: keyVault.id
+//       KeyEncryptionAlgorithm: 'RSA-OAEP'
+//       VolumeType: 'All'
+//       ResizeOSDisk: false
+//     }
+//   }
+// }
+
 
 // Add antimalware extension to session host.
 module sessionHostsAntimalwareExtension '../../../../avm/1.0.0/res/compute/virtual-machine/extension/main.bicep' = {

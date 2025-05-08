@@ -1871,7 +1871,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       // domainJoinPassword: keyVaultExisting.getSecret('domainJoinUserPassword')
       enableAcceleratedNetworking: enableAcceleratedNetworking
       // encryptionAtHost: diskZeroTrust
-      encryptionAtHost: false
+      encryptionAtHost: diskZeroTrust
       fslogixSharePath: varFslogixSharePath
       fslogixStorageAccountResourceId: fsLogixStorageAccountExisting.id
       hostPoolResourceId: existingHostPool.id

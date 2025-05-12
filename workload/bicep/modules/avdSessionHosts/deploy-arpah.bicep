@@ -97,6 +97,9 @@ param customImageDefinitionId string
 @sys.description('The Resource ID of keyvault that contains credentials.')
 param keyVaultResourceId string
 
+@sys.description('The Resource ID of keyvault that has the encryption keys.')
+param keyVaultZTResourceId string
+
 @sys.description('Identity domain name.')
 param identityDomainName string
 
@@ -187,6 +190,11 @@ var varZones = [for zone in availabilityZones: int(zone)]
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   name: last(split(keyVaultResourceId, '/'))
   scope: resourceGroup(split(keyVaultResourceId, '/')[4])
+}
+
+resource keyVaultZT 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
+  name: last(split(keyVaultZTResourceId, '/'))
+  scope: resourceGroup(split(keyVaultZTResourceId, '/')[4])
 }
 
 resource alaWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = if (!empty(alaWorkspaceResourceId) && deployMonitoring) {
@@ -289,10 +297,45 @@ module sessionHosts '../../../../avm/1.0.0/res/compute/virtual-machine/main.bice
   ]
 }
 
+module sessionHostsADE '../../../../avm/1.0.0/res/compute/virtual-machine/extension/main.bicep' = {
+  scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
+  name: 'SH-ADE-${batchId + 1}-${count - 1}-${time}'
+  params: {
+    location: location
+    virtualMachineName: '${namePrefix}${padLeft(count + countIndex, 4, '0')}'
+    name: 'AzureDiskEncryption'
+    publisher: 'Microsoft.Azure.Security'
+    type: 'AzureDiskEncryption'
+    typeHandlerVersion: '2.2'
+    autoUpgradeMinorVersion: true
+    enableAutomaticUpgrade: false
+    settings: {
+      EncryptionOperation: 'EnableEncryption'
+      KeyVaultURL: reference(keyVault.id, '2019-09-01').vaultUri
+      KeyVaultResourceId: keyVaultResourceId
+      KeyEncryptionKeyURL: reference(keyVaultZT.id, '2019-09-01').vaultUri
+      KekVaultResourceId: keyVaultZTResourceId
+      KeyEncryptionAlgorithm: 'RSA-OAEP'
+      VolumeType: 'All'
+      ResizeOSDisk: false
+    }
+  }
+  dependsOn: [
+    sessionHosts
+  ]
+}
+
+// param vmName string = ''
+// param keyVaultName string = ''
+// param keyVaultResourceGroup string = ''
+// param keyEncryptionKeyURL string = ''
+// param location string = ''
+
+// var extensionName = 'AzureDiskEncryption'
 // var keyVaultResourceID = resourceId(keyVaultResourceGroup, 'Microsoft.KeyVault/vaults/', keyVaultName)
+
 // resource DiskEncryption 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = {
-//   scope: resourceGroup('${subscriptionId}', '${computeObjectsRgName}')
-//   name: '${namePrefix}${padLeft(count + countIndex, 4, '0')}/ADE'
+//   name: '${vmName}/${extensionName}'
 //   location: location
 //   properties: {
 //     publisher: 'Microsoft.Azure.Security'
@@ -302,10 +345,10 @@ module sessionHosts '../../../../avm/1.0.0/res/compute/virtual-machine/main.bice
 //     forceUpdateTag: '1.0'
 //     settings: {
 //       EncryptionOperation: 'EnableEncryption'
-//       KeyVaultURL: reference(keyVault.id, '2019-09-01').vaultUri
-//       KeyVaultResourceId: keyVault.id
+//       KeyVaultURL: reference(keyVaultResourceID, '2019-09-01').vaultUri
+//       KeyVaultResourceId: keyVaultResourceID
 //       KeyEncryptionKeyURL: keyEncryptionKeyURL
-//       KekVaultResourceId: keyVault.id
+//       KekVaultResourceId: keyVaultResourceID
 //       KeyEncryptionAlgorithm: 'RSA-OAEP'
 //       VolumeType: 'All'
 //       ResizeOSDisk: false

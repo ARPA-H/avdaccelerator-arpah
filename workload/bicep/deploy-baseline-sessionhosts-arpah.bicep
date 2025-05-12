@@ -1878,6 +1878,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       identityDomainName: identityDomainName
       identityServiceProvider: avdIdentityServiceProvider
       keyVaultResourceId: keyVaultExisting.id
+      keyVaultZTResourceId: keyVaultZTExisting.id
       location: avdSessionHostLocation
       mpImageOffer: mpImageOffer
       mpImageSku: mpImageSku

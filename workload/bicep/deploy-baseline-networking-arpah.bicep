@@ -231,7 +231,20 @@ param time string = utcNow()
 param enableTelemetry bool = true
 
 @sys.description('Additional customer-provided static routes to be added to the route tables.')
-param customStaticRoutes array = []
+param customStaticRoutes array = [
+  {
+    name: 'DefaultRouteToFirewall'
+    properties: {
+      addressPrefix: '0.0.0.0/0'
+      hasBgpOverride: true
+      nextHopType: 'VirtualAppliance'
+      nextHopIpAddress: firewallIpAddress
+    }
+  }
+]
+
+@sys.description('Azure Firewall ip for static routes to be added to the route tables.')
+param firewallIpAddress string = ''
 
 @sys.description('Enable Microsoft Defender for Azure Kubernetes Service. (Default: true)') 
 param regionAcronym string = 'usc'

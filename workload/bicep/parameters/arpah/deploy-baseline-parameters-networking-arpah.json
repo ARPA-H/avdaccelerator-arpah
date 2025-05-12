@@ -79,6 +79,9 @@
         },           
         "avdAlaWorkspaceDataRetention": {
             "value": 90
+        },
+        "firewallIpAddress": {
+            "value": ""
         }
     }
 }

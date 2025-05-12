@@ -100,6 +100,9 @@ param keyVaultResourceId string
 @sys.description('The Resource ID of keyvault that has the encryption keys.')
 param keyVaultZTResourceId string
 
+@sys.description('The Resource ID of keyvault that has the encryption keys.')
+param diskEncryptionKeyResourceId string
+
 @sys.description('Identity domain name.')
 param identityDomainName string
 
@@ -313,7 +316,7 @@ module sessionHostsADE '../../../../avm/1.0.0/res/compute/virtual-machine/extens
       EncryptionOperation: 'EnableEncryption'
       KeyVaultURL: reference(keyVault.id, '2019-09-01').vaultUri
       KeyVaultResourceId: keyVaultResourceId
-      KeyEncryptionKeyURL: reference(keyVaultZT.id, '2019-09-01').vaultUri
+      KeyEncryptionKeyURL: reference(diskEncryptionKeyResourceId, '2019-09-01').keyUri
       KekVaultResourceId: keyVaultZTResourceId
       KeyEncryptionAlgorithm: 'RSA-OAEP'
       VolumeType: 'All'

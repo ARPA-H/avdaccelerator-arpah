@@ -12,7 +12,7 @@
       "value": "centralus"
     },
     "diskZeroTrust": {
-      "value": true
+      "value": false
     },
     "avdSessionHostsSize": {
       "value": "Standard_D4ads_v5"

@@ -1789,6 +1789,13 @@ resource diskEncryptionSet 'Microsoft.Compute/diskEncryptionSets@2023-10-02' exi
   scope: resourceGroup('${avdWorkloadSubsId}', '${varServiceObjectsRgName}')
 }
 
+resource existingKey 'Microsoft.KeyVault/vaults/keys@2022-07-01' existing = {
+  name: 'DiskEncryptionKey'
+  parent: keyVaultZTExisting
+  // scope: resourceGroup('${avdWorkloadSubsId}', '${varServiceObjectsRgName}')
+  
+}
+
 
 // module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
 //   for i in range(1, avdDeploySessionHostsCount): if (avdDeploySessionHosts) {
@@ -1879,6 +1886,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       identityServiceProvider: avdIdentityServiceProvider
       keyVaultResourceId: keyVaultExisting.id
       keyVaultZTResourceId: keyVaultZTExisting.id
+      diskEncryptionKeyResourceId: existingKey.id
       location: avdSessionHostLocation
       mpImageOffer: mpImageOffer
       mpImageSku: mpImageSku

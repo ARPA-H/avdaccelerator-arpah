@@ -1797,6 +1797,8 @@ resource existingKey 'Microsoft.KeyVault/vaults/keys@2022-07-01' existing = {
 }
 
 
+// output keyVaultKeyUrlWithVersion string = existingKey.properties.keyUriWithVersion
+
 // module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
 //   for i in range(1, avdDeploySessionHostsCount): if (avdDeploySessionHosts) {
 //     name: 'SH-Batch-${i}-${time}'
@@ -1886,7 +1888,7 @@ module sessionHosts './modules/avdSessionHosts/deploy-arpah.bicep' = [
       identityServiceProvider: avdIdentityServiceProvider
       keyVaultResourceId: keyVaultExisting.id
       keyVaultZTResourceId: keyVaultZTExisting.id
-      diskEncryptionKeyResourceId: existingKey.id
+      keyUriWithVersion: existingKey.properties.keyUriWithVersion
       location: avdSessionHostLocation
       mpImageOffer: mpImageOffer
       mpImageSku: mpImageSku

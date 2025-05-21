@@ -320,7 +320,7 @@ param mpImageSku string = 'win11-24h2-avd-m365'
 
 @sys.description('Source custom image ID. (Default: "")')
 // param avdCustomImageDefinitionId string = ''
-param avdCustomImageDefinitionId string = '/subscriptions/${imageGallerySubscriptionId}/resourceGroups/rg-avd-arpah-test-usc-gal/providers/Microsoft.Compute/galleries/acg_avd_arpah_test_usc/images/${goldenImageId}'
+param avdCustomImageDefinitionId string = '/subscriptions/${imageGallerySubscriptionId}/resourceGroups/rg-sharedServices-avd-compute-gal-usc/providers/Microsoft.Compute/galleries/acg_avd_arpah_shared_usc/images/${goldenImageId}'
 
 // @sys.description('Management VM image SKU (Default: winServer_2022_Datacenter_smalldisk_g2)')
 // param managementVmOsImage string = 'winServer_2022_Datacenter_smalldisk_g2'

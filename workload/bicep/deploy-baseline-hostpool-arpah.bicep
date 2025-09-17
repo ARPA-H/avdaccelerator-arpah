@@ -632,6 +632,8 @@ var varWorkSpaceFriendlyName = avdUseCustomNaming
 // var varHostPoolName = avdUseCustomNaming ? avdHostPoolCustomName : 'vdpool-${varManagementPlaneNamingStandard}-001' 
 var varHostPoolName = hostPoolPersona == 'Developer' || hostPoolPersona == 'Admin' ? replace(avdHostPoolCustomName, 'pooled', 'personal') : avdHostPoolCustomName
 
+var varPersonalAssignType = hostPoolPersona == 'Developer' || hostPoolPersona == 'Admin' ? 'Direct' : 'Automatic'
+
 var varHostFriendlyName = avdUseCustomNaming
   ? avdHostPoolCustomFriendlyName
   : 'Hostpool ${deploymentPrefix} ${deploymentEnvironment} ${avdManagementPlaneLocation} 001'
@@ -1216,7 +1218,7 @@ module managementPLanePersonal './modules/avdManagementPlane/deploy.bicep' = if(
       : varPersonalScalingPlanSchedules
     scalingPlanName: varScalingPlanName
     hostPoolMaxSessions: hostPoolMaxSessions
-    personalAssignType: avdPersonalAssignType
+    personalAssignType: varPersonalAssignType
     managementPlaneLocation: avdManagementPlaneLocation
     serviceObjectsRgName: varServiceObjectsRgName
     startVmOnConnect: avdStartVmOnConnect
@@ -1265,7 +1267,7 @@ module managementPLanePooled './modules/avdManagementPlane/deploy-arpah.bicep' =
       : varPersonalScalingPlanSchedules
     scalingPlanName: varScalingPlanName
     hostPoolMaxSessions: hostPoolMaxSessions
-    personalAssignType: avdPersonalAssignType
+    personalAssignType: varPersonalAssignType
     managementPlaneLocation: avdManagementPlaneLocation
     serviceObjectsRgName: varServiceObjectsRgName
     startVmOnConnect: avdStartVmOnConnect

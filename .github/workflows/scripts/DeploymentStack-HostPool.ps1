@@ -8,7 +8,8 @@ param (
     [string]$avdServicePrincipalObjectId,
     [string]$avdScurityPrincipalId,
     [string]$update_existing_stack,
-    [string]$hostPoolPersona
+    [string]$hostPoolPersona,
+    [string]$avdHostPoolType
 )
 
 $parameters = @{
@@ -23,6 +24,7 @@ $parameters = @{
     avdServicePrincipalObjectId = $avdServicePrincipalObjectId
     avdScurityPrincipalId = $avdScurityPrincipalId
     hostPoolPersona = $hostPoolPersona
+    avdHostPoolType = $avdHostPoolType
 }
 
 if ($update_existing_stack -eq 'true') {

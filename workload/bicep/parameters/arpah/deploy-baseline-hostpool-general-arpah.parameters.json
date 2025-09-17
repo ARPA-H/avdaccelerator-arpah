@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "deploymentPrefix": {
+      "value": "avda"
+    },
+    "deploymentEnvironment":{
+        "value": "Test"
+    },
+    "avdSessionHostLocation": {
+      "value": "centralus"
+    },
+    "avdManagementPlaneLocation": {
+      "value": "centralus"
+    },
+    "avdWorkloadSubsId": {
+      "value": ""
+    },
+    "avdServicePrincipalObjectId": {
+      "value": ""
+    },
+    "avdScurityPrincipalId": {
+      "value": ""
+    },
+    "avdHostPoolType": {
+      "value": "Pooled"
+    },
+    "hostPoolPreferredAppGroupType": {
+      "value": "Desktop"
+    },
+    "avdPersonalAssignType": {
+      "value": "Automatic"
+    },
+    "avdHostPoolLoadBalancerType": {
+      "value": "BreadthFirst"
+    },
+    "hostPoolMaxSessions": {
+      "value": 8
+    },
+    "avdStartVmOnConnect": {
+      "value": true
+    },
+    "useSharedImage": {
+      "value": true
+    },
+    "mpImageSku": {
+      "value": ""
+    },
+    "avdWrklKvPrefixCustomName": {
+      "value": "kv-sr"
+    }
+  }
+}
